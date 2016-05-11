@@ -32,9 +32,13 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(commonConstants.cellXib, forIndexPath: indexPath) as! FoodCell
-        cell.foodLabel.text = "jack"
-        cell.calorieLabel.text = "haha"
+        configureCell(cell, foodContent: "Carrot", caloriesContent: 37)
         return cell
+    }
+    
+    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Int){
+        cell.foodLabel.text = foodContent
+        cell.calorieLabel.text = String(caloriesContent)
     }
     
     
