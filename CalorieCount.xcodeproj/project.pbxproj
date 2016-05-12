@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		90B8BC821CE397DE0083DF72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC811CE397DE0083DF72 /* AppDelegate.swift */; };
-		90B8BC841CE397DE0083DF72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC831CE397DE0083DF72 /* ViewController.swift */; };
+		90B8BC841CE397DE0083DF72 /* CalorieCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */; };
 		90B8BC871CE397DE0083DF72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90B8BC851CE397DE0083DF72 /* Main.storyboard */; };
 		90B8BC8A1CE397DE0083DF72 /* CalorieCount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC881CE397DE0083DF72 /* CalorieCount.xcdatamodeld */; };
 		90B8BC8C1CE397DE0083DF72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90B8BC8B1CE397DE0083DF72 /* Assets.xcassets */; };
@@ -16,12 +16,13 @@
 		90B8BC971CE39C740083DF72 /* FoodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B8BC961CE39C740083DF72 /* FoodCell.xib */; };
 		90B8BC991CE3D4010083DF72 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC981CE3D4010083DF72 /* FoodCell.swift */; };
 		90B8BC9B1CE3D8CD0083DF72 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC9A1CE3D8CD0083DF72 /* Food.swift */; };
+		90B8BC9D1CE4035B0083DF72 /* NetworkGrab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		90B8BC7E1CE397DE0083DF72 /* CalorieCount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalorieCount.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B8BC811CE397DE0083DF72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		90B8BC831CE397DE0083DF72 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieCountViewController.swift; sourceTree = "<group>"; };
 		90B8BC861CE397DE0083DF72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		90B8BC891CE397DE0083DF72 /* CalorieCount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CalorieCount.xcdatamodel; sourceTree = "<group>"; };
 		90B8BC8B1CE397DE0083DF72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -30,6 +31,7 @@
 		90B8BC961CE39C740083DF72 /* FoodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodCell.xib; sourceTree = "<group>"; };
 		90B8BC981CE3D4010083DF72 /* FoodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
 		90B8BC9A1CE3D8CD0083DF72 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkGrab.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				90B8BC811CE397DE0083DF72 /* AppDelegate.swift */,
-				90B8BC831CE397DE0083DF72 /* ViewController.swift */,
+				90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */,
+				90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */,
 				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
 				90B8BC961CE39C740083DF72 /* FoodCell.xib */,
@@ -150,8 +153,9 @@
 			files = (
 				90B8BC8A1CE397DE0083DF72 /* CalorieCount.xcdatamodeld in Sources */,
 				90B8BC991CE3D4010083DF72 /* FoodCell.swift in Sources */,
+				90B8BC9D1CE4035B0083DF72 /* NetworkGrab.swift in Sources */,
 				90B8BC9B1CE3D8CD0083DF72 /* Food.swift in Sources */,
-				90B8BC841CE397DE0083DF72 /* ViewController.swift in Sources */,
+				90B8BC841CE397DE0083DF72 /* CalorieCountViewController.swift in Sources */,
 				90B8BC821CE397DE0083DF72 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

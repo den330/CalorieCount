@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
+class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     private struct commonConstants{
         static let rowHeight:CGFloat = 80
@@ -35,10 +36,22 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         configureCell(cell, foodContent: "Carrot", caloriesContent: 37)
         return cell
     }
+
     
     func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double){
         cell.foodLabel.text = foodContent
         cell.calorieLabel.text = String(caloriesContent)
     }
 }
+
+extension CalorieCountViewController: UISearchBarDelegate{
+    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+        print("haha")
+    }
+}
+
+
+
+
+
 
