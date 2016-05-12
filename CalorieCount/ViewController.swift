@@ -36,13 +36,9 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         return cell
     }
     
-    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Int){
+    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double){
         cell.foodLabel.text = foodContent
         cell.calorieLabel.text = String(caloriesContent)
     }
-    
-    
-
-
 }
 

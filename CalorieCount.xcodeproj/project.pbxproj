@@ -15,6 +15,7 @@
 		90B8BC8F1CE397DE0083DF72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90B8BC8D1CE397DE0083DF72 /* LaunchScreen.storyboard */; };
 		90B8BC971CE39C740083DF72 /* FoodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B8BC961CE39C740083DF72 /* FoodCell.xib */; };
 		90B8BC991CE3D4010083DF72 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC981CE3D4010083DF72 /* FoodCell.swift */; };
+		90B8BC9B1CE3D8CD0083DF72 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC9A1CE3D8CD0083DF72 /* Food.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		90B8BC901CE397DE0083DF72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90B8BC961CE39C740083DF72 /* FoodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodCell.xib; sourceTree = "<group>"; };
 		90B8BC981CE3D4010083DF72 /* FoodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
+		90B8BC9A1CE3D8CD0083DF72 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				90B8BC811CE397DE0083DF72 /* AppDelegate.swift */,
 				90B8BC831CE397DE0083DF72 /* ViewController.swift */,
+				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
 				90B8BC961CE39C740083DF72 /* FoodCell.xib */,
 				90B8BC981CE3D4010083DF72 /* FoodCell.swift */,
@@ -147,6 +150,7 @@
 			files = (
 				90B8BC8A1CE397DE0083DF72 /* CalorieCount.xcdatamodeld in Sources */,
 				90B8BC991CE3D4010083DF72 /* FoodCell.swift in Sources */,
+				90B8BC9B1CE3D8CD0083DF72 /* Food.swift in Sources */,
 				90B8BC841CE397DE0083DF72 /* ViewController.swift in Sources */,
 				90B8BC821CE397DE0083DF72 /* AppDelegate.swift in Sources */,
 			);
