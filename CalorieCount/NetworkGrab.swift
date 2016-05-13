@@ -12,7 +12,15 @@ class NetworkGrab{
     let baseUrl: NSURL?
     let appID: String
     let appKey: String
-    var lst = [Food]()
+    private(set) var state: State = .NotSearchedYet
+    
+    
+    enum State{
+        case NotSearchedYet
+        case Searching
+        case SearchSuccess([Food])
+        case NotFound
+    }
     
     init(){
         appID = "8b36dac9"
@@ -21,20 +29,41 @@ class NetworkGrab{
     }
     
     func performSearch(url: NSURL, completion: (Void) -> Void){
-        lst = [Food]()
+        state = .Searching
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: configuration)
         let request = NSURLRequest(URL: url )
         let dataTask = session.dataTaskWithRequest(request, completionHandler: {data, response, error in
-            let dict = self.parseJson(data!)
-            for index in 0..<5{
-                let foodItem = Food()
-                let fields = dict!["hits"]![index]!["fields"]!!
-                let calories = fields["nf_calories"]!! as! Double
-                let name = fields["item_name"]!! as! String
-                foodItem.caloriesCount = calories
-                foodItem.foodContent = name
-                self.lst.append(foodItem)
+            var success: Bool = false
+            
+            
+            if let error = error where error.code == -999{
+                return
+            }
+            
+            if let httpResponse = response  as? NSHTTPURLResponse where httpResponse.statusCode == 200{
+                let dict = self.parseJson(data!)
+                success = true
+                var searchResults = [Food]()
+                for index in 0..<5{
+                    let foodItem = Food()
+                    let hitsLst = dict!["hits"]! as! NSArray
+                    if hitsLst.count == 0{
+                        success = false
+                        break
+                    }
+                    let fields = dict!["hits"]![index]!["fields"]!!
+                    let calories = fields["nf_calories"]!! as! Double
+                    let name = fields["item_name"]!! as! String
+                    foodItem.caloriesCount = calories
+                    foodItem.foodContent = name
+                    searchResults.append(foodItem)
+                }
+                if success{
+                    self.state = .SearchSuccess(searchResults)
+                }else{
+                    self.state = .NotFound
+                }
             }
             dispatch_async(dispatch_get_main_queue()){
                 completion()

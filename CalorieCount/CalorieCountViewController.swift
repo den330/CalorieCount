@@ -29,13 +29,26 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return net.lst.count
+        switch net.state{
+            case .NotFound, .Searching: return 1
+            case .NotSearchedYet: return 0
+            case .SearchSuccess(let lst): return lst.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(commonConstants.cellXib, forIndexPath: indexPath) as! FoodCell
-        let foodItem = net.lst[indexPath.row]
-        configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!)
+        switch net.state{
+            case .SearchSuccess(let lst):
+                let foodItem = lst[indexPath.row]
+                configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!)
+                return cell
+            case .NotFound:
+                configureCell(cell, foodContent: "NA", caloriesContent: 0)
+            case .Searching:
+                configureCell(cell, foodContent: "Searching", caloriesContent: 0)
+            default: break
+        }
         return cell
     }
     
