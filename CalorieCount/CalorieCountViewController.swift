@@ -15,7 +15,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     let net = NetworkGrab()
     
     private struct commonConstants{
-        static let rowHeight:CGFloat = 100
+        static let rowHeight:CGFloat = 110
         static let topInsets:CGFloat = 64
         static let cellXib = "FoodCell"
     }
@@ -37,6 +37,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         let foodItem = net.lst[indexPath.row]
         configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!)
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
     
