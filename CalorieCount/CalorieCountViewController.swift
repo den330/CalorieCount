@@ -12,9 +12,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    let net = NetworkGrab()
     
     private struct commonConstants{
-        static let rowHeight:CGFloat = 80
+        static let rowHeight:CGFloat = 100
         static let topInsets:CGFloat = 64
         static let cellXib = "FoodCell"
     }
@@ -28,27 +29,30 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return net.lst.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(commonConstants.cellXib, forIndexPath: indexPath) as! FoodCell
-        configureCell(cell, foodContent: "Carrot", caloriesContent: 37)
+        let foodItem = net.lst[indexPath.row]
+        configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!)
         return cell
     }
 
     
     func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double){
         cell.foodLabel.text = foodContent
-        cell.calorieLabel.text = String(caloriesContent)
+        cell.calorieLabel.text = String(caloriesContent) + " kCal"
     }
 }
 
 extension CalorieCountViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
-        let net = NetworkGrab()
-        let url = net.urlWithSearchText(searchBar.text!)
-        net.performSearch(url)
+        let text = searchBar.text!
+        let url = net.urlWithSearchText(text)
+        net.performSearch(url){
+            self.tableView.reloadData()
+        }
     }
 }
 

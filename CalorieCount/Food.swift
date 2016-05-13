@@ -9,6 +9,6 @@
 import Foundation
 
 class Food{
-    let caloriesCount: Double? = nil
-    let foodContent: String? = nil
+    var caloriesCount: Double? = nil
+    var foodContent: String? = nil
 }
