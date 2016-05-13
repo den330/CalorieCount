@@ -46,7 +46,9 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
 
 extension CalorieCountViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
-        print("haha")
+        let net = NetworkGrab()
+        let url = net.urlWithSearchText(searchBar.text!)
+        net.performSearch(url)
     }
 }
 
