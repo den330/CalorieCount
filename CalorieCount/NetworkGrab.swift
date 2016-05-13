@@ -21,18 +21,21 @@ class NetworkGrab{
     }
     
     func performSearch(url: NSURL, completion: (Void) -> Void){
+        lst = [Food]()
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: configuration)
         let request = NSURLRequest(URL: url )
         let dataTask = session.dataTaskWithRequest(request, completionHandler: {data, response, error in
             let dict = self.parseJson(data!)
-            let foodItem = Food()
-            let fields = dict!["hits"]![0]!["fields"]!!
-            let calories = fields["nf_calories"]!! as! Double
-            let name = fields["item_name"]!! as! String
-            foodItem.caloriesCount = calories
-            foodItem.foodContent = name
-            self.lst = [foodItem]
+            for index in 0..<5{
+                let foodItem = Food()
+                let fields = dict!["hits"]![index]!["fields"]!!
+                let calories = fields["nf_calories"]!! as! Double
+                let name = fields["item_name"]!! as! String
+                foodItem.caloriesCount = calories
+                foodItem.foodContent = name
+                self.lst.append(foodItem)
+            }
             dispatch_async(dispatch_get_main_queue()){
                 completion()
             }
@@ -42,7 +45,7 @@ class NetworkGrab{
     
     func urlWithSearchText(text: String) -> NSURL{
         let spaceEscapeText = text.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let url = NSURL(string: "\(spaceEscapeText)?results=0%3A1&fields=nf_calories%2Citem_name&cal_min=0&cal_max=50000&appId=\(appID)&appKey=\(appKey)", relativeToURL: baseUrl)
+        let url = NSURL(string: "\(spaceEscapeText)?results=0%3A5&fields=nf_calories%2Citem_name&cal_min=0&cal_max=50000&appId=\(appID)&appKey=\(appKey)", relativeToURL: baseUrl)
         return url!
     }
     
