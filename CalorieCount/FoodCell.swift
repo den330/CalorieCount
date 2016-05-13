@@ -13,7 +13,10 @@ class FoodCell: UITableViewCell{
     @IBOutlet weak var foodLabel: UILabel!
     @IBOutlet weak var calorieLabel: UILabel!
     
-    
-    
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let selectedView = UIView(frame: CGRect.zero)
+        selectedView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 0.5)
+        selectedBackgroundView = selectedView
+    }
 }
