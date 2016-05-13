@@ -22,6 +22,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.becomeFirstResponder()
         tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
@@ -65,12 +66,17 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
 
 extension CalorieCountViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
+        searchBar.resignFirstResponder()
         let text = searchBar.text!
         let url = net.urlWithSearchText(text)
         net.performSearch(url){
             self.tableView.reloadData()
         }
         tableView.reloadData()
+    }
+    
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
     }
 }
 
