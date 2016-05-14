@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
+    
+    var managedContext: NSManagedObjectContext!
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -53,9 +56,28 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         return cell
     }
     
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        switch net.state{
+            case .SearchSuccess( _):
+                return indexPath
+            default: return nil
+        }
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         performSegueWithIdentifier("showDetail", sender: indexPath)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetail"{
+            let detailController = segue.destinationViewController as! DetailViewController
+            let index = sender as! NSIndexPath
+            if let lst = net.state.get(){
+                detailController.foodSelected = lst[index.row]
+                detailController.managedContext = managedContext
+            }
+        }
     }
 
     

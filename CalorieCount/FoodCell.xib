@@ -39,7 +39,7 @@
                 <outlet property="calorieLabel" destination="t7H-0c-teA" id="jwY-dj-kBL"/>
                 <outlet property="foodLabel" destination="typ-3N-jma" id="PPC-Lf-M03"/>
             </connections>
-            <point key="canvasLocation" x="275" y="339"/>
+            <point key="canvasLocation" x="188" y="479"/>
         </tableViewCell>
     </objects>
 </document>

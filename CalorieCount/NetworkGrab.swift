@@ -9,9 +9,9 @@
 import Foundation
 
 class NetworkGrab{
-    let baseUrl: NSURL?
-    let appID: String
-    let appKey: String
+    private let baseUrl: NSURL?
+    private let appID: String
+    private let appKey: String
     private(set) var state: State = .NotSearchedYet
     
     
@@ -20,6 +20,14 @@ class NetworkGrab{
         case Searching
         case SearchSuccess([Food])
         case NotFound
+        
+        func get() -> [Food]?{
+            switch self{
+                case SearchSuccess(let lst):
+                    return lst
+                default: return nil
+            }
+        }
     }
     
     init(){

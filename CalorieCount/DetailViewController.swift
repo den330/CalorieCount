@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailViewController: UIViewController {
     
-
+    var foodSelected: Food?
+    var managedContext: NSManagedObjectContext!
     
     @IBOutlet weak var quantityLabel: UILabel!
     var currentfigure = 0
@@ -23,6 +25,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(foodSelected?.foodContent)
     }
     
     @IBAction func addButton(){
