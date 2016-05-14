@@ -13,6 +13,8 @@ class DetailViewController: UIViewController {
     
     var foodSelected: Food?
     var managedContext: NSManagedObjectContext!
+    var recentDay: Day?
+    var itemForSelected: ItemConsumed?
     
     @IBOutlet weak var quantityLabel: UILabel!
     var currentfigure = 0
@@ -25,7 +27,6 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(foodSelected?.foodContent)
     }
     
     @IBAction func addButton(){
@@ -43,7 +44,44 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func saveButton(){
+
+        
+        let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
+        let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
+        let dayFetch = NSFetchRequest(entityName: "Day")
+        let sort = NSSortDescriptor(key: "currentDate", ascending: true)
+        dayFetch.sortDescriptors = [sort]
+        do{
+            let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
+            if sameDay(results){
+                print("same day")
+            }else{
+                recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
+                itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
+                itemForSelected?.quantityConsumed = Int(quantityLabel.text!)
+                itemForSelected?.name = foodSelected?.foodContent
+                itemForSelected?.unitCalories = foodSelected?.caloriesCount
+                itemForSelected?.totalCalories = Double((itemForSelected?.quantityConsumed)!) * Double((itemForSelected?.unitCalories)!)
+                recentDay?.currentDate = NSDate()
+                let items = recentDay!.items!.mutableCopy() as! NSMutableOrderedSet
+                items.addObject(itemForSelected!)
+                recentDay?.items = items.copy() as? NSOrderedSet
+                try managedContext.save()
+            }
+        }catch let error as NSError{
+            print("Error: \(error)" + "description \(error.localizedDescription)")
+        }
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func sameDay(dayLst:[Day]) -> Bool{
+        if dayLst.count == 0{
+            return false
+        }
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let currentDate = NSDate()
+        let recentDate = dayLst.last?.currentDate
+        return calendar!.isDate(currentDate, inSameDayAsDate: recentDate!)
     }
 
     
