@@ -55,6 +55,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        performSegueWithIdentifier("showDetail", sender: indexPath)
     }
 
     

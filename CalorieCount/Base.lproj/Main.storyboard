@@ -47,11 +47,64 @@
                     <connections>
                         <outlet property="searchBar" destination="73R-3t-qYc" id="czm-yH-LpD"/>
                         <outlet property="tableView" destination="QFG-Cm-VTq" id="hF1-Aw-OW8"/>
+                        <segue destination="uog-p9-HYp" kind="presentation" identifier="showDetail" id="wSO-tQ-y2A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="503" y="392"/>
+            <point key="canvasLocation" x="371" y="107"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="P6j-6k-Orh">
+            <objects>
+                <viewController id="uog-p9-HYp" customClass="DetailViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RPB-WZ-lOm"/>
+                        <viewControllerLayoutGuide type="bottom" id="bCs-aS-2gL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7mC-tc-wO1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J76-84-kri" userLabel="Pop-up View">
+                                <rect key="frame" x="180" y="180" width="240" height="240"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="of4-cK-ETq" userLabel="Close Button">
+                                        <rect key="frame" x="8" y="8" width="15" height="22"/>
+                                        <state key="normal" image="CloseButton"/>
+                                        <connections>
+                                            <action selector="close" destination="uog-p9-HYp" eventType="touchUpInside" id="s8c-AK-JL2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.95373448581560283" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="2GR-Bc-EB4"/>
+                                    <constraint firstAttribute="height" constant="240" id="6iO-8b-nU7"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="J76-84-kri" firstAttribute="centerX" secondItem="7mC-tc-wO1" secondAttribute="centerX" id="XbN-RG-Yxh"/>
+                            <constraint firstItem="J76-84-kri" firstAttribute="leading" secondItem="7mC-tc-wO1" secondAttribute="leading" constant="180" id="fMh-LC-bna"/>
+                            <constraint firstItem="J76-84-kri" firstAttribute="centerY" secondItem="7mC-tc-wO1" secondAttribute="centerY" id="fUp-fJ-8JX"/>
+                            <constraint firstItem="J76-84-kri" firstAttribute="top" secondItem="RPB-WZ-lOm" secondAttribute="bottom" constant="160" id="pOP-x1-Dpc"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="fMh-LC-bna"/>
+                                <exclude reference="pOP-x1-Dpc"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ymX-6t-3sC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1081" y="107"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="CloseButton" width="15" height="15"/>
+    </resources>
 </document>
