@@ -68,13 +68,5 @@ class RecordTableViewController: UITableViewController {
             dayController.day = fetchedResultsController.objectAtIndexPath(index) as! Day
         }
     }
-    
-  
-    
-    
-    
-    
-
-
 
 }

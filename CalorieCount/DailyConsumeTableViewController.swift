@@ -33,6 +33,10 @@ class DailyConsumeTableViewController: UITableViewController{
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("item", forIndexPath: indexPath)
