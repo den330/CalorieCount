@@ -51,6 +51,7 @@ class NetworkGrab{
             
             if let httpResponse = response  as? NSHTTPURLResponse where httpResponse.statusCode == 200{
                 let dict = self.parseJson(data!)
+                print(dict)
                 success = true
                 var searchResults = [Food]()
                 for index in 0..<5{
@@ -63,8 +64,15 @@ class NetworkGrab{
                     let fields = dict!["hits"]![index]!["fields"]!!
                     let calories = fields["nf_calories"]!! as! Double
                     let name = fields["item_name"]!! as! String
+                    let brandName = fields["brand_name"]!! as! String
+                    let serve_unit = fields["nf_serving_size_unit"]!! as! String
+                    let serve_qty = fields["nf_serving_size_qty"]!! as! Double
+                    let food_id = fields["item_id"]!! as! String
                     foodItem.caloriesCount = calories
                     foodItem.foodContent = name
+                    foodItem.brandContent = brandName
+                    foodItem.quantity = String(serve_qty) + " " + serve_unit
+                    foodItem.id = food_id
                     searchResults.append(foodItem)
                 }
                 if success{
@@ -82,7 +90,7 @@ class NetworkGrab{
     
     func urlWithSearchText(text: String) -> NSURL{
         let spaceEscapeText = text.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let url = NSURL(string: "\(spaceEscapeText)?results=0%3A5&fields=nf_calories%2Citem_name&cal_min=0&cal_max=50000&appId=\(appID)&appKey=\(appKey)", relativeToURL: baseUrl)
+        let url = NSURL(string: "\(spaceEscapeText)?results=0%3A5&fields=nf_calories%2Citem_name%2Cbrand_name%2Cnf_serving_size_unit%2Cnf_serving_size_qty%2Citem_id&cal_min=0&cal_max=50000&appId=\(appID)&appKey=\(appKey)", relativeToURL: baseUrl)
         return url!
     }
     

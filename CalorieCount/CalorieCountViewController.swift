@@ -19,7 +19,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     let net = NetworkGrab()
     
     private struct commonConstants{
-        static let rowHeight:CGFloat = 110
+        static let rowHeight:CGFloat = 170
         static let topInsets:CGFloat = 64
         static let cellXib = "FoodCell"
     }
@@ -84,12 +84,12 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         switch net.state{
             case .SearchSuccess(let lst):
                 let foodItem = lst[indexPath.row]
-                configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!)
+                configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!, brandContent: foodItem.brandContent!,quantityContent: foodItem.quantity!)
                 return cell
             case .NotFound:
-                configureCell(cell, foodContent: "NA", caloriesContent: 0)
+                configureCell(cell, foodContent: "NA", caloriesContent: 0,brandContent: "NA",quantityContent: "NA")
             case .Searching:
-                configureCell(cell, foodContent: "Searching", caloriesContent: 0)
+                configureCell(cell, foodContent: "Searching", caloriesContent: 0, brandContent: "Searching",quantityContent: "Searching")
             default: break
         }
         return cell
@@ -120,9 +120,12 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
 
     
-    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double){
+    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: String){
         cell.foodLabel.text = foodContent
         cell.calorieLabel.text = String(caloriesContent) + " kCal"
+        cell.brandLabel.text = brandContent
+        cell.quantityLabel.text = quantityContent
+        
     }
 }
 

@@ -12,6 +12,9 @@ import UIKit
 class FoodCell: UITableViewCell{
     @IBOutlet weak var foodLabel: UILabel!
     @IBOutlet weak var calorieLabel: UILabel!
+    @IBOutlet weak var brandLabel: UILabel!
+    @IBOutlet weak var quantityLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

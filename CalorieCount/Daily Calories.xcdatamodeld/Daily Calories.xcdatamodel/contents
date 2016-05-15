@@ -5,7 +5,10 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ItemConsumed" inverseName="days" inverseEntity="ItemConsumed" syncable="YES"/>
     </entity>
     <entity name="ItemConsumed" representedClassName=".ItemConsumed" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="quantityConsumed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="totalCalories" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="unitCalories" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -13,6 +16,6 @@
     </entity>
     <elements>
         <element name="Day" positionX="-342" positionY="-12" width="128" height="73"/>
-        <element name="ItemConsumed" positionX="-54" positionY="0" width="128" height="118"/>
+        <element name="ItemConsumed" positionX="-54" positionY="0" width="128" height="165"/>
     </elements>
 </model>

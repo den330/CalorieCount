@@ -17,6 +17,7 @@ class DailyConsumeTableViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         items = day.items
+        tableView.rowHeight = 160
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -43,10 +44,14 @@ class DailyConsumeTableViewController: UITableViewController{
         let contentLabel = cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1002) as! UILabel
         let quantityLabel = cell.viewWithTag(1001) as! UILabel
+        let brandLabel = cell.viewWithTag(1003) as! UILabel
+        let unitQuantityLabel = cell.viewWithTag(1004) as! UILabel
         let item = day.items![indexPath.row] as! ItemConsumed
         contentLabel.text = item.name
         caloriesLabel.text = "Total Calories: " + String(item.totalCalories!)
         quantityLabel.text = "Quantity Consumed: " + String(item.quantityConsumed!)
+        brandLabel.text = "Brand: " + item.brand!
+        unitQuantityLabel.text = "Unit: " + item.quantity!
         return cell
     }
 }

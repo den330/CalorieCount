@@ -63,12 +63,15 @@ class DetailViewController: UIViewController {
                 itemForSelected?.name = foodSelected?.foodContent
                 itemForSelected?.unitCalories = foodSelected?.caloriesCount
                 itemForSelected?.totalCalories = Double((itemForSelected?.quantityConsumed)!) * Double((itemForSelected?.unitCalories)!)
+                itemForSelected?.quantity = foodSelected?.quantity
+                itemForSelected?.brand = foodSelected?.brandContent
                 recentDay?.currentDate = NSDate()
+                itemForSelected?.id = foodSelected?.id
                 let items = recentDay!.items!.mutableCopy() as! NSMutableOrderedSet
                 var existed: Bool = false
                 for i in items{
                     let singleItem = i as! ItemConsumed
-                    if itemForSelected!.name == singleItem.name{
+                    if itemForSelected!.id == singleItem.id{
                         existed = true
                         singleItem.quantityConsumed = Double(singleItem.quantityConsumed!) + Double(itemForSelected!.quantityConsumed!)
                         singleItem.totalCalories = Double(singleItem.totalCalories!) + Double(itemForSelected!.totalCalories!)
