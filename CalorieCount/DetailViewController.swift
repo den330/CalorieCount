@@ -65,7 +65,18 @@ class DetailViewController: UIViewController {
                 itemForSelected?.totalCalories = Double((itemForSelected?.quantityConsumed)!) * Double((itemForSelected?.unitCalories)!)
                 recentDay?.currentDate = NSDate()
                 let items = recentDay!.items!.mutableCopy() as! NSMutableOrderedSet
-                items.addObject(itemForSelected!)
+                var existed: Bool = false
+                for i in items{
+                    let singleItem = i as! ItemConsumed
+                    if itemForSelected!.name == singleItem.name{
+                        existed = true
+                        singleItem.quantityConsumed = Double(singleItem.quantityConsumed!) + Double(itemForSelected!.quantityConsumed!)
+                        singleItem.totalCalories = Double(singleItem.totalCalories!) + Double(itemForSelected!.totalCalories!)
+                    }
+                }
+                if !existed{
+                    items.addObject(itemForSelected!)
+                }
                 recentDay?.items = items.copy() as? NSOrderedSet
                 try managedContext.save()
             }catch let error as NSError{
