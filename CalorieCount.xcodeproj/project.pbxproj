@@ -26,6 +26,7 @@
 		90D11A2A1CE790EC005F8E13 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D11A261CE790EC005F8E13 /* Day.swift */; };
 		90D11A2B1CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D11A271CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift */; };
 		90D11A2C1CE790EC005F8E13 /* ItemConsumed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D11A281CE790EC005F8E13 /* ItemConsumed.swift */; };
+		90F5B8ED1CE8DD790089E72E /* DailyConsumeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		90D11A261CE790EC005F8E13 /* Day.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		90D11A271CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemConsumed+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		90D11A281CE790EC005F8E13 /* ItemConsumed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemConsumed.swift; sourceTree = "<group>"; };
+		90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyConsumeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */,
 				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
+				90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */,
 				90D11A1E1CE6ABBA005F8E13 /* DetailPresentationController.swift */,
 				90D11A1C1CE6A737005F8E13 /* DetailViewController.swift */,
 				90D11A201CE788DF005F8E13 /* CoreDataStack.swift */,
@@ -182,6 +185,7 @@
 				90D11A1F1CE6ABBA005F8E13 /* DetailPresentationController.swift in Sources */,
 				90D11A2A1CE790EC005F8E13 /* Day.swift in Sources */,
 				90B8BC8A1CE397DE0083DF72 /* CalorieCount.xcdatamodeld in Sources */,
+				90F5B8ED1CE8DD790089E72E /* DailyConsumeTableViewController.swift in Sources */,
 				9087CEDB1CEB6AE0006A1C63 /* RecordTableViewController.swift in Sources */,
 				90D11A2B1CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift in Sources */,
 				90D11A291CE790EC005F8E13 /* Day+CoreDataProperties.swift in Sources */,
