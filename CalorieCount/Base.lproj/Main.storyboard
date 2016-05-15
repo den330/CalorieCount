@@ -285,10 +285,10 @@
             </objects>
             <point key="canvasLocation" x="2899" y="-4"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item Navigation View Controller-->
         <scene sceneID="ZeB-Jd-fvH">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BTn-jd-NlY" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BTn-jd-NlY" customClass="ItemNavigationViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bUE-1E-4TK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

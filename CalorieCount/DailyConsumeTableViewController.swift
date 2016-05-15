@@ -19,6 +19,12 @@ class DailyConsumeTableViewController: UITableViewController{
         items = day.items
     }
     
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Landscape
+    }
+    
+
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items!.count
     }
