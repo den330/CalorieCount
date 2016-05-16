@@ -49,6 +49,24 @@ class RecordTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
+            for item in day.items!{
+                let i = item as! ItemConsumed
+                managedContext.deleteObject(i)
+            }
+            managedContext.deleteObject(day)
+        }
+        
+            do{
+                try managedContext.save()
+            }catch let error as NSError{
+                print("Could not save delete: \(error)")
+            }
+    }
+    
+    
     func configureCell(cell: UITableViewCell, day: Day){
         let items = day.items!
         var totalCalories = 0.0
