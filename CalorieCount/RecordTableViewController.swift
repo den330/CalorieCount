@@ -39,7 +39,8 @@ class RecordTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
-        return sectionInfo.numberOfObjects
+        let rowNum = sectionInfo.numberOfObjects
+        return rowNum
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
