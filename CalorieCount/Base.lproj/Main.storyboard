@@ -292,11 +292,13 @@
                         <barButtonItem key="leftBarButtonItem" title="Back" id="dyE-k0-Hm7">
                             <connections>
                                 <action selector="back" destination="wfy-lH-oaM" id="hl9-dY-0fm"/>
+                                <segue destination="xJY-uS-96G" kind="unwind" unwindAction="itemDidEdited:" id="DME-1l-0Jt"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A17-pp-hBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="xJY-uS-96G" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2899" y="-4"/>
         </scene>

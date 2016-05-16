@@ -30,6 +30,12 @@ class RecordTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func itemDidEdited(segue: UIStoryboardSegue){
+        tableView.reloadData()
+    }
+    
+
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
