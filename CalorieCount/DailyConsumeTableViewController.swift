@@ -31,6 +31,10 @@ class DailyConsumeTableViewController: UITableViewController{
             let foodToRemove = day.items![indexPath.row] as! ItemConsumed
             managedContext.deleteObject(foodToRemove)
             
+            if day.items!.count == 1{
+                managedContext.deleteObject(day)
+            }
+            
             do{
                 try managedContext.save()
             }catch let error as NSError{

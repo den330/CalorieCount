@@ -23,6 +23,7 @@ class RecordTableViewController: UITableViewController {
         let sortDescriptor = NSSortDescriptor(key: "currentDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
         do{
             try fetchedResultsController.performFetch()
         }catch let error as NSError{
@@ -30,9 +31,9 @@ class RecordTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func itemDidEdited(segue: UIStoryboardSegue){
-        tableView.reloadData()
-    }
+//    @IBAction func itemDidEdited(segue: UIStoryboardSegue){
+//        tableView.reloadData()
+//    }
     
 
     
@@ -75,5 +76,30 @@ class RecordTableViewController: UITableViewController {
             dayController.managedContext = managedContext
         }
     }
+}
 
+extension RecordTableViewController: NSFetchedResultsControllerDelegate{
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        switch type{
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
+        case .Update:
+            let cell = tableView.cellForRowAtIndexPath(indexPath!)
+            let day = fetchedResultsController.objectAtIndexPath(indexPath!) as! Day
+            configureCell(cell!, day: day)
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.endUpdates()
+    }
 }
