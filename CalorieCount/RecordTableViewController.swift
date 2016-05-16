@@ -66,6 +66,7 @@ class RecordTableViewController: UITableViewController {
             let naviController = segue.destinationViewController as! UINavigationController
             let dayController = naviController.topViewController as! DailyConsumeTableViewController
             dayController.day = fetchedResultsController.objectAtIndexPath(index) as! Day
+            dayController.managedContext = managedContext
         }
     }
 

@@ -8,10 +8,12 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class DailyConsumeTableViewController: UITableViewController{
     var day: Day!
     var items: NSOrderedSet?
+    var managedContext: NSManagedObjectContext!
     
     
     override func viewDidLoad() {
@@ -22,6 +24,22 @@ class DailyConsumeTableViewController: UITableViewController{
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.Landscape
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            let foodToRemove = day.items![indexPath.row] as! ItemConsumed
+            managedContext.deleteObject(foodToRemove)
+            
+            do{
+                try managedContext.save()
+            }catch let error as NSError{
+                print("Could not save delete: \(error)")
+            }
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
+        
     }
     
 
