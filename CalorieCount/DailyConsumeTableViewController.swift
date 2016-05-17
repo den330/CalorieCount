@@ -22,10 +22,6 @@ class DailyConsumeTableViewController: UITableViewController{
         tableView.rowHeight = 160
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Landscape
-    }
-    
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
             let foodToRemove = day.items![indexPath.row] as! ItemConsumed
@@ -47,14 +43,12 @@ class DailyConsumeTableViewController: UITableViewController{
         
     }
     
-
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items!.count
     }
     
     @IBAction func back(){
-        dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.popViewControllerAnimated(true)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

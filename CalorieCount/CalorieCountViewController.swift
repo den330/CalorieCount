@@ -12,7 +12,7 @@ import CoreData
 class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
     
     var managedContext: NSManagedObjectContext!
-    var recordController: RecordTableViewController?
+    var NaviController: UINavigationController?
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -44,14 +44,15 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     func showRecordController(coordinator: UIViewControllerTransitionCoordinator){
-        precondition(recordController == nil)
+        precondition(NaviController == nil)
         if self.presentedViewController != nil{
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         searchBar.resignFirstResponder()
-        recordController = storyboard!.instantiateViewControllerWithIdentifier("RecordTableViewController") as? RecordTableViewController
-        if let controller = recordController{
-            controller.managedContext = managedContext
+        NaviController = storyboard!.instantiateViewControllerWithIdentifier("ItemNavigationController") as? UINavigationController
+        if let controller = NaviController{
+            let desController = controller.topViewController as! RecordTableViewController
+            desController.managedContext = managedContext
             controller.view.frame = view.bounds
             view.addSubview(controller.view)
             addChildViewController(controller)
@@ -63,11 +64,11 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     
     func hideRecordController(coordinator: UIViewControllerTransitionCoordinator){
-        if let controller = recordController{
+        if let controller = NaviController{
             controller.willMoveToParentViewController(nil)
             controller.view.removeFromSuperview()
             controller.removeFromParentViewController()
-            recordController = nil
+            NaviController = nil
         }
     }
 

@@ -89,8 +89,7 @@ class RecordTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showthatday"{
             let index = sender as! NSIndexPath
-            let naviController = segue.destinationViewController as! UINavigationController
-            let dayController = naviController.topViewController as! DailyConsumeTableViewController
+            let dayController = segue.destinationViewController as! DailyConsumeTableViewController
             dayController.day = fetchedResultsController.objectAtIndexPath(index) as! Day
             dayController.managedContext = managedContext
         }

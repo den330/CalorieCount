@@ -163,7 +163,7 @@
             </objects>
             <point key="canvasLocation" x="598" y="-223"/>
         </scene>
-        <!--Record Table View Controller-->
+        <!--Calories Record-->
         <scene sceneID="dSq-nc-HgG">
             <objects>
                 <tableViewController storyboardIdentifier="RecordTableViewController" id="Lfi-YJ-KRW" customClass="RecordTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
@@ -173,7 +173,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recordCell" id="Bo1-Sv-KNW">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bo1-Sv-KNW" id="cLD-Jf-Aqn">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -206,15 +206,16 @@
                             <outlet property="delegate" destination="Lfi-YJ-KRW" id="ksN-lV-l4F"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Calories Record" id="xrQ-un-oXJ"/>
                     <connections>
-                        <segue destination="BTn-jd-NlY" kind="show" identifier="showthatday" id="A0Q-hf-2pu"/>
+                        <segue destination="wfy-lH-oaM" kind="show" identifier="showthatday" id="U3G-ue-Pge"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o6h-EI-8eG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1352" y="-4"/>
+            <point key="canvasLocation" x="1986" y="3"/>
         </scene>
-        <!--Daily Consume Table View Controller-->
+        <!--Daily Calories-->
         <scene sceneID="FbU-fP-eVW">
             <objects>
                 <tableViewController id="wfy-lH-oaM" customClass="DailyConsumeTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
@@ -288,7 +289,7 @@
                             <outlet property="delegate" destination="wfy-lH-oaM" id="k9o-I2-GGX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="SES-YV-yS8">
+                    <navigationItem key="navigationItem" title="Daily Calories" id="SES-YV-yS8">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="dyE-k0-Hm7">
                             <connections>
                                 <action selector="back" destination="wfy-lH-oaM" id="hl9-dY-0fm"/>
@@ -300,10 +301,10 @@
             </objects>
             <point key="canvasLocation" x="2899" y="-4"/>
         </scene>
-        <!--Item Navigation View Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="ZeB-Jd-fvH">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BTn-jd-NlY" customClass="ItemNavigationViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ItemNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="BTn-jd-NlY" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bUE-1E-4TK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -311,12 +312,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="wfy-lH-oaM" kind="relationship" relationship="rootViewController" id="ukq-LN-Kso"/>
+                        <segue destination="Lfi-YJ-KRW" kind="relationship" relationship="rootViewController" id="pD0-sB-XiU"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dM6-uE-Stg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2087" y="-4"/>
+            <point key="canvasLocation" x="1320" y="3"/>
         </scene>
     </scenes>
     <resources>
