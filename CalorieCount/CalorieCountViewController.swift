@@ -12,6 +12,7 @@ import CoreData
 class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
     
     var managedContext: NSManagedObjectContext!
+    var recordController: RecordTableViewController?
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -30,6 +31,36 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.rowHeight = commonConstants.rowHeight
+    }
+    
+    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
+        switch newCollection.verticalSizeClass{
+            case .Compact:
+                showRecordController(coordinator)
+            case .Regular, .Unspecified:
+                hideRecordController(coordinator)
+        }
+    }
+    
+    func showRecordController(coordinator: UIViewControllerTransitionCoordinator){
+        precondition(recordController == nil)
+        recordController = storyboard!.instantiateViewControllerWithIdentifier("RecordTableViewController") as? RecordTableViewController
+        if let controller = recordController{
+            controller.view.frame = view.bounds
+            view.addSubview(controller.view)
+            addChildViewController(controller)
+            controller.didMoveToParentViewController(self)
+        }
+    }
+    
+    func hideRecordController(coordinato: UIViewControllerTransitionCoordinator){
+        if let controller = recordController{
+            controller.willMoveToParentViewController(nil)
+            controller.view.removeFromSuperview()
+            controller.removeFromParentViewController()
+            recordController = nil
+        }
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
