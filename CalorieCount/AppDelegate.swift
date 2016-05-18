@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let CalorieController = window!.rootViewController as! CalorieCountViewController
         CalorieController.managedContext = coreDataStack.context
-        
         return true
         
     }

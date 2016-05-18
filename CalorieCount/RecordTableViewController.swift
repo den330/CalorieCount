@@ -7,35 +7,48 @@
 //
 
 import UIKit
+import CoreData
 
 class RecordTableViewController: UITableViewController {
+    
+    var fetchedResultsController: NSFetchedResultsController!
+    let fetchRequest = NSFetchRequest(entityName: "Day")
+    var managedContext: NSManagedObjectContext!
+    
+   
+    
 
     override func viewDidLoad() {
+        print("haha")
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let sortDescriptor = NSSortDescriptor(key: "currentDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        do{
+            try fetchedResultsController.performFetch()
+        }catch let error as NSError{
+            print("Error: \(error.localizedDescription)")
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        let sectionInfo = fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
     }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("recordCell", forIndexPath: indexPath)
+        let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
+        let dateLabel =  cell.viewWithTag(1000) as! UILabel
+        dateLabel.text = String(day.currentDate!)
+        return cell
+    }
+    
+  
+    
+    
+    
+    
 
 
 

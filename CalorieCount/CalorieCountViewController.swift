@@ -45,8 +45,13 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     func showRecordController(coordinator: UIViewControllerTransitionCoordinator){
         precondition(recordController == nil)
+        if self.presentedViewController != nil{
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        searchBar.resignFirstResponder()
         recordController = storyboard!.instantiateViewControllerWithIdentifier("RecordTableViewController") as? RecordTableViewController
         if let controller = recordController{
+            controller.managedContext = managedContext
             controller.view.frame = view.bounds
             view.addSubview(controller.view)
             addChildViewController(controller)
@@ -54,7 +59,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         }
     }
     
-    func hideRecordController(coordinato: UIViewControllerTransitionCoordinator){
+    
+    
+    
+    func hideRecordController(coordinator: UIViewControllerTransitionCoordinator){
         if let controller = recordController{
             controller.willMoveToParentViewController(nil)
             controller.view.removeFromSuperview()
