@@ -54,7 +54,7 @@ class NetworkGrab{
                 success = true
                 var searchResults = [Food]()
                 let hitsLst = dict!["hits"]! as! NSArray
-                let totalNum = min(hitsLst.count, 20)
+                let totalNum = min(hitsLst.count, 50)
                 if totalNum == 0 {
                     success = false
                 }else{
