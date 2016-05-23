@@ -53,26 +53,27 @@ class NetworkGrab{
                 let dict = self.parseJson(data!)
                 success = true
                 var searchResults = [Food]()
-                for index in 0..<20{
-                    let foodItem = Food()
-                    let hitsLst = dict!["hits"]! as! NSArray
-                    if hitsLst.count == 0{
-                        success = false
-                        break
-                    }
-                    let fields = dict!["hits"]![index]!["fields"]!!
-                    let calories = fields["nf_calories"]!! as! Double
-                    let name = fields["item_name"]!! as! String
-                    let brandName = fields["brand_name"]!! as! String
-                    let serve_unit = fields["nf_serving_size_unit"]!! as! String
-                    let serve_qty = fields["nf_serving_size_qty"]!! as! Double
-                    let food_id = fields["item_id"]!! as! String
-                    foodItem.caloriesCount = calories
-                    foodItem.foodContent = name
-                    foodItem.brandContent = brandName
-                    foodItem.quantity = String(serve_qty) + " " + serve_unit
-                    foodItem.id = food_id
-                    searchResults.append(foodItem)
+                let hitsLst = dict!["hits"]! as! NSArray
+                let totalNum = min(hitsLst.count, 20)
+                if totalNum == 0 {
+                    success = false
+                }else{
+                    for index in 0..<totalNum{
+                        let foodItem = Food()
+                        let fields = dict!["hits"]![index]!["fields"]!!
+                        let calories = fields["nf_calories"]!! as! Double
+                        let name = fields["item_name"]!! as! String
+                        let brandName = fields["brand_name"]!! as! String
+                        let serve_unit = fields["nf_serving_size_unit"]!! as! String
+                        let serve_qty = fields["nf_serving_size_qty"]!! as! Double
+                        let food_id = fields["item_id"]!! as! String
+                        foodItem.caloriesCount = calories
+                        foodItem.foodContent = name
+                        foodItem.brandContent = brandName
+                        foodItem.quantity = String(serve_qty) + " " + serve_unit
+                        foodItem.id = food_id
+                        searchResults.append(foodItem)
+                        }
                 }
                 if success{
                     self.state = .SearchSuccess(searchResults)
@@ -89,7 +90,7 @@ class NetworkGrab{
     
     func urlWithSearchText(text: String) -> NSURL{
         let spaceEscapeText = text.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let url = NSURL(string: "\(spaceEscapeText)?results=0%3A20&fields=nf_calories%2Citem_name%2Cbrand_name%2Cnf_serving_size_unit%2Cnf_serving_size_qty%2Citem_id&cal_min=0&cal_max=50000&appId=\(appID)&appKey=\(appKey)", relativeToURL: baseUrl)
+        let url = NSURL(string: "\(spaceEscapeText)?results=0%3A50&fields=nf_calories%2Citem_name%2Cbrand_name%2Cnf_serving_size_unit%2Cnf_serving_size_qty%2Citem_id&cal_min=0&cal_max=50000&appId=\(appID)&appKey=\(appKey)", relativeToURL: baseUrl)
         return url!
     }
     
