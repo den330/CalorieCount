@@ -54,6 +54,7 @@ class NetworkGrab{
                 success = true
                 var searchResults = [Food]()
                 let hitsLst = dict!["hits"]! as! NSArray
+                print(hitsLst.count)
                 let totalNum = min(hitsLst.count, 50)
                 if totalNum == 0 {
                     success = false
@@ -64,13 +65,17 @@ class NetworkGrab{
                         let calories = fields["nf_calories"]!! as! Double
                         let name = fields["item_name"]!! as! String
                         let brandName = fields["brand_name"]!! as! String
-                        let serve_unit = fields["nf_serving_size_unit"]!! as! String
+                        let serve_unit = fields["nf_serving_size_unit"]!! as? String
                         let serve_qty = fields["nf_serving_size_qty"]!! as! Double
                         let food_id = fields["item_id"]!! as! String
                         foodItem.caloriesCount = calories
                         foodItem.foodContent = name
                         foodItem.brandContent = brandName
-                        foodItem.quantity = String(serve_qty) + " " + serve_unit
+                        if serve_unit != nil{
+                            foodItem.quantity = String(serve_qty) + " " + serve_unit!
+                        }else{
+                            foodItem.quantity = "N/A"
+                        }
                         foodItem.id = food_id
                         searchResults.append(foodItem)
                         }
