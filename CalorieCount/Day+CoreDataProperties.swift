@@ -13,7 +13,7 @@ import Foundation
 import CoreData
 
 extension Day {
-
+    
     @NSManaged var currentDate: NSDate?
     @NSManaged var items: NSOrderedSet?
 
