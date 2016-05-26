@@ -27,6 +27,10 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.close))
+        gesture.cancelsTouchesInView = false
+        gesture.delegate = self
+        view.addGestureRecognizer(gesture)
     }
     
     @IBAction func addButton(){
@@ -109,5 +113,12 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UIViewControllerTransitioningDelegate{
     func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
         return DetailPresentationController(presentedViewController: presented, presentingViewController: presenting)
+    }
+}
+
+
+extension DetailViewController: UIGestureRecognizerDelegate{
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        return(touch.view === self.view)
     }
 }
