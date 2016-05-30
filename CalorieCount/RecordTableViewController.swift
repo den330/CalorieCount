@@ -78,8 +78,8 @@ class RecordTableViewController: UITableViewController {
         let dateLabel =  cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1001) as! UILabel
         let today = dateFormatter.stringFromDate(day.currentDate!)
-        dateLabel.text = today
-        caloriesLabel.text = "Total Calories Consumed: " + String(totalCalories) + " kCal"
+        dateLabel.text = today + " (Click For Details)"
+        caloriesLabel.text = "Total: " + String(totalCalories) + " Cal"
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

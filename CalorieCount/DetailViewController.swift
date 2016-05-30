@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     var itemForSelected: ItemConsumed?
     
     @IBOutlet weak var quantityLabel: UILabel!
-    var currentfigure = 0
+    var currentfigure = 1
     
     required init?(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
