@@ -77,6 +77,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             case .NotFound, .Searching: return 1
             case .NotSearchedYet: return 0
             case .SearchSuccess(let lst): return lst.count
+            case .NoConnection: return 1
         }
     }
     
@@ -89,6 +90,8 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
                 return cell
             case .NotFound:
                 configureCell(cell, foodContent: "NA", caloriesContent: 0,brandContent: "NA",quantityContent: "NA")
+            case .NoConnection:
+                configureCell(cell, foodContent: "No Connection", caloriesContent: 0, brandContent: "NA", quantityContent: "NA")
             case .Searching:
                 configureCell(cell, foodContent: "Searching", caloriesContent: 0, brandContent: "Searching",quantityContent: "Searching")
             default: break

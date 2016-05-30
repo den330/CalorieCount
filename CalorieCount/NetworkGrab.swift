@@ -7,12 +7,38 @@
 //
 
 import Foundation
+import SystemConfiguration
+
+
 
 class NetworkGrab{
     private let baseUrl: NSURL?
     private let appID: String
     private let appKey: String
     private(set) var state: State = .NotSearchedYet
+    private var dataTask: NSURLSessionDataTask? = nil
+    
+    func connectedToNetwork() -> Bool {
+        
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        guard let defaultRouteReachability = withUnsafePointer(&zeroAddress, {
+            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        }) else {
+            return false
+        }
+        
+        var flags : SCNetworkReachabilityFlags = []
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+            return false
+        }
+        
+        let isReachable = flags.contains(.Reachable)
+        let needsConnection = flags.contains(.ConnectionRequired)
+        return (isReachable && !needsConnection)
+    }
     
     
     enum State{
@@ -20,6 +46,7 @@ class NetworkGrab{
         case Searching
         case SearchSuccess([Food])
         case NotFound
+        case NoConnection
         
         func get() -> [Food]?{
             switch self{
@@ -37,13 +64,18 @@ class NetworkGrab{
     }
     
     func performSearch(url: NSURL, completion: (Void) -> Void){
+        if !connectedToNetwork(){
+            state = .NoConnection
+            return
+        }
         state = .Searching
+        dataTask?.cancel()
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: configuration)
         let request = NSURLRequest(URL: url )
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: {data, response, error in
+        dataTask = session.dataTaskWithRequest(request, completionHandler: {data, response, error in
             var success: Bool = false
-            
+        
             
             if let error = error where error.code == -999{
                 return
@@ -89,7 +121,7 @@ class NetworkGrab{
                 completion()
             }
         })
-        dataTask.resume()
+        dataTask!.resume()
     }
     
     func urlWithSearchText(text: String) -> NSURL{
