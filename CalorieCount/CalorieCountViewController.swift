@@ -126,7 +126,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: String){
         cell.foodLabel.text = foodContent
-        cell.calorieLabel.text = String(caloriesContent) + " kCal"
+        cell.calorieLabel.text = String(caloriesContent) + " Cal"
         cell.brandLabel.text = brandContent
         cell.quantityLabel.text = quantityContent
         
