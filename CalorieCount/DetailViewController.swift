@@ -41,7 +41,7 @@ class DetailViewController: UIViewController {
     
     @IBAction func minusButton(){
         currentfigure = Int(quantityLabel.text!)!
-        if currentfigure > 0{
+        if currentfigure > 1{
             currentfigure -= 1
             quantityLabel.text = String(currentfigure)
         }
