@@ -14,12 +14,14 @@ class DailyConsumeTableViewController: UITableViewController{
     var day: Day!
     var items: NSOrderedSet?
     var managedContext: NSManagedObjectContext!
+  
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         items = day.items
         tableView.rowHeight = 160
+        navigationItem.title = "Total Calories Consumed On " + dateFormatter.stringFromDate(day.currentDate!)
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {

@@ -19,6 +19,7 @@
 		90B8BC991CE3D4010083DF72 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC981CE3D4010083DF72 /* FoodCell.swift */; };
 		90B8BC9B1CE3D8CD0083DF72 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC9A1CE3D8CD0083DF72 /* Food.swift */; };
 		90B8BC9D1CE4035B0083DF72 /* NetworkGrab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */; };
+		90CD30CB1CFE30B60063A7B9 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CD30CA1CFE30B60063A7B9 /* functions.swift */; };
 		90D11A1D1CE6A737005F8E13 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D11A1C1CE6A737005F8E13 /* DetailViewController.swift */; };
 		90D11A1F1CE6ABBA005F8E13 /* DetailPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D11A1E1CE6ABBA005F8E13 /* DetailPresentationController.swift */; };
 		90D11A211CE788DF005F8E13 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D11A201CE788DF005F8E13 /* CoreDataStack.swift */; };
@@ -45,6 +46,7 @@
 		90B8BC981CE3D4010083DF72 /* FoodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
 		90B8BC9A1CE3D8CD0083DF72 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkGrab.swift; sourceTree = "<group>"; };
+		90CD30CA1CFE30B60063A7B9 /* functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		90D11A1C1CE6A737005F8E13 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		90D11A1E1CE6ABBA005F8E13 /* DetailPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPresentationController.swift; sourceTree = "<group>"; };
 		90D11A201CE788DF005F8E13 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
 				90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */,
+				90CD30CA1CFE30B60063A7B9 /* functions.swift */,
 				90D11A1E1CE6ABBA005F8E13 /* DetailPresentationController.swift */,
 				900596B51CFD0A25001E1321 /* DetailAnimationController.swift */,
 				90D11A1C1CE6A737005F8E13 /* DetailViewController.swift */,
@@ -190,6 +193,7 @@
 				90D11A2A1CE790EC005F8E13 /* Day.swift in Sources */,
 				900596B61CFD0A25001E1321 /* DetailAnimationController.swift in Sources */,
 				90B8BC8A1CE397DE0083DF72 /* CalorieCount.xcdatamodeld in Sources */,
+				90CD30CB1CFE30B60063A7B9 /* functions.swift in Sources */,
 				90F5B8ED1CE8DD790089E72E /* DailyConsumeTableViewController.swift in Sources */,
 				9087CEDB1CEB6AE0006A1C63 /* RecordTableViewController.swift in Sources */,
 				90D11A2B1CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift in Sources */,

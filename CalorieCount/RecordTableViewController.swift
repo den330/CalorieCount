@@ -15,11 +15,10 @@ class RecordTableViewController: UITableViewController {
     var fetchedResultsController: NSFetchedResultsController!
     let fetchRequest = NSFetchRequest(entityName: "Day")
     var managedContext: NSManagedObjectContext!
-    let dateFormatter = NSDateFormatter()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dateFormatter.dateStyle = .MediumStyle
         let sortDescriptor = NSSortDescriptor(key: "currentDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
