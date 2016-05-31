@@ -17,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func customizeAppearance(){
         let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
+        let tabBarTintColor = UIColor(red: 255, green: 165, blue: 0, alpha: 1)
         UISearchBar.appearance().barTintColor = barTintColor
+        UITabBar.appearance().barTintColor = tabBarTintColor
         window!.tintColor = UIColor(red: 10/255, green: 80/255, blue: 80/255, alpha: 1)
     }
 
@@ -26,10 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         customizeAppearance()
         
-        let CalorieController = window!.rootViewController as! CalorieCountViewController
-        CalorieController.managedContext = coreDataStack.context
+        let TabController = window!.rootViewController as! UITabBarController
+        let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
+        let NavController = TabController.viewControllers![1] as! UINavigationController
+        let recordController = NavController.topViewController as! RecordTableViewController
+        caloriesController.managedContext = coreDataStack.context
+        recordController.managedContext = coreDataStack.context
         return true
-        
     }
 
 

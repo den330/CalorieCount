@@ -34,45 +34,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         tableView.rowHeight = commonConstants.rowHeight
     }
     
-    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
-        switch newCollection.verticalSizeClass{
-            case .Compact:
-                showRecordController(coordinator)
-            case .Regular, .Unspecified:
-                hideRecordController(coordinator)
-        }
-    }
-    
-    func showRecordController(coordinator: UIViewControllerTransitionCoordinator){
-        precondition(NaviController == nil)
-        if self.presentedViewController != nil{
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        searchBar.resignFirstResponder()
-        NaviController = storyboard!.instantiateViewControllerWithIdentifier("ItemNavigationController") as? UINavigationController
-        if let controller = NaviController{
-            let desController = controller.topViewController as! RecordTableViewController
-            desController.managedContext = managedContext
-            controller.view.frame = view.bounds
-            view.addSubview(controller.view)
-            addChildViewController(controller)
-            controller.didMoveToParentViewController(self)
-        }
-    }
-    
-    
-    
-    
-    func hideRecordController(coordinator: UIViewControllerTransitionCoordinator){
-        if let controller = NaviController{
-            controller.willMoveToParentViewController(nil)
-            controller.view.removeFromSuperview()
-            controller.removeFromParentViewController()
-            NaviController = nil
-        }
-    }
-
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
             case .NotFound, .Searching: return 1

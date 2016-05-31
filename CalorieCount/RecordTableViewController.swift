@@ -19,6 +19,7 @@ class RecordTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = 60
         let sortDescriptor = NSSortDescriptor(key: "currentDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -29,12 +30,6 @@ class RecordTableViewController: UITableViewController {
             print("Error: \(error.localizedDescription)")
         }
     }
-    
-//    @IBAction func itemDidEdited(segue: UIStoryboardSegue){
-//        tableView.reloadData()
-//    }
-    
-
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]

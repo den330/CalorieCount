@@ -20,8 +20,9 @@ class DailyConsumeTableViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         items = day.items
-        tableView.rowHeight = 160
-        navigationItem.title = "Total Calories Consumed On " + dateFormatter.stringFromDate(day.currentDate!)
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 180
+        navigationItem.title = dateFormatter.stringFromDate(day.currentDate!)
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -67,7 +68,7 @@ class DailyConsumeTableViewController: UITableViewController{
         let unitQuantityLabel = cell.viewWithTag(1004) as! UILabel
         let item = day.items![indexPath.row] as! ItemConsumed
         contentLabel.text = item.name
-        caloriesLabel.text = "Total Calories: " + String(item.totalCalories!)
+        caloriesLabel.text = "Total Calories: " + String(format: "%.2f", Double(item.totalCalories!))
         quantityLabel.text = "Quantity Consumed: " + String(item.quantityConsumed!)
         brandLabel.text = "Brand: " + item.brand!
         unitQuantityLabel.text = "Unit: " + item.quantity!
