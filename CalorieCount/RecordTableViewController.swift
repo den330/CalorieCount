@@ -45,7 +45,7 @@ class RecordTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("recordCell", forIndexPath: indexPath)
-        cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        cell.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 1.0)
         let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
         configureCell(cell, day: day)
         return cell
@@ -79,8 +79,8 @@ class RecordTableViewController: UITableViewController {
         let dateLabel =  cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1001) as! UILabel
         let today = dateFormatter.stringFromDate(day.currentDate!)
-        dateLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0)
-        caloriesLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0)
+        dateLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
+        caloriesLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         dateLabel.text = today + " (Click For Details)"
         caloriesLabel.text = "Total: " + String(totalCalories) + " Cal"
     }
