@@ -17,6 +17,10 @@ class NetworkGrab{
     private let appKey: String
     private(set) var state: State = .NotSearchedYet
     private var dataTask: NSURLSessionDataTask? = nil
+    private let numOfResults: String
+    private let fields: String
+    private let calReq: String
+    private let appInfo: String
     
     func connectedToNetwork() -> Bool {
         
@@ -61,6 +65,10 @@ class NetworkGrab{
         appID = "8b36dac9"
         appKey = "c79b530ed299ec9f53d64be135311b09"
         baseUrl = NSURL(string: "https://api.nutritionix.com/v1_1/search/")
+        numOfResults = "0%3A50"
+        fields = "fields=nf_calories%2Citem_name%2Cbrand_name%2Cnf_serving_size_unit%2Cnf_serving_size_qty%2Citem_id"
+        calReq = "cal_min=0&cal_max=50000"
+        appInfo = "appId=\(appID)&appKey=\(appKey)"
     }
     
     func performSearch(url: NSURL, completion: (Void) -> Void){
@@ -126,7 +134,7 @@ class NetworkGrab{
     
     func urlWithSearchText(text: String) -> NSURL{
         let spaceEscapeText = text.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let url = NSURL(string: "\(spaceEscapeText)?results=0%3A50&fields=nf_calories%2Citem_name%2Cbrand_name%2Cnf_serving_size_unit%2Cnf_serving_size_qty%2Citem_id&cal_min=0&cal_max=50000&appId=\(appID)&appKey=\(appKey)", relativeToURL: baseUrl)
+        let url = NSURL(string: "\(spaceEscapeText)?results=\(numOfResults)&\(fields)&\(calReq)&\(appInfo)", relativeToURL: baseUrl)
         return url!
     }
     

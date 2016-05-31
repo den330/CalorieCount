@@ -13,6 +13,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     var managedContext: NSManagedObjectContext!
     var NaviController: UINavigationController?
+    let transition = DetailAnimationController()
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -108,6 +109,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        transition.presenting = true
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         performSegueWithIdentifier("showDetail", sender: indexPath)
     }
@@ -115,6 +117,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail"{
             let detailController = segue.destinationViewController as! DetailViewController
+            detailController.transitioningDelegate = self
             let index = sender as! NSIndexPath
             if let lst = net.state.get(){
                 detailController.foodSelected = lst[index.row]
@@ -146,6 +149,18 @@ extension CalorieCountViewController: UISearchBarDelegate{
     
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
         return .TopAttached
+    }
+}
+
+
+extension CalorieCountViewController: UIViewControllerTransitioningDelegate{
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
     }
 }
 
