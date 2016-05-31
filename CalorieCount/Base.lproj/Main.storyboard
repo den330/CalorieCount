@@ -73,12 +73,15 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="393-um-OGm">
                                         <rect key="frame" x="113" y="101" width="15" height="37"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                        <color key="textColor" red="1" green="0.18123664780000001" blue="0.29336600159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="swf-RD-Weo" userLabel="CloseButton">
                                         <rect key="frame" x="8" y="8" width="15" height="22"/>
-                                        <state key="normal" image="CloseButton"/>
+                                        <state key="normal" image="CloseButton">
+                                            <color key="titleColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="close" destination="uog-p9-HYp" eventType="touchUpInside" id="yU5-Vf-xGm"/>
                                         </connections>
@@ -86,13 +89,15 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How many units of it have you consumed today?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="wkp-Q0-o8B">
                                         <rect key="frame" x="5" y="38" width="230" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="0.18123664780000001" blue="0.29336600159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o86-hu-kk7">
                                         <rect key="frame" x="86" y="168" width="68" height="49"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                        <state key="normal" title="Save"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="saveButton" destination="uog-p9-HYp" eventType="touchUpInside" id="ZRS-ek-JVX"/>
                                         </connections>
@@ -100,7 +105,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IqR-Q7-2mt">
                                         <rect key="frame" x="61" y="95" width="30" height="49"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                        <state key="normal" title="-"/>
+                                        <state key="normal" title="-">
+                                            <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="minusButton" destination="uog-p9-HYp" eventType="touchUpInside" id="oAo-eF-rtw"/>
                                         </connections>
@@ -108,13 +115,15 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVD-Pl-Y1M">
                                         <rect key="frame" x="150" y="95" width="30" height="49"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                        <state key="normal" title="+"/>
+                                        <state key="normal" title="+">
+                                            <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="addButton" destination="uog-p9-HYp" eventType="touchUpInside" id="vG8-A1-Big"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.69832974137931036" green="0.5" blue="1" alpha="0.95373448579999998" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.18123664780000001" blue="0.29336600159999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="swf-RD-Weo" firstAttribute="top" secondItem="J76-84-kri" secondAttribute="topMargin" id="19q-Xq-mhi"/>
                                     <constraint firstAttribute="width" constant="240" id="2GR-Bc-EB4"/>
