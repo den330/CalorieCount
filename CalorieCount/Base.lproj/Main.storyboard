@@ -97,6 +97,22 @@
                                             <action selector="saveButton" destination="uog-p9-HYp" eventType="touchUpInside" id="ZRS-ek-JVX"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IqR-Q7-2mt">
+                                        <rect key="frame" x="61" y="95" width="30" height="49"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                        <state key="normal" title="-"/>
+                                        <connections>
+                                            <action selector="minusButton" destination="uog-p9-HYp" eventType="touchUpInside" id="oAo-eF-rtw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVD-Pl-Y1M">
+                                        <rect key="frame" x="150" y="95" width="30" height="49"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                        <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="addButton" destination="uog-p9-HYp" eventType="touchUpInside" id="vG8-A1-Big"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.69832974137931036" green="0.5" blue="1" alpha="0.95373448579999998" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -104,46 +120,34 @@
                                     <constraint firstAttribute="width" constant="240" id="2GR-Bc-EB4"/>
                                     <constraint firstItem="393-um-OGm" firstAttribute="centerX" secondItem="J76-84-kri" secondAttribute="centerX" id="4CA-J0-asP"/>
                                     <constraint firstAttribute="height" constant="240" id="6iO-8b-nU7"/>
+                                    <constraint firstAttribute="height" constant="240" id="97i-xi-xvT"/>
                                     <constraint firstItem="wkp-Q0-o8B" firstAttribute="top" secondItem="swf-RD-Weo" secondAttribute="bottom" constant="8" id="AjZ-Gw-hwr"/>
+                                    <constraint firstItem="gVD-Pl-Y1M" firstAttribute="leading" secondItem="393-um-OGm" secondAttribute="trailing" constant="22" id="B1e-ah-prM"/>
                                     <constraint firstItem="393-um-OGm" firstAttribute="centerY" secondItem="J76-84-kri" secondAttribute="centerY" id="Gyt-1Q-E5L"/>
                                     <constraint firstItem="wkp-Q0-o8B" firstAttribute="leading" secondItem="J76-84-kri" secondAttribute="leading" constant="5" id="I3F-LU-XAM"/>
+                                    <constraint firstItem="393-um-OGm" firstAttribute="leading" secondItem="IqR-Q7-2mt" secondAttribute="trailing" constant="22" id="KdE-MN-VkT"/>
+                                    <constraint firstItem="gVD-Pl-Y1M" firstAttribute="centerY" secondItem="J76-84-kri" secondAttribute="centerY" id="ZWE-by-aoK"/>
+                                    <constraint firstAttribute="width" constant="240" id="ayu-d3-GX3"/>
                                     <constraint firstItem="swf-RD-Weo" firstAttribute="leading" secondItem="J76-84-kri" secondAttribute="leadingMargin" id="c4a-hD-VeE"/>
                                     <constraint firstItem="wkp-Q0-o8B" firstAttribute="centerX" secondItem="J76-84-kri" secondAttribute="centerX" id="ce6-ow-xYj"/>
                                     <constraint firstItem="o86-hu-kk7" firstAttribute="centerX" secondItem="J76-84-kri" secondAttribute="centerX" id="ewt-CK-3og"/>
+                                    <constraint firstItem="IqR-Q7-2mt" firstAttribute="centerY" secondItem="J76-84-kri" secondAttribute="centerY" id="htQ-R1-O6z"/>
                                     <constraint firstItem="wkp-Q0-o8B" firstAttribute="leading" secondItem="J76-84-kri" secondAttribute="leading" constant="5" id="oqc-v4-tWa"/>
                                     <constraint firstAttribute="bottom" secondItem="o86-hu-kk7" secondAttribute="bottom" constant="23" id="qa5-1L-B0P"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="2GR-Bc-EB4"/>
+                                        <exclude reference="6iO-8b-nU7"/>
                                         <exclude reference="I3F-LU-XAM"/>
                                         <exclude reference="oqc-v4-tWa"/>
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IqR-Q7-2mt">
-                                <rect key="frame" x="239" y="275" width="30" height="49"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                <state key="normal" title="-"/>
-                                <connections>
-                                    <action selector="minusButton" destination="uog-p9-HYp" eventType="touchUpInside" id="oAo-eF-rtw"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVD-Pl-Y1M">
-                                <rect key="frame" x="332" y="275" width="30" height="49"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                <state key="normal" title="+"/>
-                                <connections>
-                                    <action selector="addButton" destination="uog-p9-HYp" eventType="touchUpInside" id="vG8-A1-Big"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="gVD-Pl-Y1M" firstAttribute="leading" secondItem="393-um-OGm" secondAttribute="trailing" constant="24" id="ClS-ej-I6y"/>
-                            <constraint firstItem="IqR-Q7-2mt" firstAttribute="baseline" secondItem="393-um-OGm" secondAttribute="baseline" id="MgC-zW-JDX"/>
-                            <constraint firstItem="393-um-OGm" firstAttribute="leading" secondItem="IqR-Q7-2mt" secondAttribute="trailing" constant="24" id="SXK-pz-YWT"/>
                             <constraint firstItem="J76-84-kri" firstAttribute="centerX" secondItem="7mC-tc-wO1" secondAttribute="centerX" id="XbN-RG-Yxh"/>
-                            <constraint firstItem="gVD-Pl-Y1M" firstAttribute="baseline" secondItem="393-um-OGm" secondAttribute="baseline" id="bGf-r7-lDz"/>
                             <constraint firstItem="J76-84-kri" firstAttribute="leading" secondItem="7mC-tc-wO1" secondAttribute="leading" constant="180" id="fMh-LC-bna"/>
                             <constraint firstItem="J76-84-kri" firstAttribute="centerY" secondItem="7mC-tc-wO1" secondAttribute="centerY" id="fUp-fJ-8JX"/>
                             <constraint firstItem="J76-84-kri" firstAttribute="top" secondItem="RPB-WZ-lOm" secondAttribute="bottom" constant="160" id="pOP-x1-Dpc"/>
