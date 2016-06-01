@@ -75,7 +75,7 @@ class RecordTableViewController: UITableViewController {
         let today = dateFormatter.stringFromDate(day.currentDate!)
         dateLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         caloriesLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
-        dateLabel.text = today + " (Click For Details)"
+        dateLabel.text = today
         caloriesLabel.text = "Total: " + String(totalCalories) + " Cal"
     }
     
