@@ -29,6 +29,7 @@ class RecordTableViewController: UITableViewController {
         }catch let error as NSError{
             print("Error: \(error.localizedDescription)")
         }
+        tabBarController?.delegate = self
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,7 +40,6 @@ class RecordTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("recordCell", forIndexPath: indexPath)
-        cell.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 1.0)
         let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
         configureCell(cell, day: day)
         return cell
@@ -116,5 +116,11 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
+    }
+}
+
+extension RecordTableViewController: UITabBarControllerDelegate{
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        navigationController?.popViewControllerAnimated(true)
     }
 }
