@@ -32,7 +32,6 @@ class DailyConsumeTableViewController: UITableViewController{
             
             if day.items!.count == 1{
                 managedContext.deleteObject(day)
-                navigationController?.popViewControllerAnimated(true)
             }
             
             do{
