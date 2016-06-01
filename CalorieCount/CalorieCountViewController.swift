@@ -44,8 +44,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(commonConstants.cellXib, forIndexPath: indexPath) as! FoodCell
+        cell.selectionStyle = .None
         switch net.state{
             case .SearchSuccess(let lst):
+                cell.selectionStyle = .Default
                 let foodItem = lst[indexPath.row]
                 configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!, brandContent: foodItem.brandContent!,quantityContent: foodItem.quantity!)
                 return cell
