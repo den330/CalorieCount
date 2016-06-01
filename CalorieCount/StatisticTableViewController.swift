@@ -22,12 +22,38 @@ class StatisticTableViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        FirstLineLabel.text = "1 ITtdasdasdasodpasdasdasofajoewjfoawfoiwaejfoiawejfoiawefiojwaeoifjaweoifjwaeiofwe"
-        SecondLineLabel.text = "2"
-        ThirdLineLabel.text = "3"
+        tableView.rowHeight = UITableViewAutomaticDimension
+        let sortDescriptor = NSSortDescriptor(key: "currentDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        do{
+            try fetchedResultsController.performFetch()
+        }catch let error as NSError{
+            print("Error: \(error.localizedDescription)")
+        }
+        let totalCalories = "0"
+        let avgCalories = "0"
+        let lastCalories = "0"
+        
+        FirstLineLabel.text = totalCalories + " Cal"
+        SecondLineLabel.text = avgCalories + " Cal"
+        ThirdLineLabel.text = lastCalories + " Cal"
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
 
 
 
+}
+
+
+extension StatisticTableViewController: NSFetchedResultsControllerDelegate{
 }
