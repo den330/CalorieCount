@@ -74,4 +74,11 @@ class DailyConsumeTableViewController: UITableViewController{
         unitQuantityLabel.text = "Unit: " + item.quantity!
         return cell
     }
+    
+    @IBAction func handleSwipe(recognizer:UISwipeGestureRecognizer) {
+        back()
+    }
+    
+    
+    
 }

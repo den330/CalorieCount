@@ -335,6 +335,7 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="urw-6l-NZ8" firstAttribute="leading" secondItem="PFT-ge-gBH" secondAttribute="leading" constant="8" id="SjW-p7-ZU4"/>
                                 </constraints>
@@ -348,6 +349,7 @@
                         <connections>
                             <outlet property="dataSource" destination="wfy-lH-oaM" id="eie-4E-Vnr"/>
                             <outlet property="delegate" destination="wfy-lH-oaM" id="k9o-I2-GGX"/>
+                            <outletCollection property="gestureRecognizers" destination="Amd-4S-1uZ" appends="YES" id="SGu-A7-hqF"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Daily Calories" id="SES-YV-yS8">
@@ -359,6 +361,11 @@
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A17-pp-hBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="Amd-4S-1uZ">
+                    <connections>
+                        <action selector="handleSwipe:" destination="wfy-lH-oaM" id="ET4-Hs-Vl7"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1447" y="536"/>
         </scene>
