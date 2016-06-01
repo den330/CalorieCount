@@ -52,6 +52,7 @@ class NetworkGrab{
         case NotFound
         case NoConnection
         
+        
         func get() -> [Food]?{
             switch self{
                 case SearchSuccess(let lst):
@@ -69,6 +70,7 @@ class NetworkGrab{
         fields = "fields=nf_calories%2Citem_name%2Cbrand_name%2Cnf_serving_size_unit%2Cnf_serving_size_qty%2Citem_id"
         calReq = "cal_min=0&cal_max=50000"
         appInfo = "appId=\(appID)&appKey=\(appKey)"
+        state = .NotSearchedYet
     }
     
     func performSearch(url: NSURL, completion: (Void) -> Void){

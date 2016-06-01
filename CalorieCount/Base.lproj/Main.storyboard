@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QFG-Cm-VTq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QFG-Cm-VTq">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -349,23 +349,11 @@
                         <connections>
                             <outlet property="dataSource" destination="wfy-lH-oaM" id="eie-4E-Vnr"/>
                             <outlet property="delegate" destination="wfy-lH-oaM" id="k9o-I2-GGX"/>
-                            <outletCollection property="gestureRecognizers" destination="Amd-4S-1uZ" appends="YES" id="SGu-A7-hqF"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Daily Calories" id="SES-YV-yS8">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="dyE-k0-Hm7">
-                            <connections>
-                                <action selector="back" destination="wfy-lH-oaM" id="hl9-dY-0fm"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Daily Calories" id="SES-YV-yS8"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A17-pp-hBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="Amd-4S-1uZ">
-                    <connections>
-                        <action selector="handleSwipe:" destination="wfy-lH-oaM" id="ET4-Hs-Vl7"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1447" y="536"/>
         </scene>

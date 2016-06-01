@@ -22,7 +22,7 @@ class DailyConsumeTableViewController: UITableViewController{
         items = day.items
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 180
-        navigationItem.title = dateFormatter.stringFromDate(day.currentDate!)
+        navigationItem.title = "on " + dateFormatter.stringFromDate(day.currentDate!)
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -50,10 +50,7 @@ class DailyConsumeTableViewController: UITableViewController{
         return items!.count
     }
     
-    @IBAction func back(){
-        navigationController?.popViewControllerAnimated(true)
-    }
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -74,11 +71,4 @@ class DailyConsumeTableViewController: UITableViewController{
         unitQuantityLabel.text = "Unit: " + item.quantity!
         return cell
     }
-    
-    @IBAction func handleSwipe(recognizer:UISwipeGestureRecognizer) {
-        back()
-    }
-    
-    
-    
 }

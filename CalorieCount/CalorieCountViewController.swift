@@ -27,7 +27,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.becomeFirstResponder()
         tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
@@ -37,10 +36,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
             case .NotFound, .Searching: return 1
-            case .NotSearchedYet: return 0
+            case .NotSearchedYet: return 1
             case .SearchSuccess(let lst): return lst.count
             case .NoConnection: return 1
-        }
+            }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -56,7 +55,8 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
                 configureCell(cell, foodContent: "No Connection", caloriesContent: 0, brandContent: "NA", quantityContent: "NA")
             case .Searching:
                 configureCell(cell, foodContent: "Searching", caloriesContent: 0, brandContent: "Searching",quantityContent: "Searching")
-            default: break
+            case .NotSearchedYet:
+                configureCell(cell, foodContent: "Click Search bar to start search", caloriesContent: 0, brandContent: "", quantityContent: "")
         }
         return cell
     }
