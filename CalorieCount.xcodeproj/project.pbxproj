@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		900596B61CFD0A25001E1321 /* DetailAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900596B51CFD0A25001E1321 /* DetailAnimationController.swift */; };
+		9029F6F61CFF99E5008914FC /* StatisticTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9029F6F51CFF99E5008914FC /* StatisticTableViewController.swift */; };
 		9087CEDB1CEB6AE0006A1C63 /* RecordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */; };
 		90B8BC821CE397DE0083DF72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC811CE397DE0083DF72 /* AppDelegate.swift */; };
 		90B8BC841CE397DE0083DF72 /* CalorieCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		900596B51CFD0A25001E1321 /* DetailAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailAnimationController.swift; sourceTree = "<group>"; };
+		9029F6F51CFF99E5008914FC /* StatisticTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticTableViewController.swift; sourceTree = "<group>"; };
 		9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableViewController.swift; sourceTree = "<group>"; };
 		90B8BC7E1CE397DE0083DF72 /* CalorieCount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalorieCount.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B8BC811CE397DE0083DF72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */,
 				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
+				9029F6F51CFF99E5008914FC /* StatisticTableViewController.swift */,
 				90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */,
 				90CD30CA1CFE30B60063A7B9 /* functions.swift */,
 				90D11A1E1CE6ABBA005F8E13 /* DetailPresentationController.swift */,
@@ -199,6 +202,7 @@
 				90D11A2B1CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift in Sources */,
 				90D11A291CE790EC005F8E13 /* Day+CoreDataProperties.swift in Sources */,
 				90B8BC991CE3D4010083DF72 /* FoodCell.swift in Sources */,
+				9029F6F61CFF99E5008914FC /* StatisticTableViewController.swift in Sources */,
 				90D11A211CE788DF005F8E13 /* CoreDataStack.swift in Sources */,
 				90D11A2C1CE790EC005F8E13 /* ItemConsumed.swift in Sources */,
 				90B8BC9D1CE4035B0083DF72 /* NetworkGrab.swift in Sources */,

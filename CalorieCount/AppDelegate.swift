@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController
         let recordController = NavController.topViewController as! RecordTableViewController
+        let secondNavController = TabController.viewControllers![2] as! UINavigationController
+        let statisticController = secondNavController.topViewController as! StatisticTableViewController
+        statisticController.managedContext = coreDataStack.context
         caloriesController.managedContext = coreDataStack.context
         recordController.managedContext = coreDataStack.context
         return true
