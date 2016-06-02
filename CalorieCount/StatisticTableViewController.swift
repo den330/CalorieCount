@@ -26,12 +26,8 @@ class StatisticTableViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
-
-       
-        
         fetchTotal()
         getAvg()
- 
     }
     
     override func viewWillAppear(animated: Bool) {
