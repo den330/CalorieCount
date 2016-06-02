@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         customizeAppearance()
-        
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController

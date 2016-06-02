@@ -21,7 +21,7 @@ class StatisticTableViewController: UITableViewController{
     
     @IBOutlet weak var FirstLineLabel: UILabel!
     @IBOutlet weak var SecondLineLabel: UILabel!
-    @IBOutlet weak var ThirdLineLabel: UILabel!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class StatisticTableViewController: UITableViewController{
             let resultDict = results.first!
             let total = resultDict["Total"] as! Double
             totalCals = total
-            FirstLineLabel.text = "\(totalCals)"
+            FirstLineLabel.text = "\(totalCals)" + " Cal"
         }catch let error as NSError{
             print("Could not fetch \(error), \(error.userInfo)")
         }
@@ -90,10 +90,9 @@ class StatisticTableViewController: UITableViewController{
 
             let avg: Double
             avg = (daysInCalc == 0) ? 0.0 : calInCalc / Double(daysInCalc)
-            SecondLineLabel.text = String(format: "%.2f", avg)
+            SecondLineLabel.text = String(format: "%.2f", avg) + " Cal"
         }catch{
             print(error)
-            
         }
     }
     

@@ -454,36 +454,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="lqy-33-p0O">
-                                        <rect key="frame" x="0.0" y="198" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lqy-33-p0O" id="dCi-bN-n3P">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calories of the Lastly Consumed Item" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="0Je-WZ-3Kd">
-                                                    <rect key="frame" x="8" y="0.0" width="137" height="43"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.076499580540000001" green="0.62788380870000005" blue="0.62644190440000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwU-0b-o8y">
-                                                    <rect key="frame" x="550" y="0.0" width="42" height="43"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="1" green="0.18123664780000001" blue="0.29336600159999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="0Je-WZ-3Kd" secondAttribute="bottom" id="Fva-g1-sJc"/>
-                                                <constraint firstAttribute="bottom" secondItem="KwU-0b-o8y" secondAttribute="bottom" id="Ot8-wR-LLR"/>
-                                                <constraint firstItem="KwU-0b-o8y" firstAttribute="top" secondItem="dCi-bN-n3P" secondAttribute="top" id="W5e-hO-8zf"/>
-                                                <constraint firstItem="0Je-WZ-3Kd" firstAttribute="leading" secondItem="dCi-bN-n3P" secondAttribute="leading" constant="8" id="eiA-h3-p9A"/>
-                                                <constraint firstItem="0Je-WZ-3Kd" firstAttribute="top" secondItem="dCi-bN-n3P" secondAttribute="top" id="mch-op-dle"/>
-                                                <constraint firstAttribute="trailing" secondItem="KwU-0b-o8y" secondAttribute="trailing" constant="8" id="rr2-A3-GkF"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -496,7 +466,6 @@
                     <connections>
                         <outlet property="FirstLineLabel" destination="q1W-Yi-x1y" id="dRY-wh-vEl"/>
                         <outlet property="SecondLineLabel" destination="pa1-aN-CqF" id="VWE-D8-oQN"/>
-                        <outlet property="ThirdLineLabel" destination="KwU-0b-o8y" id="3Gq-9u-bGB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4r3-yR-AXP" userLabel="First Responder" sceneMemberID="firstResponder"/>
