@@ -26,11 +26,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().backgroundColor = cellColor
         window!.tintColor = UIColor(red: 10/255, green: 80/255, blue: 80/255, alpha: 1)
     }
+    
+    func removeLeaks(){
+        do{
+            let results = try coreDataStack.context.executeFetchRequest(itemConsumedFetch)
+            for i in results{
+                let item = i as! ItemConsumed
+                if item.days == nil{
+                    coreDataStack.context.deleteObject(item)
+                }
+            }
+            
+            do{
+                try coreDataStack.context.save()
+            }catch let error as NSError{
+                print("Could not save delete: \(error)")
+            }
+        }catch{
+            print(error)
+        }
+    }
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         customizeAppearance()
+        if NSUserDefaults.standardUserDefaults().objectForKey("isFirstTime") == nil{
+            removeLeaks()
+            let isFirstTime = false
+            NSUserDefaults.standardUserDefaults().setBool(isFirstTime, forKey: "isFirstTime")
+        }
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController

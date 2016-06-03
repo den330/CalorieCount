@@ -28,36 +28,13 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if NSUserDefaults.standardUserDefaults().objectForKey("isFirstTime") == nil{
-            removeLeaks()
-            let isFirstTime = false
-            NSUserDefaults.standardUserDefaults().setBool(isFirstTime, forKey: "isFirstTime")
-        }
+
         tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.rowHeight = commonConstants.rowHeight
     }
-    
-    func removeLeaks(){
-        do{
-            let results = try managedContext.executeFetchRequest(itemConsumedFetch)
-            for i in results{
-                let item = i as! ItemConsumed
-                if item.days == nil{
-                    managedContext.deleteObject(item)
-                }
-            }
-            
-            do{
-                try managedContext.save()
-            }catch let error as NSError{
-                print("Could not save delete: \(error)")
-            }
-        }catch{
-            print(error)
-        }
-    }
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{

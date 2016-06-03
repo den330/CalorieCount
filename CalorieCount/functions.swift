@@ -15,6 +15,8 @@ var dateFormatter: NSDateFormatter = {
     return dateformatter
 }()
 
+
+
 func sameDay(dayLst:[Day]) -> Bool{
     if dayLst.count == 0{
         return false
