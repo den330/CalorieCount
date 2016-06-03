@@ -26,8 +26,6 @@ class CoreDataStack{
     private lazy var psc: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.modelName)
-        print("\(url)")
-        
         do{
             let options = [NSMigratePersistentStoresAutomaticallyOption: true]
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
