@@ -66,9 +66,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         recordController.managedContext = coreDataStack.context
         return true
     }
-
-
-
-
 }
 
