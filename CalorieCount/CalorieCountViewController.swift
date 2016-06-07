@@ -39,13 +39,13 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         super.viewDidAppear(animated)
         if NSUserDefaults.standardUserDefaults().objectForKey("knowDelete") == nil{
             let message = "You can delete your calorie record(single item or entire day) by swiping (to the left)"
-            let alert = UIAlertController(title: "FYI", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.setValue(NSAttributedString(string: "FYI", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
+            let alert = UIAlertController(title: "Tips", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.setValue(NSAttributedString(string: "Tips", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
             alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15),NSForegroundColorAttributeName : UIColor.yellowColor()]), forKey: "attributedMessage")
             alert.addAction(UIAlertAction(title: "Got it", style: .Default, handler: nil))
             let subview = alert.view.subviews.first! as UIView
             let alertContentView = subview.subviews.first! as UIView
-            alertContentView.backgroundColor = UIColor.redColor()
+            alertContentView.backgroundColor = UIColor.darkGrayColor()
             presentViewController(alert, animated: true, completion: nil)
             alert.view.tintColor = UIColor.greenColor()
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "knowDelete")
