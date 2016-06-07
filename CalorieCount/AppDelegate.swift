@@ -52,8 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         customizeAppearance()
         if NSUserDefaults.standardUserDefaults().objectForKey("isFirstTime") == nil{
             removeLeaks()
-            let isFirstTime = false
-            NSUserDefaults.standardUserDefaults().setBool(isFirstTime, forKey: "isFirstTime")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isFirstTime")
         }
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
