@@ -23,7 +23,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     private struct commonConstants{
         static let rowHeight:CGFloat = 170
-        static let topInsets:CGFloat = 64
+        static let topInsets:CGFloat = 108
         static let cellXib = "FoodCell"
     }
     

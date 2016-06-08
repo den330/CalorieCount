@@ -33,6 +33,15 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="cBg-cZ-6pd"/>
                                 </connections>
                             </searchBar>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwu-VA-l9j">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <items>
+                                    <navigationItem id="UKI-fv-qTC">
+                                        <nil key="title"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Refine" id="lQc-CA-iCh"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -42,6 +51,9 @@
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ImF-98-2Aa"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="QFG-Cm-VTq" secondAttribute="leading" id="Obx-Og-CBu"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="bB7-cp-IKD"/>
+                            <constraint firstItem="dwu-VA-l9j" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="fho-sl-4TU"/>
+                            <constraint firstItem="dwu-VA-l9j" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="kVC-KY-Idq"/>
+                            <constraint firstItem="dwu-VA-l9j" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="lAo-Dz-y9v"/>
                             <constraint firstAttribute="trailing" secondItem="QFG-Cm-VTq" secondAttribute="trailing" id="uQ8-Wd-YTo"/>
                         </constraints>
                     </view>
@@ -54,7 +66,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-271" y="-775"/>
+            <point key="canvasLocation" x="-266" y="-748"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dD9-P4-6R1">
