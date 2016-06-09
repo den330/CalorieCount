@@ -33,28 +33,40 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="cBg-cZ-6pd"/>
                                 </connections>
                             </searchBar>
-                            <searchBar contentMode="redraw" text="" placeholder="Brand or Restaurant name (optional filter)" translatesAutoresizingMaskIntoConstraints="NO" id="Gqd-rW-fRZ">
+                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Brand or Restaurant Name(optional filter)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OUc-Ka-ObX">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.078431372549019607" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="af4-Ip-8KH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
-                            </searchBar>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ve2-K9-oiO"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="5pz-0L-r5z"/>
+                            <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="E3J-sb-PBP"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="GNR-gM-2NP"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GiG-8F-2tC"/>
+                            <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKr-Nh-Cv9"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="Kzw-Ra-5b5"/>
-                            <constraint firstAttribute="trailing" secondItem="Gqd-rW-fRZ" secondAttribute="trailing" id="R03-53-9wR"/>
-                            <constraint firstItem="Gqd-rW-fRZ" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="TTd-VY-F89"/>
-                            <constraint firstItem="Gqd-rW-fRZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="W1B-fJ-SfZ"/>
+                            <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="X7d-uq-E9e"/>
+                            <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Z6d-ZO-Cjp"/>
+                            <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="bHW-Ik-Imj"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="buC-b5-S5I"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dyl-OU-nyR"/>
+                            <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="fdP-eJ-VVy"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ycp-pI-irW"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search-7" id="3cd-TT-XgF"/>
                     <connections>
-                        <outlet property="filterSearchBar" destination="Gqd-rW-fRZ" id="gPR-Ef-YWt"/>
+                        <outlet property="filterTextField" destination="OUc-Ka-ObX" id="IxX-PY-IaO"/>
                         <outlet property="searchBar" destination="73R-3t-qYc" id="czm-yH-LpD"/>
                         <outlet property="tableView" destination="QFG-Cm-VTq" id="hF1-Aw-OW8"/>
                         <segue destination="uog-p9-HYp" kind="presentation" identifier="showDetail" id="wSO-tQ-y2A"/>
