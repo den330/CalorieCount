@@ -22,6 +22,7 @@ class NetworkGrab{
     private let calReq: String
     private let appInfo: String
     
+    
     func connectedToNetwork() -> Bool {
         
         var zeroAddress = sockaddr_in()
@@ -87,9 +88,9 @@ class NetworkGrab{
         request.HTTPMethod = "Post"
         var postString: String
         if filterText == ""{
-            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\", \"queries\":{\"item_name\":\"\(mainText)\"},\(fields)}"
+            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\",\"query\":\"\(mainText)\",\(fields),\"offset\":0,\"limit\":50}"
         }else{
-            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\", \"queries\":{\"item_name\":\"\(mainText)\", \"brand_name\":\"\(filterText)\"},\(fields)}"
+            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\",\"queries\":{\"item_name\":\"\(mainText)\", \"brand_name\":\"\(filterText)\"},\(fields),\"offset\":0,\"limit\":50}"
         }
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -140,12 +141,6 @@ class NetworkGrab{
         })
         
         dataTask!.resume()
-    }
-    
-    func urlWithSearchText(text: String) -> NSURL{
-        let spaceEscapeText = text.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let url = NSURL(string: "\(spaceEscapeText)?results=\(numOfResults)&\(fields)&\(calReq)&\(appInfo)", relativeToURL: baseUrl)
-        return url!
     }
     
     func parseJson(data:NSData) -> [String: AnyObject]?{
