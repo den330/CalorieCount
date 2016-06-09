@@ -33,32 +33,28 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="cBg-cZ-6pd"/>
                                 </connections>
                             </searchBar>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwu-VA-l9j">
+                            <searchBar contentMode="redraw" text="" placeholder="Brand or Restaurant name (optional filter)" translatesAutoresizingMaskIntoConstraints="NO" id="Gqd-rW-fRZ">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <items>
-                                    <navigationItem id="UKI-fv-qTC">
-                                        <nil key="title"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Refine" id="lQc-CA-iCh"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="QFG-Cm-VTq" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="9U9-G9-OYt"/>
-                            <constraint firstItem="73R-3t-qYc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Baf-f3-Wpf"/>
-                            <constraint firstItem="73R-3t-qYc" firstAttribute="trailing" secondItem="QFG-Cm-VTq" secondAttribute="trailing" id="F0d-b4-A2c"/>
-                            <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ImF-98-2Aa"/>
-                            <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="QFG-Cm-VTq" secondAttribute="leading" id="Obx-Og-CBu"/>
-                            <constraint firstItem="QFG-Cm-VTq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="bB7-cp-IKD"/>
-                            <constraint firstItem="dwu-VA-l9j" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="fho-sl-4TU"/>
-                            <constraint firstItem="dwu-VA-l9j" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="kVC-KY-Idq"/>
-                            <constraint firstItem="dwu-VA-l9j" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="lAo-Dz-y9v"/>
-                            <constraint firstAttribute="trailing" secondItem="QFG-Cm-VTq" secondAttribute="trailing" id="uQ8-Wd-YTo"/>
+                            <constraint firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="5pz-0L-r5z"/>
+                            <constraint firstItem="QFG-Cm-VTq" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="GNR-gM-2NP"/>
+                            <constraint firstItem="73R-3t-qYc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GiG-8F-2tC"/>
+                            <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="Kzw-Ra-5b5"/>
+                            <constraint firstAttribute="trailing" secondItem="Gqd-rW-fRZ" secondAttribute="trailing" id="R03-53-9wR"/>
+                            <constraint firstItem="Gqd-rW-fRZ" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="TTd-VY-F89"/>
+                            <constraint firstItem="Gqd-rW-fRZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="W1B-fJ-SfZ"/>
+                            <constraint firstItem="QFG-Cm-VTq" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="buC-b5-S5I"/>
+                            <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dyl-OU-nyR"/>
+                            <constraint firstItem="QFG-Cm-VTq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ycp-pI-irW"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search-7" id="3cd-TT-XgF"/>
                     <connections>
+                        <outlet property="filterSearchBar" destination="Gqd-rW-fRZ" id="gPR-Ef-YWt"/>
                         <outlet property="searchBar" destination="73R-3t-qYc" id="czm-yH-LpD"/>
                         <outlet property="tableView" destination="QFG-Cm-VTq" id="hF1-Aw-OW8"/>
                         <segue destination="uog-p9-HYp" kind="presentation" identifier="showDetail" id="wSO-tQ-y2A"/>

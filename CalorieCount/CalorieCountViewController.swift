@@ -17,6 +17,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     
 
+    @IBOutlet weak var filterSearchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     let net = NetworkGrab()
@@ -122,11 +123,13 @@ extension CalorieCountViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
         searchBar.resignFirstResponder()
         let text = searchBar.text!
-        let url = net.urlWithSearchText(text)
-        net.performSearch(url){
-            self.tableView.reloadData()
+        let filtertext = filterSearchBar.text!
+        if text != ""{
+            net.performSearch(text, filterText: filtertext){
+                self.tableView.reloadData()
+            }
+            tableView.reloadData()
         }
-        tableView.reloadData()
     }
     
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {

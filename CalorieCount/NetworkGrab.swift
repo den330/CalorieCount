@@ -67,13 +67,13 @@ class NetworkGrab{
         appKey = "c79b530ed299ec9f53d64be135311b09"
         baseUrl = NSURL(string: "https://api.nutritionix.com/v1_1/search/")
         numOfResults = "0%3A50"
-        fields = "fields=nf_calories%2Citem_name%2Cbrand_name%2Cnf_serving_size_unit%2Cnf_serving_size_qty%2Citem_id"
         calReq = "cal_min=0&cal_max=50000"
         appInfo = "appId=\(appID)&appKey=\(appKey)"
         state = .NotSearchedYet
+        fields = "\"fields\":[\"nf_calories\",\"item_name\",\"brand_name\",\"nf_serving_size_unit\",\"nf_serving_size_qty\",\"item_id\"]"
     }
     
-    func performSearch(url: NSURL, completion: (Void) -> Void){
+    func performSearch(mainText: String, filterText: String, completion: (Void) -> Void){
         if !connectedToNetwork(){
             state = .NoConnection
             return
@@ -82,11 +82,19 @@ class NetworkGrab{
         dataTask?.cancel()
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: configuration)
-        let request = NSURLRequest(URL: url )
+        let request = NSMutableURLRequest(URL: baseUrl!)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPMethod = "Post"
+        var postString: String
+        if filterText == ""{
+            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\", \"queries\":{\"item_name\":\"\(mainText)\"},\(fields)}"
+        }else{
+            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\", \"queries\":{\"item_name\":\"\(mainText)\", \"brand_name\":\"\(filterText)\"},\(fields)}"
+        }
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
         dataTask = session.dataTaskWithRequest(request, completionHandler: {data, response, error in
             var success: Bool = false
-        
-            
             if let error = error where error.code == -999{
                 return
             }
@@ -107,7 +115,7 @@ class NetworkGrab{
                         let name = fields["item_name"]!! as! String
                         let brandName = fields["brand_name"]!! as! String
                         let serve_unit = fields["nf_serving_size_unit"]!! as? String
-                        let serve_qty = fields["nf_serving_size_qty"]!! as! Double
+                        let serve_qty = fields["nf_serving_size_qty"]!! as? Double
                         let food_id = fields["item_id"]!! as! String
                         foodItem.caloriesCount = calories
                         foodItem.foodContent = name
@@ -130,6 +138,7 @@ class NetworkGrab{
                 completion()
             }
         })
+        
         dataTask!.resume()
     }
     
