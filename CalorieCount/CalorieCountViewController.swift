@@ -138,15 +138,11 @@ extension CalorieCountViewController: UISearchBarDelegate{
 }
 
 extension CalorieCountViewController: UITextFieldDelegate{
-    func textFieldDidEndEditing(textField: UITextField) {
-        searchBarSearchButtonClicked(searchBar)
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+            searchBarSearchButtonClicked(searchBar)
             textField.resignFirstResponder()
             return false
     }
-    
 }
 
 
