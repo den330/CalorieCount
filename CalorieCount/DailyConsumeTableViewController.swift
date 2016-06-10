@@ -67,7 +67,11 @@ class DailyConsumeTableViewController: UITableViewController{
         caloriesLabel.text = "Total Calories: " + String(format: "%.2f", Double(item.totalCalories!)) + " Cal"
         quantityLabel.text = "Quantity Consumed: " + String(item.quantityConsumed!)
         brandLabel.text = "Brand: " + item.brand!
-        unitQuantityLabel.text = "Unit: " + item.quantity!
+        if let quantity = item.quantity{
+            unitQuantityLabel.text = "Unit: " + quantity
+        }else{
+            unitQuantityLabel.text = "Unit: NA"
+        }
         return cell
     }
 }
