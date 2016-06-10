@@ -15,6 +15,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     var managedContext: NSManagedObjectContext!
     var NaviController: UINavigationController?
     let transition = DetailAnimationController()
+    var didTip = false
     
     @IBOutlet weak var filterTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -38,23 +39,26 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         var message: String
-        if NSUserDefaults.standardUserDefaults().boolForKey("knowDelete"){
-            switch NSUserDefaults.standardUserDefaults().valueForKey("tips") as? Int{
-            case nil:
-                message = "Idea for a new feature? SHAKE your phone and let me know!"
-                makeAlert(message)
-                NSUserDefaults.standardUserDefaults().setValue(1, forKey: "tips")
-//            case 1?:
-//                print("haha")
-            default: break
+        if didTip == false{
+            if NSUserDefaults.standardUserDefaults().boolForKey("knowDelete"){
+                switch NSUserDefaults.standardUserDefaults().valueForKey("tips") as? Int{
+                case nil:
+                    message = "Idea for a new feature? SHAKE your phone and let me know!"
+                    makeAlert(message)
+                    NSUserDefaults.standardUserDefaults().setValue(1, forKey: "tips")
+    //            case 1?:
+    //                print("haha")
+                default: break
+                }
             }
-        }
-        switch NSUserDefaults.standardUserDefaults().objectForKey("knowDelete"){
-            case nil:
-                message = "You can delete your calorie record(single item or entire day) by swiping (to the left)"
-                makeAlert(message)
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "knowDelete")
-            default: break
+            switch NSUserDefaults.standardUserDefaults().objectForKey("knowDelete"){
+                case nil:
+                    message = "You can delete your calorie record(single item or entire day) by swiping (to the left)"
+                    makeAlert(message)
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "knowDelete")
+                default: break
+            }
+            didTip = true
         }
 
 
@@ -73,34 +77,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         presentViewController(alert, animated: true, completion: nil)
         alert.view.tintColor = UIColor.greenColor()
     }
-    
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake{
-            showEmail()
-        }
-    }
-    
-    func showEmail(){
-        if presentedViewController != nil{
-            dismissViewControllerAnimated(true,completion: nil)
-        }
-        makeEmail()
-    }
-    
-                
-
-    
-    func makeEmail(){
-        if MFMailComposeViewController.canSendMail(){
-            let controller = MFMailComposeViewController()
-            controller.mailComposeDelegate = self
-            controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
-            controller.setToRecipients(["yaxinyuan0910@gmail.com"])
-            presentViewController(controller, animated: true, completion: nil)
-            }
-    }
-    
-
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
@@ -208,6 +184,29 @@ extension CalorieCountViewController: UIViewControllerTransitioningDelegate{
 extension CalorieCountViewController: MFMailComposeViewControllerDelegate{
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake{
+            showEmail()
+        }
+    }
+    
+    func showEmail(){
+        if presentedViewController != nil{
+            dismissViewControllerAnimated(true,completion: nil)
+        }
+        makeEmail()
+    }
+    
+    func makeEmail(){
+        if MFMailComposeViewController.canSendMail(){
+            let controller = MFMailComposeViewController()
+            controller.mailComposeDelegate = self
+            controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
+            controller.setToRecipients(["yaxinyuan0910@gmail.com"])
+            presentViewController(controller, animated: true, completion: nil)
+        }
     }
 }
 

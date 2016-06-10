@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
 
 class RecordTableViewController: UITableViewController {
@@ -125,3 +126,35 @@ extension RecordTableViewController: UITabBarControllerDelegate{
         navigationController?.popViewControllerAnimated(true)
     }
 }
+
+extension RecordTableViewController: MFMailComposeViewControllerDelegate{
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake{
+            showEmail()
+        }
+    }
+    
+    func showEmail(){
+        if presentedViewController != nil{
+            dismissViewControllerAnimated(true,completion: nil)
+        }
+        makeEmail()
+    }
+    
+    func makeEmail(){
+        if MFMailComposeViewController.canSendMail(){
+            let controller = MFMailComposeViewController()
+            controller.mailComposeDelegate = self
+            controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
+            controller.setToRecipients(["yaxinyuan0910@gmail.com"])
+            presentViewController(controller, animated: true, completion: nil)
+        }
+    }
+}
+
+
+
