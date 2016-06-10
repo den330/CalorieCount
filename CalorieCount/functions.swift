@@ -8,12 +8,18 @@
 
 import Foundation
 import CoreData
+import MessageUI
+import UIKit
 
 var dateFormatter: NSDateFormatter = {
     var dateformatter = NSDateFormatter()
     dateformatter.dateStyle = .MediumStyle
     return dateformatter
 }()
+
+
+
+
 
 
 

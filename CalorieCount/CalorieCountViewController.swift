@@ -8,15 +8,14 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
-class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
+class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,MyAlertControllerDelegate{
     
     var managedContext: NSManagedObjectContext!
     var NaviController: UINavigationController?
     let transition = DetailAnimationController()
     
-    
-
     @IBOutlet weak var filterTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -38,20 +37,69 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if NSUserDefaults.standardUserDefaults().objectForKey("knowDelete") == nil{
-            let message = "You can delete your calorie record(single item or entire day) by swiping (to the left)"
-            let alert = UIAlertController(title: "Tips", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.setValue(NSAttributedString(string: "Tips", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
-            alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15),NSForegroundColorAttributeName : UIColor.yellowColor()]), forKey: "attributedMessage")
-            alert.addAction(UIAlertAction(title: "Got it", style: .Default, handler: nil))
-            let subview = alert.view.subviews.first! as UIView
-            let alertContentView = subview.subviews.first! as UIView
-            alertContentView.backgroundColor = UIColor.darkGrayColor()
-            presentViewController(alert, animated: true, completion: nil)
-            alert.view.tintColor = UIColor.greenColor()
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "knowDelete")
+        var message: String
+        if NSUserDefaults.standardUserDefaults().boolForKey("knowDelete"){
+            switch NSUserDefaults.standardUserDefaults().valueForKey("tips") as? Int{
+            case nil:
+                message = "Idea for a new feature? SHAKE your phone and let me know!"
+                makeAlert(message)
+                NSUserDefaults.standardUserDefaults().setValue(1, forKey: "tips")
+//            case 1?:
+//                print("haha")
+            default: break
+            }
+        }
+        switch NSUserDefaults.standardUserDefaults().objectForKey("knowDelete"){
+            case nil:
+                message = "You can delete your calorie record(single item or entire day) by swiping (to the left)"
+                makeAlert(message)
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "knowDelete")
+            default: break
+        }
+
+
+    }
+    
+    func makeAlert(message: String){
+        let title = "Tips"
+        let alert = MyAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.delegate = self
+        alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
+        alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15),NSForegroundColorAttributeName : UIColor.yellowColor()]), forKey: "attributedMessage")
+        alert.addAction(UIAlertAction(title: "Got it", style: .Default, handler: nil))
+        let subview = alert.view.subviews.first! as UIView
+        let alertContentView = subview.subviews.first! as UIView
+        alertContentView.backgroundColor = UIColor.darkGrayColor()
+        presentViewController(alert, animated: true, completion: nil)
+        alert.view.tintColor = UIColor.greenColor()
+    }
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake{
+            showEmail()
         }
     }
+    
+    func showEmail(){
+        if presentedViewController != nil{
+            dismissViewControllerAnimated(true,completion: nil)
+        }
+        makeEmail()
+    }
+    
+                
+
+    
+    func makeEmail(){
+        if MFMailComposeViewController.canSendMail(){
+            let controller = MFMailComposeViewController()
+            controller.mailComposeDelegate = self
+            controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
+            controller.setToRecipients(["yaxinyuan0910@gmail.com"])
+            presentViewController(controller, animated: true, completion: nil)
+            }
+    }
+    
 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,6 +202,12 @@ extension CalorieCountViewController: UIViewControllerTransitioningDelegate{
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.presenting = false
         return transition
+    }
+}
+
+extension CalorieCountViewController: MFMailComposeViewControllerDelegate{
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
