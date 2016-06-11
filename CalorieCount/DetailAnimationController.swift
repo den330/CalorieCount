@@ -24,20 +24,13 @@ class DetailAnimationController: NSObject, UIViewControllerAnimatedTransitioning
         if presenting{
             let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
             containerView.addSubview(toView)
-            toView.transform = CGAffineTransformMakeScale(0.4, 0.4)
-            UIView.animateKeyframesWithDuration(transitionDuration(transitionContext), delay: 0, options: .CalculationModeCubic, animations: {
-                UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.334, animations: {
-                    toView.transform = CGAffineTransformMakeScale(1.3, 1.3)
-                })
-                UIView.addKeyframeWithRelativeStartTime(0.334, relativeDuration: 0.333, animations: {
-                    toView.transform = CGAffineTransformMakeScale(0.7, 0.7)
-                })
-                UIView.addKeyframeWithRelativeStartTime(0.666, relativeDuration: 0.333, animations: {
-                    toView.transform = CGAffineTransformMakeScale(1.0, 1.0)
-                })
-                }, completion: {
-                    finished in transitionContext.completeTransition(finished)
+            toView.center.y += (containerView.bounds.size.height/2 + toView.frame.size.height/2)
+            UIView.animateWithDuration(duration, animations: {
+                toView.center.y -= (containerView.bounds.size.height/2 + toView.frame.size.height/2)
+                }, completion: {_ in
+                    transitionContext.completeTransition(true)
             })
+
         }else{
             if count == 3{
                 count = 0
@@ -53,7 +46,7 @@ class DetailAnimationController: NSObject, UIViewControllerAnimatedTransitioning
                 }else if self.count == 2{
                     fromView.center.x -= containerView.bounds.width
                 }else{
-                    fromView.alpha = 0.0
+                    fromView.center.y -= containerView.bounds.height
                 }}, completion: { _ in
                 transitionContext.completeTransition(true)})
         }

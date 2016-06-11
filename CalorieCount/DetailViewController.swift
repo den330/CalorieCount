@@ -48,6 +48,8 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func saveButton(){
+        let hudView = HudView.hudInView(view, animated: true)
+        hudView.text = "Saved"
         let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
         do{
@@ -88,12 +90,12 @@ class DetailViewController: UIViewController {
         }catch let error as NSError{
             print("Error: \(error)" + "description \(error.localizedDescription)")
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        let delayInSeconds = 0.6
+        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
+        dispatch_after(when, dispatch_get_main_queue()){
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
-    
-    
-
-
     
     @IBAction func close(){
         dismissViewControllerAnimated(true, completion: nil)
