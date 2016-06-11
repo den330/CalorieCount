@@ -77,7 +77,7 @@ class RecordTableViewController: UITableViewController {
         dateLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         caloriesLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         dateLabel.text = today
-        caloriesLabel.text = "Total: " + String(totalCalories) + " Cal"
+        caloriesLabel.text = "Total: " + String(format: "%.2f", Double(totalCalories)) + " Cal"
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
