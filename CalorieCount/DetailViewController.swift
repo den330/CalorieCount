@@ -50,36 +50,37 @@ class DetailViewController: UIViewController {
     @IBAction func saveButton(){
         let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
-        let dayFetch = NSFetchRequest(entityName: "Day")
-        let sort = NSSortDescriptor(key: "currentDate", ascending: true)
-        dayFetch.sortDescriptors = [sort]
         do{
             let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
             if sameDay(results){
-                recentDay = results.last!
+                recentDay = results.first!
             }else{
                 recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
             }
-            itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
-            itemForSelected.quantityConsumed = Int(quantityLabel.text!)
-            itemForSelected.name = foodSelected.foodContent
-            itemForSelected.unitCalories = foodSelected.caloriesCount
-            itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)!) * Double((itemForSelected.unitCalories)!)
-            itemForSelected.quantity = foodSelected.quantity
-            itemForSelected.brand = foodSelected.brandContent
-            recentDay.currentDate = NSDate()
-            itemForSelected.id = foodSelected.id
             let items = recentDay.items!.mutableCopy() as! NSMutableOrderedSet
             var existed: Bool = false
             for i in items{
                 let singleItem = i as! ItemConsumed
-                if itemForSelected.id == singleItem.id{
+                if singleItem.id == foodSelected.id{
                     existed = true
-                    singleItem.quantityConsumed = Double(singleItem.quantityConsumed!) + Double(itemForSelected.quantityConsumed!)
-                    singleItem.totalCalories = Double(singleItem.totalCalories!) + Double(itemForSelected.totalCalories!)
+                    singleItem.quantityConsumed = Double(singleItem.quantityConsumed!) + Double(currentfigure)
+                    let newAddedCalories = foodSelected.caloriesCount! * Double(currentfigure)
+                    singleItem.totalCalories = Double(singleItem.totalCalories!) + newAddedCalories
+                   break
                 }
             }
             if !existed{
+                itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
+                itemForSelected.quantityConsumed = Int(quantityLabel.text!)
+                itemForSelected.name = foodSelected.foodContent
+                itemForSelected.unitCalories = foodSelected.caloriesCount
+                itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)!) * Double((itemForSelected.unitCalories)!)
+                if let quantity = foodSelected.quantity, unit = foodSelected.unit{
+                    itemForSelected.quantity = String(quantity) + " " + unit
+                }
+                itemForSelected.brand = foodSelected.brandContent
+                recentDay.currentDate = NSDate()
+                itemForSelected.id = foodSelected.id
                 items.addObject(itemForSelected)
             }
             recentDay.items = items.copy() as? NSOrderedSet
@@ -91,15 +92,7 @@ class DetailViewController: UIViewController {
     }
     
     
-    func sameDay(dayLst:[Day]) -> Bool{
-        if dayLst.count == 0{
-            return false
-        }
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        let currentDate = NSDate()
-        let recentDate = dayLst.last?.currentDate
-        return calendar!.isDate(currentDate, inSameDayAsDate: recentDate!)
-    }
+
 
     
     @IBAction func close(){

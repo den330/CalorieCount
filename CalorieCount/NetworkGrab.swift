@@ -113,9 +113,8 @@ class NetworkGrab{
                         foodItem.foodContent = name
                         foodItem.brandContent = brandName
                         if serve_unit != nil{
-                            foodItem.quantity = String(serve_qty) + " " + serve_unit!
-                        }else{
-                            foodItem.quantity = "N/A"
+                            foodItem.quantity = serve_qty
+                            foodItem.unit = serve_unit
                         }
                         foodItem.id = food_id
                         searchResults.append(foodItem)

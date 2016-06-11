@@ -49,16 +49,16 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             case .SearchSuccess(let lst):
                 cell.selectionStyle = .Default
                 let foodItem = lst[indexPath.row]
-                configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!, brandContent: foodItem.brandContent!,quantityContent: foodItem.quantity!)
+                configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!, brandContent: foodItem.brandContent!,quantityContent: foodItem.quantity,unitContent: foodItem.unit)
                 return cell
             case .NotFound:
-                configureCell(cell, foodContent: "NA", caloriesContent: 0,brandContent: "NA",quantityContent: "NA")
+                configureCell(cell, foodContent: "NA", caloriesContent: 0,brandContent: "NA",quantityContent: nil,unitContent: nil)
             case .NoConnection:
-                configureCell(cell, foodContent: "No Connection", caloriesContent: 0, brandContent: "NA", quantityContent: "NA")
+                configureCell(cell, foodContent: "No Connection", caloriesContent: 0, brandContent: "NA", quantityContent: nil, unitContent: nil)
             case .Searching:
-                configureCell(cell, foodContent: "Searching", caloriesContent: 0, brandContent: "Searching",quantityContent: "Searching")
+                configureCell(cell, foodContent: "Searching", caloriesContent: 0, brandContent: "Searching",quantityContent: nil,unitContent: nil)
             case .NotSearchedYet:
-                configureCell(cell, foodContent: "Click Search bar to start search", caloriesContent: 0, brandContent: "", quantityContent: "")
+                configureCell(cell, foodContent: "Click Search bar to start search", caloriesContent: 0, brandContent: "", quantityContent: nil,unitContent: nil)
         }
         return cell
     }
@@ -90,12 +90,11 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
 
     
-    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: String){
+    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: Double?,unitContent: String?){
         cell.foodLabel.text = foodContent
         cell.calorieLabel.text = String(caloriesContent) + " Cal"
         cell.brandLabel.text = brandContent
-        cell.quantityLabel.text = quantityContent
-        
+        cell.quantityLabel.text = (quantityContent == nil) ? "NA" : String(quantityContent!) + " " + unitContent!
     }
 }
 

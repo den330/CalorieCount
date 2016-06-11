@@ -7,9 +7,28 @@
 //
 
 import Foundation
+import CoreData
 
 var dateFormatter: NSDateFormatter = {
     var dateformatter = NSDateFormatter()
     dateformatter.dateStyle = .MediumStyle
     return dateformatter
+}()
+
+func sameDay(dayLst:[Day]) -> Bool{
+    if dayLst.count == 0{
+        return false
+    }
+    let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+    let currentDate = NSDate()
+    let recentDate = dayLst.first?.currentDate
+    return calendar!.isDate(currentDate, inSameDayAsDate: recentDate!)
+}
+
+let dayFetch: NSFetchRequest = {
+    let Fetch = NSFetchRequest(entityName: "Day")
+    let sort = NSSortDescriptor(key: "currentDate", ascending: false)
+    Fetch.sortDescriptors = [sort]
+    Fetch.fetchLimit = 1
+    return Fetch
 }()

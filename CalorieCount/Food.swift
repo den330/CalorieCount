@@ -12,6 +12,7 @@ class Food{
     var caloriesCount: Double? = nil
     var foodContent: String? = nil
     var brandContent: String? = nil
-    var quantity: String? = nil
+    var quantity: Double? = nil
+    var unit: String? = nil
     var id: String? = nil
 }
