@@ -24,9 +24,11 @@ class DetailAnimationController: NSObject, UIViewControllerAnimatedTransitioning
         if presenting{
             let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
             containerView.addSubview(toView)
-            toView.center.y += (containerView.bounds.size.height/2 + toView.frame.size.height/2)
-            UIView.animateWithDuration(duration, animations: {
-                toView.center.y -= (containerView.bounds.size.height/2 + toView.frame.size.height/2)
+            toView.center.y += containerView.bounds.size.height
+            toView.transform = CGAffineTransformMakeScale(0.5, 0.5)
+            UIView.animateWithDuration(duration-0.1, animations: {
+                toView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                toView.center.y -= containerView.bounds.size.height
                 }, completion: {_ in
                     transitionContext.completeTransition(true)
             })
