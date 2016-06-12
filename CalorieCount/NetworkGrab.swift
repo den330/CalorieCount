@@ -121,9 +121,12 @@ class NetworkGrab{
                         foodItem.caloriesCount = calories
                         foodItem.foodContent = name
                         foodItem.brandContent = brandName
-                        if serve_unit != nil{
-                            foodItem.quantity = serve_qty
-                            foodItem.unit = serve_unit
+                        if let unit = serve_unit, qty = serve_qty{
+                            foodItem.quantity = qty
+                            foodItem.unit = unit
+                        }else{
+                            foodItem.quantity = nil
+                            foodItem.unit = nil
                         }
                         foodItem.id = food_id
                         searchResults.append(foodItem)

@@ -127,7 +127,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     func handleLongPress(sender: UILongPressGestureRecognizer){
         if sender.state == UIGestureRecognizerState.Began {
-            let touchPoint = sender.locationInView(self.view)
+            let touchPoint = sender.locationInView(tableView)
             if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
                 print("haha\(indexPath)")
             }
