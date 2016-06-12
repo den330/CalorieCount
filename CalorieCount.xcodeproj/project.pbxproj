@@ -14,7 +14,6 @@
 		908C41211D0B5FBA00C70A02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 908C41151D0B5FBA00C70A02 /* Assets.xcassets */; };
 		908C41221D0B5FBA00C70A02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 908C41171D0B5FBA00C70A02 /* LaunchScreen.storyboard */; };
 		908C41231D0B5FBA00C70A02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 908C41191D0B5FBA00C70A02 /* Main.storyboard */; };
-		908C41241D0B5FBA00C70A02 /* CalorieCount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 908C411B1D0B5FBA00C70A02 /* CalorieCount.xcdatamodeld */; };
 		908C41251D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 908C411D1D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld */; };
 		908C41261D0B5FBA00C70A02 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 908C411F1D0B5FBA00C70A02 /* EmptyCell.xib */; };
 		908C41271D0B5FBA00C70A02 /* MyAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C41201D0B5FBA00C70A02 /* MyAlertController.swift */; };
@@ -45,7 +44,6 @@
 		908C41151D0B5FBA00C70A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		908C41181D0B5FBA00C70A02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		908C411A1D0B5FBA00C70A02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
-		908C411C1D0B5FBA00C70A02 /* CalorieCount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CalorieCount.xcdatamodel; sourceTree = "<group>"; };
 		908C411E1D0B5FBA00C70A02 /* Daily Calories.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories.xcdatamodel"; sourceTree = "<group>"; };
 		908C411F1D0B5FBA00C70A02 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		908C41201D0B5FBA00C70A02 /* MyAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAlertController.swift; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 			children = (
 				908C41151D0B5FBA00C70A02 /* Assets.xcassets */,
 				908C41161D0B5FBA00C70A02 /* Base.lproj */,
-				908C411B1D0B5FBA00C70A02 /* CalorieCount.xcdatamodeld */,
 				908C411D1D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld */,
 				908C411F1D0B5FBA00C70A02 /* EmptyCell.xib */,
 				908C41201D0B5FBA00C70A02 /* MyAlertController.swift */,
@@ -221,7 +218,6 @@
 				908C41271D0B5FBA00C70A02 /* MyAlertController.swift in Sources */,
 				90D11A2A1CE790EC005F8E13 /* Day.swift in Sources */,
 				900596B61CFD0A25001E1321 /* DetailAnimationController.swift in Sources */,
-				908C41241D0B5FBA00C70A02 /* CalorieCount.xcdatamodeld in Sources */,
 				9075BF5C1D0CB1FB00F57575 /* HudView.swift in Sources */,
 				90CD30CB1CFE30B60063A7B9 /* functions.swift in Sources */,
 				90F5B8ED1CE8DD790089E72E /* DailyConsumeTableViewController.swift in Sources */,
@@ -410,16 +406,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		908C411B1D0B5FBA00C70A02 /* CalorieCount.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				908C411C1D0B5FBA00C70A02 /* CalorieCount.xcdatamodel */,
-			);
-			currentVersion = 908C411C1D0B5FBA00C70A02 /* CalorieCount.xcdatamodel */;
-			path = CalorieCount.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		908C411D1D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

@@ -50,6 +50,15 @@ class DetailViewController: UIViewController {
     @IBAction func saveButton(){
         let hudView = HudView.hudInView(view, animated: true)
         hudView.text = "Saved"
+        saveItem()
+        let delayInSeconds = 0.6
+        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
+        dispatch_after(when, dispatch_get_main_queue()){
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    func saveItem(){
         let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
         do{
@@ -68,7 +77,7 @@ class DetailViewController: UIViewController {
                     singleItem.quantityConsumed = Double(singleItem.quantityConsumed!) + Double(currentfigure)
                     let newAddedCalories = foodSelected.caloriesCount! * Double(currentfigure)
                     singleItem.totalCalories = Double(singleItem.totalCalories!) + newAddedCalories
-                   break
+                    break
                 }
             }
             if !existed{
@@ -90,12 +99,8 @@ class DetailViewController: UIViewController {
         }catch let error as NSError{
             print("Error: \(error)" + "description \(error.localizedDescription)")
         }
-        let delayInSeconds = 0.6
-        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-        dispatch_after(when, dispatch_get_main_queue()){
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
     }
+    
     
     @IBAction func close(){
         dismissViewControllerAnimated(true, completion: nil)
