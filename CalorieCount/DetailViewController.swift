@@ -74,24 +74,24 @@ class DetailViewController: UIViewController {
                 let singleItem = i as! ItemConsumed
                 if singleItem.id == foodSelected.id{
                     existed = true
-                    singleItem.quantityConsumed = Double(singleItem.quantityConsumed!) + Double(currentfigure)
+                    singleItem.quantityConsumed = singleItem.quantityConsumed + currentfigure
                     let newAddedCalories = foodSelected.caloriesCount! * Double(currentfigure)
-                    singleItem.totalCalories = Double(singleItem.totalCalories!) + newAddedCalories
+                    singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
                     break
                 }
             }
             if !existed{
                 itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
-                itemForSelected.quantityConsumed = Int(quantityLabel.text!)
+                itemForSelected.quantityConsumed = Int32(quantityLabel.text!)!
                 itemForSelected.name = foodSelected.foodContent
-                itemForSelected.unitCalories = foodSelected.caloriesCount
-                itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)!) * Double((itemForSelected.unitCalories)!)
+                itemForSelected.unitCalories = foodSelected.caloriesCount!
+                itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)) * Double((itemForSelected.unitCalories))
                 if let quantity = foodSelected.quantity, unit = foodSelected.unit{
                     itemForSelected.quantity = String(quantity) + " " + unit
                 }
                 itemForSelected.brand = foodSelected.brandContent
                 recentDay.currentDate = NSDate()
-                itemForSelected.id = foodSelected.id
+                itemForSelected.id = foodSelected.id!
                 items.addObject(itemForSelected)
             }
             recentDay.items = items.copy() as? NSOrderedSet

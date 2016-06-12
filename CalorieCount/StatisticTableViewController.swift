@@ -81,7 +81,7 @@ class StatisticTableViewController: UITableViewController{
                 var currentDayCal = 0.0
                 for i in items{
                     let singleItem = i as! ItemConsumed
-                    currentDayCal += singleItem.totalCalories! as Double
+                    currentDayCal += singleItem.totalCalories as Double
                 }
                 calInCalc = totalCals - currentDayCal
             }else{

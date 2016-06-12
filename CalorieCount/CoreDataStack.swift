@@ -27,7 +27,7 @@ class CoreDataStack{
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.modelName)
         do{
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true]
+            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption:true]
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
         }catch{
             print("Error adding persistent store")

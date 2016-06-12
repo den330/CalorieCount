@@ -69,7 +69,7 @@ class RecordTableViewController: UITableViewController {
         var totalCalories = 0.0
         for i in items{
             let item = i as! ItemConsumed
-            totalCalories += Double(item.totalCalories!)
+            totalCalories += Double(item.totalCalories)
         }
         let dateLabel =  cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1001) as! UILabel

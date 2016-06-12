@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
+    <entity name="Day" representedClassName=".Day" syncable="YES">
+        <attribute name="currentDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ItemConsumed" inverseName="days" inverseEntity="ItemConsumed" syncable="YES"/>
+    </entity>
+    <entity name="ItemConsumed" representedClassName=".ItemConsumed" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isFav" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantityConsumed" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalCalories" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="unitCalories" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="days" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Day" inverseName="items" inverseEntity="Day" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Day" positionX="-342" positionY="-12" width="128" height="73"/>
+        <element name="ItemConsumed" positionX="-54" positionY="0" width="128" height="180"/>
+    </elements>
+</model>
