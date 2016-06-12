@@ -16,6 +16,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     var NaviController: UINavigationController?
     let transition = DetailAnimationController()
     var didTip = false
+    var pendingFav: Food!
     
     @IBOutlet weak var filterTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -81,6 +82,21 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         alert.view.tintColor = UIColor.greenColor()
     }
     
+    func makeFavAlert(){
+        let alert = MyAlertController(title: "Favorite", message: "Add to Favorite", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.delegate = self
+        alert.addAction(UIAlertAction(title: "Add it!", style: .Default, handler: {_ in self.handleFav()}))
+        alert.addAction(UIAlertAction(title: "Don't", style: .Default, handler: nil))
+        presentViewController(alert,animated: true, completion: nil)
+        alert.view.tintColor = UIColor.redColor()
+    }
+    
+    func handleFav(){
+        let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)!
+        let favFood = ItemConsumed(entity: itemEntity, insertIntoManagedObjectContext: managedContext)
+        
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
             case .NotFound, .Searching: return 1
@@ -129,7 +145,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         if sender.state == UIGestureRecognizerState.Began {
             let touchPoint = sender.locationInView(tableView)
             if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
-                print("haha\(indexPath)")
+                if let lst = net.state.get(){
+                    pendingFav = lst[indexPath.row]
+                    makeFavAlert()
+                }
             }
         }
     }
