@@ -57,6 +57,25 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         cell.quantityLabel.text = item.quantity
         return cell
     }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            let item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
+            managedContext.deleteObject(item)
+        }
+        
+        do{
+            try managedContext.save()
+        }catch let error as NSError{
+            print("Could not save delete: \(error)")
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        <#code#>
+    }
+    
+    
 }
 
 
