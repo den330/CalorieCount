@@ -13,7 +13,7 @@ import MessageUI
 
 class StatisticTableViewController: UITableViewController{
     
-    var fetchedResultsController: NSFetchedResultsController!
+    
     let fetchRequest = NSFetchRequest(entityName: "Day")
     var managedContext: NSManagedObjectContext!
     var isFirstTime = true

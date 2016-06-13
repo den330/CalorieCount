@@ -12,7 +12,7 @@ import MessageUI
 
 class DetailViewController: UIViewController {
     
-    var foodSelected: Food!
+    var foodSelected: Food?
     var managedContext: NSManagedObjectContext!
     var recentDay: Day!
     var itemForSelected: ItemConsumed!
@@ -29,6 +29,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("haha")
         let gesture = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.close))
         gesture.cancelsTouchesInView = false
         gesture.delegate = self
@@ -63,8 +64,8 @@ class DetailViewController: UIViewController {
     func saveItem(){
         let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
-        if foodSelected != nil{
-
+        if let foodS = foodSelected{
+            print("here")
             do{
                 let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
                 if sameDay(results){
@@ -76,10 +77,10 @@ class DetailViewController: UIViewController {
                 var existed: Bool = false
                 for i in items{
                     let singleItem = i as! ItemConsumed
-                    if singleItem.id == foodSelected.id{
+                    if singleItem.id == foodS.id{
                         existed = true
                         singleItem.quantityConsumed = singleItem.quantityConsumed + currentfigure
-                        let newAddedCalories = foodSelected.caloriesCount! * Double(currentfigure)
+                        let newAddedCalories = foodS.caloriesCount! * Double(currentfigure)
                         singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
                         break
                     }
@@ -87,27 +88,30 @@ class DetailViewController: UIViewController {
                 if !existed{
                     itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
                     itemForSelected.quantityConsumed = Int32(quantityLabel.text!)!
-                    itemForSelected.name = foodSelected.foodContent
-                    itemForSelected.unitCalories = foodSelected.caloriesCount!
+                    itemForSelected.name = foodS.foodContent
+                    itemForSelected.unitCalories = foodS.caloriesCount!
                     itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)) * Double((itemForSelected.unitCalories))
-                    if let quantity = foodSelected.quantity, unit = foodSelected.unit{
+                    if let quantity = foodS.quantity, unit = foodS.unit{
                         itemForSelected.quantity = String(quantity) + " " + unit
                     }
-                    itemForSelected.brand = foodSelected.brandContent
-                    recentDay.currentDate = NSDate()
-                    itemForSelected.id = foodSelected.id!
+                    itemForSelected.brand = foodS.brandContent
+                    itemForSelected.id = foodS.id!
                     items.addObject(itemForSelected)
                 }
                 recentDay.items = items.copy() as? NSOrderedSet
+                recentDay.currentDate = NSDate()
                 try managedContext.save()
             }catch let error as NSError{
                 print("Error: \(error)" + "description \(error.localizedDescription)")
             }
         }else{
+            print("123here")
             do{
                 let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
                 if sameDay(results){
+                    print("before")
                     recentDay = results.first!
+                    print("after")
                 }else{
                     recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
                 }
@@ -136,6 +140,7 @@ class DetailViewController: UIViewController {
                     items.addObject(itemForSelected)
                 }
                 recentDay.items = items.copy() as? NSOrderedSet
+                recentDay.currentDate = NSDate()
                 try managedContext.save()
             }catch let error as NSError{
                 print("Error: \(error)" + "description \(error.localizedDescription)")
