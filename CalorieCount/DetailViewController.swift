@@ -17,6 +17,7 @@ class DetailViewController: UIViewController {
     var recentDay: Day!
     var itemForSelected: ItemConsumed!
     var itemCon: ItemConsumed!
+    let transition = DetailAnimationController()
     
     @IBOutlet weak var quantityLabel: UILabel!
     var currentfigure = 1
@@ -29,7 +30,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("haha")
+        transition.presenting = true
         let gesture = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.close))
         gesture.cancelsTouchesInView = false
         gesture.delegate = self
@@ -65,7 +66,6 @@ class DetailViewController: UIViewController {
         let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
         if let foodS = foodSelected{
-            print("here")
             do{
                 let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
                 if sameDay(results){
@@ -105,13 +105,10 @@ class DetailViewController: UIViewController {
                 print("Error: \(error)" + "description \(error.localizedDescription)")
             }
         }else{
-            print("123here")
-            do{
+           do{
                 let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
                 if sameDay(results){
-                    print("before")
                     recentDay = results.first!
-                    print("after")
                 }else{
                     recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
                 }
@@ -159,7 +156,17 @@ extension DetailViewController: UIViewControllerTransitioningDelegate{
     func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
         return DetailPresentationController(presentedViewController: presented, presentingViewController: presenting)
     }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
+    }
 }
+
 
 
 extension DetailViewController: UIGestureRecognizerDelegate{

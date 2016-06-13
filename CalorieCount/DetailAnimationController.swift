@@ -34,22 +34,13 @@ class DetailAnimationController: NSObject, UIViewControllerAnimatedTransitioning
             })
 
         }else{
-            if count == 3{
-                count = 0
-            }
-            count += 1
             let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)!
             containerView.addSubview(fromView)
             fromView.alpha = 1.0
             UIView.animateWithDuration(duration, animations: {
                 fromView.transform = CGAffineTransformMakeScale(0.5, 0.5)
-                if self.count == 1{
-                    fromView.center.x += containerView.bounds.width
-                }else if self.count == 2{
-                    fromView.center.x -= containerView.bounds.width
-                }else{
-                    fromView.center.y -= containerView.bounds.height
-                }}, completion: { _ in
+                fromView.center.y -= containerView.bounds.height
+                }, completion: { _ in
                 transitionContext.completeTransition(true)})
         }
     }
