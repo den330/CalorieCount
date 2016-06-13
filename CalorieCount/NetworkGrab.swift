@@ -13,14 +13,18 @@ import SystemConfiguration
 
 class NetworkGrab{
     private let baseUrl: NSURL?
-    private let appID: String
-    private let appKey: String
+    private let appID1: String
+    private let appKey1: String
+    private let appKey2: String
+    private let appID2: String
+    private var idInUse: String?
+    private var keyInUse: String?
     private(set) var state: State = .NotSearchedYet
     private var dataTask: NSURLSessionDataTask? = nil
     private let numOfResults: String
     private let fields: String
-    private let calReq: String
-    private let appInfo: String
+
+
     
     
     func connectedToNetwork() -> Bool {
@@ -45,6 +49,19 @@ class NetworkGrab{
         return (isReachable && !needsConnection)
     }
     
+    func getInUse(){
+        if idInUse == nil{
+            idInUse = appID1
+            keyInUse = appKey1
+        }else if idInUse! == appID1{
+            idInUse = appID2
+            keyInUse = appKey2
+        }else{
+            idInUse = appID1
+            keyInUse = appKey1
+        }
+    }
+    
     
     enum State{
         case NotSearchedYet
@@ -64,12 +81,12 @@ class NetworkGrab{
     }
     
     init(){
-        appID = "8b36dac9"
-        appKey = "c79b530ed299ec9f53d64be135311b09"
+        appID1 = "8b36dac9"
+        appKey1 = "c79b530ed299ec9f53d64be135311b09"
+        appID2 = "0a714183"
+        appKey2 = "67d0f5774ec4e02095a3cc1b36a5ccc8"
         baseUrl = NSURL(string: "https://api.nutritionix.com/v1_1/search/")
         numOfResults = "0%3A50"
-        calReq = "cal_min=0&cal_max=50000"
-        appInfo = "appId=\(appID)&appKey=\(appKey)"
         state = .NotSearchedYet
         fields = "\"fields\":[\"nf_calories\",\"item_name\",\"brand_name\",\"nf_serving_size_unit\",\"nf_serving_size_qty\",\"item_id\"]"
     }
@@ -81,6 +98,8 @@ class NetworkGrab{
         }
         state = .Searching
         dataTask?.cancel()
+        getInUse()
+        print(idInUse!)
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: configuration)
         let request = NSMutableURLRequest(URL: baseUrl!)
@@ -88,9 +107,9 @@ class NetworkGrab{
         request.HTTPMethod = "Post"
         var postString: String
         if filterText == ""{
-            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\",\"query\":\"\(mainText)\",\(fields),\"offset\":0,\"limit\":50}"
+            postString = "{\"appId\":\"\(idInUse!)\", \"appKey\":\"\(keyInUse!)\",\"query\":\"\(mainText)\",\(fields),\"offset\":0,\"limit\":50}"
         }else{
-            postString = "{\"appId\":\"\(appID)\", \"appKey\":\"\(appKey)\",\"queries\":{\"item_name\":\"\(mainText)\", \"brand_name\":\"\(filterText)\"},\(fields),\"offset\":0,\"limit\":50}"
+            postString = "{\"appId\":\"\(idInUse!)\", \"appKey\":\"\(keyInUse!)\",\"queries\":{\"item_name\":\"\(mainText)\", \"brand_name\":\"\(filterText)\"},\(fields),\"offset\":0,\"limit\":50}"
         }
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
