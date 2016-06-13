@@ -585,6 +585,7 @@
                     <navigationItem key="navigationItem" title="Favorite" id="mgH-Dk-PVF"/>
                     <connections>
                         <outlet property="tableView" destination="Mfs-x2-It4" id="Dum-vq-hNQ"/>
+                        <segue destination="uog-p9-HYp" kind="presentation" identifier="showPop" id="ybx-fD-IYt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7N9-eP-PRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -618,4 +619,7 @@
         <image name="heart-7" width="30" height="30"/>
         <image name="search-7" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ybx-fD-IYt"/>
+    </inferredMetricsTieBreakers>
 </document>

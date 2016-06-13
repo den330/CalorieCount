@@ -72,10 +72,18 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        <#code#>
+        performSegueWithIdentifier("showPop", sender: fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showPop"{
+            let item = sender as! ItemConsumed
+            let DestController = segue.destinationViewController as! DetailViewController
+            DestController.itemCon = item
+            DestController.managedContext = managedContext
+        }
+    }
 }
 
 
