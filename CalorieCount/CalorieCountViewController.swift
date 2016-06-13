@@ -50,8 +50,11 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
                     message = "Idea for a new feature? SHAKE your phone and let me know!"
                     makeAlert(message)
                     NSUserDefaults.standardUserDefaults().setValue(1, forKey: "tips")
-    //            case 1?:
-    //                print("haha")
+                case 1?:
+                    message = "For an item you frequently search, LONG PRESS it and add it to Fav, so next time" +
+                    " you can add it directly from Fav tab without searching!"
+                    makeAlert(message)
+                    NSUserDefaults.standardUserDefaults().setValue(2, forKey: "tips")
                 default: break
                 }
             }
