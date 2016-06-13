@@ -53,7 +53,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         let cell = tableView.dequeueReusableCellWithIdentifier(commonConstants.cellXib, forIndexPath: indexPath) as! FoodCell
         let item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
         cell.brandLabel.text = item.brand
-        cell.calorieLabel.text = String(item.unitCalories)
+        cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
         cell.foodLabel.text = item.name
         cell.quantityLabel.text = item.quantity
         return cell
