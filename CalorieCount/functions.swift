@@ -18,10 +18,12 @@ var dateFormatter: NSDateFormatter = {
 }()
 
 
-
-
-
-
+func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: Double?,unitContent: String?){
+    cell.foodLabel.text = foodContent
+    cell.calorieLabel.text = String(caloriesContent) + " Cal"
+    cell.brandLabel.text = brandContent
+    cell.quantityLabel.text = (quantityContent == nil) ? "NA" : String(quantityContent!) + " " + unitContent!
+}
 
 func sameDay(dayLst:[Day]) -> Bool{
     if dayLst.count == 0{

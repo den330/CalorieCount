@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         customizeAppearance()
-        removeLeaks()
         if NSUserDefaults.standardUserDefaults().objectForKey("isFirstTime") == nil{
             removeLeaks()
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isFirstTime")
@@ -61,9 +60,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let recordController = NavController.topViewController as! RecordTableViewController
         let secondNavController = TabController.viewControllers![2] as! UINavigationController
         let statisticController = secondNavController.topViewController as! StatisticTableViewController
+        let thirdNavController = TabController.viewControllers![3] as! UINavigationController
+        let favController = thirdNavController.topViewController as! FavViewController
         statisticController.managedContext = coreDataStack.context
         caloriesController.managedContext = coreDataStack.context
         recordController.managedContext = coreDataStack.context
+        favController.managedContext = coreDataStack.context
         return true
     }
 }

@@ -108,6 +108,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="xHC-PM-GxK"/>
                         <segue destination="BTn-jd-NlY" kind="relationship" relationship="viewControllers" id="pv1-ZU-usQ"/>
                         <segue destination="0bn-Cp-7Rd" kind="relationship" relationship="viewControllers" id="0Ej-1M-PIB"/>
+                        <segue destination="pZ4-20-YT6" kind="relationship" relationship="viewControllers" id="UgR-xl-zTS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IhO-j3-ivZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -539,6 +540,57 @@
             </objects>
             <point key="canvasLocation" x="348" y="945"/>
         </scene>
+        <!--Fav-->
+        <scene sceneID="t1t-Ea-jcA">
+            <objects>
+                <navigationController id="pZ4-20-YT6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Fav" image="heart-7" id="YDM-iK-Dgd"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a1L-PQ-OAb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="bi5-08-cus" kind="relationship" relationship="rootViewController" id="URE-F8-6D9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="obl-K8-8uV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-707" y="1738"/>
+        </scene>
+        <!--Favorite-->
+        <scene sceneID="b9Z-b1-amv">
+            <objects>
+                <viewController id="bi5-08-cus" customClass="FavViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GsC-yY-b7j"/>
+                        <viewControllerLayoutGuide type="bottom" id="T1t-lz-TnT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="z7h-3K-COa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mfs-x2-It4">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mfs-x2-It4" firstAttribute="leading" secondItem="z7h-3K-COa" secondAttribute="leading" id="5ky-vb-N52"/>
+                            <constraint firstItem="Mfs-x2-It4" firstAttribute="top" secondItem="z7h-3K-COa" secondAttribute="top" id="Xaw-CA-lhr"/>
+                            <constraint firstAttribute="bottom" secondItem="Mfs-x2-It4" secondAttribute="bottom" id="jeL-di-MZq"/>
+                            <constraint firstAttribute="trailing" secondItem="Mfs-x2-It4" secondAttribute="trailing" id="jlo-ne-oPd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Favorite" id="mgH-Dk-PVF"/>
+                    <connections>
+                        <outlet property="tableView" destination="Mfs-x2-It4" id="Dum-vq-hNQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7N9-eP-PRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-16" y="1737"/>
+        </scene>
         <!--Record-->
         <scene sceneID="ZeB-Jd-fvH">
             <objects>
@@ -563,6 +615,7 @@
         <image name="CloseButton" width="15" height="15"/>
         <image name="calendar-7" width="30" height="30"/>
         <image name="connectivity-bar-7" width="30" height="30"/>
+        <image name="heart-7" width="30" height="30"/>
         <image name="search-7" width="30" height="30"/>
     </resources>
 </document>

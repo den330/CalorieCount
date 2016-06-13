@@ -116,7 +116,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         favFood.isFav = true
         favFood.name = pendingFav.foodContent
         if let quantity = pendingFav.quantity, unit = pendingFav.unit{
-            favFood.quantity = String(quantity) + unit
+            favFood.quantity = String(quantity) + " " + unit
         }else{
             favFood.quantity = "NA"
         }
@@ -201,14 +201,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
                 detailController.managedContext = managedContext
             }
         }
-    }
-
-    
-    func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: Double?,unitContent: String?){
-        cell.foodLabel.text = foodContent
-        cell.calorieLabel.text = String(caloriesContent) + " Cal"
-        cell.brandLabel.text = brandContent
-        cell.quantityLabel.text = (quantityContent == nil) ? "NA" : String(quantityContent!) + " " + unitContent!
     }
 }
 

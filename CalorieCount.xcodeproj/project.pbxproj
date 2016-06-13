@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		900596B61CFD0A25001E1321 /* DetailAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900596B51CFD0A25001E1321 /* DetailAnimationController.swift */; };
+		902818261D0E351300A4E16A /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902818251D0E351300A4E16A /* FavViewController.swift */; };
 		9029F6F61CFF99E5008914FC /* StatisticTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9029F6F51CFF99E5008914FC /* StatisticTableViewController.swift */; };
 		9075BF5C1D0CB1FB00F57575 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9075BF5B1D0CB1FB00F57575 /* HudView.swift */; };
 		9087CEDB1CEB6AE0006A1C63 /* RecordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		900596B51CFD0A25001E1321 /* DetailAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailAnimationController.swift; sourceTree = "<group>"; };
 		902818241D0E1C1D00A4E16A /* Daily Calories 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 2.xcdatamodel"; sourceTree = "<group>"; };
+		902818251D0E351300A4E16A /* FavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
 		9029F6F51CFF99E5008914FC /* StatisticTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticTableViewController.swift; sourceTree = "<group>"; };
 		9075BF5B1D0CB1FB00F57575 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */,
 				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
+				902818251D0E351300A4E16A /* FavViewController.swift */,
 				9029F6F51CFF99E5008914FC /* StatisticTableViewController.swift */,
 				9075BF5B1D0CB1FB00F57575 /* HudView.swift */,
 				90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */,
@@ -224,6 +227,7 @@
 				90F5B8ED1CE8DD790089E72E /* DailyConsumeTableViewController.swift in Sources */,
 				9087CEDB1CEB6AE0006A1C63 /* RecordTableViewController.swift in Sources */,
 				90D11A2B1CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift in Sources */,
+				902818261D0E351300A4E16A /* FavViewController.swift in Sources */,
 				90D11A291CE790EC005F8E13 /* Day+CoreDataProperties.swift in Sources */,
 				90B8BC991CE3D4010083DF72 /* FoodCell.swift in Sources */,
 				9029F6F61CFF99E5008914FC /* StatisticTableViewController.swift in Sources */,
