@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         customizeAppearance()
+        removeLeaks()
         if NSUserDefaults.standardUserDefaults().objectForKey("isFirstTime") == nil{
             removeLeaks()
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isFirstTime")

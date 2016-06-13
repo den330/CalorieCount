@@ -92,10 +92,46 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     func handleFav(){
+        let fetchRequest = NSFetchRequest(entityName: "ItemConsumed")
+        fetchRequest.predicate = NSPredicate(format: "isFav==%@", true)
+        var results:[ItemConsumed]?
+        do{
+            results = try managedContext.executeFetchRequest(fetchRequest) as? [ItemConsumed]
+        }catch let error as NSError{
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        guard let lst = results else{
+            print("Wrong")
+            return
+        }
+        for i in lst{
+            if i.id == pendingFav.id{
+                return
+            }
+        }
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)!
         let favFood = ItemConsumed(entity: itemEntity, insertIntoManagedObjectContext: managedContext)
-        
+        favFood.brand = pendingFav.brandContent
+        favFood.id = pendingFav.id!
+        favFood.isFav = true
+        favFood.name = pendingFav.foodContent
+        if let quantity = pendingFav.quantity, unit = pendingFav.unit{
+            favFood.quantity = String(quantity) + unit
+        }else{
+            favFood.quantity = "NA"
+        }
+        favFood.quantityConsumed = 0
+        favFood.totalCalories = 0
+        favFood.unitCalories = pendingFav.caloriesCount!
+        do{
+            try managedContext.save()
+        }catch{
+            print(error)
+        }
     }
+
+
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
