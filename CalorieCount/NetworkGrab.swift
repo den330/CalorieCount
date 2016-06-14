@@ -99,7 +99,6 @@ class NetworkGrab{
         state = .Searching
         dataTask?.cancel()
         getInUse()
-        print(idInUse!)
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: configuration)
         let request = NSMutableURLRequest(URL: baseUrl!)
