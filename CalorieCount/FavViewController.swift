@@ -18,7 +18,6 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
     var managedContext: NSManagedObjectContext!
     
     private struct commonConstants{
-        static let rowHeight:CGFloat = 170
         static let topInsets:CGFloat = 0
         static let cellXib = "FoodCell"
     }
@@ -30,7 +29,8 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
-        tableView.rowHeight = commonConstants.rowHeight
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
         let sortDescriptor = NSSortDescriptor(key: "unitCalories", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.predicate = NSPredicate(format: "isFav==%@", true)

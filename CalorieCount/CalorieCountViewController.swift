@@ -24,7 +24,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     let net = NetworkGrab()
     
     private struct commonConstants{
-        static let rowHeight:CGFloat = 170
         static let topInsets:CGFloat = 92
         static let cellXib = "FoodCell"
     }
@@ -37,7 +36,8 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
-        tableView.rowHeight = commonConstants.rowHeight
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     override func viewDidAppear(animated: Bool) {
