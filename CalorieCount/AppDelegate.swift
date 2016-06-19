@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import CoreSpotlight
+import MobileCoreServices
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -46,6 +48,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(error)
         }
     }
+    
+
+    
+    
+    func indexAllRecord(){
+        let fetchRequest = NSFetchRequest(entityName: "Day")
+        do{
+            let lst = try coreDataStack.context.executeFetchRequest(fetchRequest) as! [Day]
+            let items = lst.map{$0.searchableItem}
+            CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
+                if let error = error{
+                    print("\(error)")
+                }else{
+                    print("indexed")
+                }
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -54,6 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             removeLeaks()
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isFirstTime")
         }
+        indexAllRecord()
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController

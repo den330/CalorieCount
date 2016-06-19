@@ -8,10 +8,30 @@
 
 import Foundation
 import CoreData
+import CoreSpotlight
+import MobileCoreServices
 
 
 class Day: NSManagedObject {
+    
+    var searchableItem: CSSearchableItem{
+        let item = CSSearchableItem(uniqueIdentifier: nil, domainIdentifier: nil, attributeSet: attributeSet)
+        return item
+    }
+    
+    internal var attributeSet: CSSearchableItemAttributeSet{
+        let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeContact as String)
+        attributeSet.title = dateFormatter.stringFromDate(currentDate!)
+        var calories:Double = 0
+        for i in items!{
+            let item = i as! ItemConsumed
+            calories += item.totalCalories
+        }
+        attributeSet.contentDescription = "Total Calorie: \(calories)"
+        attributeSet.keywords = ["Calorie"]
+        return attributeSet
+    }
 
-// Insert code here to add functionality to your managed object subclass
+
 
 }
