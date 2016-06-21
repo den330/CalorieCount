@@ -141,6 +141,11 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
                 managedContext.deleteObject(item as! ItemConsumed)
             }
             managedContext.deleteObject(day)
+            do{
+                try managedContext.save()
+            }catch let error as NSError{
+                print("Could not save delete: \(error)")
+            }
         }
     }
 }

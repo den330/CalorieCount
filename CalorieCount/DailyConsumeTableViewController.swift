@@ -75,36 +75,32 @@ class DailyConsumeTableViewController: UITableViewController{
         }
         return cell
     }
-}
-
-extension DailyConsumeTableViewController: MFMailComposeViewControllerDelegate{
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake{
-            showEmail()
+            let alert = MyAlertController(title: "Delete", message: "Delete All Records On This Day?", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {_ in self.handleMotion()}))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+            presentViewController(alert,animated: true, completion: nil)
+            alert.view.tintColor = UIColor.redColor()
         }
     }
     
-    func showEmail(){
-        if presentedViewController != nil{
-            dismissViewControllerAnimated(true,completion: nil)
+    func handleMotion(){
+        for i in day.items!{
+            managedContext.deleteObject(i as! ItemConsumed)
         }
-        makeEmail()
-    }
-    
-    func makeEmail(){
-        if MFMailComposeViewController.canSendMail(){
-            let controller = MFMailComposeViewController()
-            controller.mailComposeDelegate = self
-            controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
-            controller.setToRecipients(["yaxinyuan0910@gmail.com"])
-            presentViewController(controller, animated: true, completion: nil)
+        managedContext.deleteObject(day)
+        do{
+            try managedContext.save()
+        }catch let error as NSError{
+            print("Could not save delete: \(error)")
         }
+        tableView.reloadData()
     }
 }
+
+
 
 
 
