@@ -111,21 +111,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     
-    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
-        let objectId: NSDate
-        if userActivity.activityType == CSSearchableItemActionType{
-            if let activityObjectId = userActivity.userInfo![CSSearchableItemActivityIdentifier] as? NSDate{
-                objectId = activityObjectId
-                print(objectId)
-                
-                return true
-            }else{
-                return false
-            }
-        }else{
-            return false
-        }
-    }
+//    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+//        let objectId: NSDate
+//        if userActivity.activityType == CSSearchableItemActionType{
+//            if let activityObjectId = userActivity.userInfo![CSSearchableItemActivityIdentifier] as? NSDate{
+//                objectId = activityObjectId
+//                print(objectId)
+//                
+//                return true
+//            }else{
+//                return false
+//            }
+//        }else{
+//            return false
+//        }
+//    }
 }
 
 
