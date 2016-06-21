@@ -56,13 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchRequest = NSFetchRequest(entityName: "Day")
         do{
             let lst = try coreDataStack.context.executeFetchRequest(fetchRequest) as! [Day]
-            let lstReverse = lst.reverse()
-            let items = lstReverse.map{$0.searchableItem}
+            let items = lst.map{$0.searchableItem}
             CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
                 if let error = error{
                     print("\(error)")
-                }else{
-                    print("indexed")
                 }
             }
         }catch{
@@ -70,13 +67,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func destroyAllRecord(){
+    func updateAllRecord(){
         CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
             error in
             if let error = error{
                 print(error)
             }else{
-                print("deleted index")
+                self.indexAllRecord()
             }
         }
     }
@@ -89,8 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             removeLeaks()
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isFirstTime")
         }
-        destroyAllRecord()
-        indexAllRecord()
+        updateAllRecord()
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController
@@ -105,22 +101,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         favController.managedContext = coreDataStack.context
         return true
     }
-}
+
     
-//    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
-//        let objectId: String
-//        if userActivity.activityType == CSSearchableItemActionType{
-//            if let activityObjectId = userActivity.userInfo![CSSearchableItemActivityIdentifier] as! String{
-//                objectId = activityObjectId
-//                print(objectId)
-//                print(dateFormatter.dateFromString(objectId))
-//                return true
-//            }else{
-//                return false
-//            }
-//        }else{
-//            return false
-//        }
-//    }
-//}
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        let objectId: NSDate
+        if userActivity.activityType == CSSearchableItemActionType{
+            if let activityObjectId = userActivity.userInfo![CSSearchableItemActivityIdentifier] as? NSDate{
+                objectId = activityObjectId
+                print(objectId)
+                
+                return true
+            }else{
+                return false
+            }
+        }else{
+            return false
+        }
+    }
+}
+
 
