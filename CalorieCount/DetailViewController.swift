@@ -68,7 +68,7 @@ class DetailViewController: UIViewController {
         if let foodS = foodSelected{
             do{
                 let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
-                if sameDay(results){
+                if sameDay(results,day: NSDate()){
                     recentDay = results.first!
                 }else{
                     recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
@@ -107,7 +107,7 @@ class DetailViewController: UIViewController {
         }else{
            do{
                 let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
-                if sameDay(results){
+            if sameDay(results,day:NSDate()){
                     recentDay = results.first!
                 }else{
                     recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)

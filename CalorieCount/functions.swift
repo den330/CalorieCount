@@ -14,6 +14,7 @@ import UIKit
 var dateFormatter: NSDateFormatter = {
     var dateformatter = NSDateFormatter()
     dateformatter.dateStyle = .MediumStyle
+    //dateformatter.dateFormat = "dd-MM-yyyy"
     return dateformatter
 }()
 
@@ -25,14 +26,13 @@ func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double,
     cell.quantityLabel.text = (quantityContent == nil) ? "NA" : String(quantityContent!) + " " + unitContent!
 }
 
-func sameDay(dayLst:[Day]) -> Bool{
+func sameDay(dayLst:[Day],day: NSDate) -> Bool{
     if dayLst.count == 0{
         return false
     }
     let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-    let currentDate = NSDate()
     let recentDate = dayLst.first?.currentDate
-    return calendar!.isDate(currentDate, inSameDayAsDate: recentDate!)
+    return calendar!.isDate(day, inSameDayAsDate: recentDate!)
 }
 
 let dayFetch: NSFetchRequest = {

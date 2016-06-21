@@ -56,7 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchRequest = NSFetchRequest(entityName: "Day")
         do{
             let lst = try coreDataStack.context.executeFetchRequest(fetchRequest) as! [Day]
-            let items = lst.map{$0.searchableItem}
+            let lstReverse = lst.reverse()
+            let items = lstReverse.map{$0.searchableItem}
             CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
                 if let error = error{
                     print("\(error)")
@@ -69,6 +70,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func destroyAllRecord(){
+        CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
+            error in
+            if let error = error{
+                print(error)
+            }else{
+                print("deleted index")
+            }
+        }
+    }
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -77,6 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             removeLeaks()
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isFirstTime")
         }
+        destroyAllRecord()
         indexAllRecord()
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
@@ -93,4 +106,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 }
+    
+//    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+//        let objectId: String
+//        if userActivity.activityType == CSSearchableItemActionType{
+//            if let activityObjectId = userActivity.userInfo![CSSearchableItemActivityIdentifier] as! String{
+//                objectId = activityObjectId
+//                print(objectId)
+//                print(dateFormatter.dateFromString(objectId))
+//                return true
+//            }else{
+//                return false
+//            }
+//        }else{
+//            return false
+//        }
+//    }
+//}
 

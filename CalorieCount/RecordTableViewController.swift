@@ -21,7 +21,7 @@ class RecordTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 60
-        let sortDescriptor = NSSortDescriptor(key: "currentDate", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "currentDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
@@ -73,10 +73,14 @@ class RecordTableViewController: UITableViewController {
         }
         let dateLabel =  cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1001) as! UILabel
-        let today = dateFormatter.stringFromDate(day.currentDate!)
+        let date = dateFormatter.stringFromDate(day.currentDate!)
         dateLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         caloriesLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
-        dateLabel.text = today
+        if !sameDay([day],day: NSDate()){
+            dateLabel.text = date
+        }else{
+            dateLabel.text = "Today"
+        }
         caloriesLabel.text = "Total: " + String(format: "%.2f", Double(totalCalories)) + " Cal"
     }
     
