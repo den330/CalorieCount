@@ -29,25 +29,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.tintColor = UIColor.whiteColor()
     }
     
-    func removeLeaks(){
-        do{
-            let results = try coreDataStack.context.executeFetchRequest(itemConsumedFetch)
-            for i in results{
-                let item = i as! ItemConsumed
-                if item.days == nil{
-                    coreDataStack.context.deleteObject(item)
-                }
-            }
-            
-            do{
-                try coreDataStack.context.save()
-            }catch let error as NSError{
-                print("Could not save delete: \(error)")
-            }
-        }catch{
-            print(error)
-        }
-    }
+//    func removeLeaks(){
+//        do{
+//            let results = try coreDataStack.context.executeFetchRequest(itemConsumedFetch)
+//            for i in results{
+//                let item = i as! ItemConsumed
+//                if item.days == nil{
+//                    coreDataStack.context.deleteObject(item)
+//                }
+//            }
+//            
+//            do{
+//                try coreDataStack.context.save()
+//            }catch let error as NSError{
+//                print("Could not save delete: \(error)")
+//            }
+//        }catch{
+//            print(error)
+//        }
+//    }
     
 
     
@@ -55,7 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func indexAllRecord(){
         let fetchRequest = NSFetchRequest(entityName: "Day")
         do{
-            let lst = try coreDataStack.context.executeFetchRequest(fetchRequest) as! [Day]
+            let context = coreDataStack.context
+            let lst = try context.executeFetchRequest(fetchRequest) as! [Day]
             let items = lst.map{$0.searchableItem}
             CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
                 if let error = error{
@@ -82,11 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         customizeAppearance()
-        if NSUserDefaults.standardUserDefaults().objectForKey("isFirstTime") == nil{
-            removeLeaks()
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isFirstTime")
-        }
-        updateAllRecord()
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController
@@ -99,6 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         caloriesController.managedContext = coreDataStack.context
         recordController.managedContext = coreDataStack.context
         favController.managedContext = coreDataStack.context
+        updateAllRecord()
         return true
     }
     
