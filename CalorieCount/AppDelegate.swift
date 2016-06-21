@@ -101,6 +101,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         favController.managedContext = coreDataStack.context
         return true
     }
+    
+    func applicationWillTerminate(application: UIApplication) {
+        updateAllRecord()
+    }
+    
+    func applicationDidEnterBackground(application: UIApplication) {
+        updateAllRecord()
+    }
 
     
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {

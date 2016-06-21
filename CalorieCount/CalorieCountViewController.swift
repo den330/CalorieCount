@@ -47,7 +47,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             if NSUserDefaults.standardUserDefaults().boolForKey("knowDelete"){
                 switch NSUserDefaults.standardUserDefaults().valueForKey("tips") as? Int{
                 case nil:
-                    message = "Idea for a new feature? SHAKE your phone and let me know!"
+                    message = "Idea for a new feature? SHAKE your phone(while Search Tab or Stat Tab is selected) and let me know!"
                     makeAlert(message)
                     NSUserDefaults.standardUserDefaults().setValue(1, forKey: "tips")
                 case 1?:
@@ -55,6 +55,20 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
                     " you can add it directly from Fav tab without searching!"
                     makeAlert(message)
                     NSUserDefaults.standardUserDefaults().setValue(2, forKey: "tips")
+                case 2?:
+                    message = "Instead of deleting one at a time, you can delete your record or fav all at once, just go to the page" +
+                    " you want to delete and SHAKE your phone, then you will be provided an option to remove all"
+                    makeAlert(message)
+                    NSUserDefaults.standardUserDefaults().setValue(3, forKey: "tips")
+                case 3?:
+                    message = "If you just want to take a look at your calorie record,you don't have to open this app, just type 'CR' in Spotlight"
+                    makeAlert(message)
+                    NSUserDefaults.standardUserDefaults().setValue(4,forKey: "tips")
+                case 4?:
+                    message = "If you are still unclear about how to take full advantage of this app, please visit the AppStore page of this app, the complete" +
+                    " and most up-to-date manual will always be presented in the description there"
+                    makeAlert(message)
+                    NSUserDefaults.standardUserDefaults().setValue(5, forKey: "tips")
                 default: break
                 }
             }

@@ -78,7 +78,7 @@ class DailyConsumeTableViewController: UITableViewController{
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake{
-            let alert = MyAlertController(title: "Delete", message: "Delete All Records On This Day?", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Delete", message: "Delete All Records On This Day?", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {_ in self.handleMotion()}))
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
             presentViewController(alert,animated: true, completion: nil)

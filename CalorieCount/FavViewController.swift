@@ -110,34 +110,31 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
     }
-}
-
-extension FavViewController: MFMailComposeViewControllerDelegate{
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake{
-            showEmail()
+            if motion == .MotionShake{
+                let alert = UIAlertController(title: "Delete", message: "Delete All Fav?", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {_ in self.handleMotion()}))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+                presentViewController(alert,animated: true, completion: nil)
+                alert.view.tintColor = UIColor.redColor()
+            }
         }
     }
     
-    func showEmail(){
-        if presentedViewController != nil{
-            dismissViewControllerAnimated(true,completion: nil)
+    func handleMotion(){
+        let objects = fetchedResultsController.fetchedObjects as! [ItemConsumed]
+        for object in objects{
+            managedContext.deleteObject(object)
         }
-        makeEmail()
-    }
-    
-    func makeEmail(){
-        if MFMailComposeViewController.canSendMail(){
-            let controller = MFMailComposeViewController()
-            controller.mailComposeDelegate = self
-            controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
-            controller.setToRecipients(["yaxinyuan0910@gmail.com"])
-            presentViewController(controller, animated: true, completion: nil)
+        do{
+            try managedContext.save()
+        }catch let error as NSError{
+            print("Could not save delete: \(error)")
         }
     }
 }
+
+
 
