@@ -335,7 +335,7 @@
         <!--Daily Calories-->
         <scene sceneID="FbU-fP-eVW">
             <objects>
-                <tableViewController id="wfy-lH-oaM" customClass="DailyConsumeTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="daily" storyboardIdentifier="daily" id="wfy-lH-oaM" customClass="DailyConsumeTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="V8p-H8-ZhN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

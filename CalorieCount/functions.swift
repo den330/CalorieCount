@@ -43,6 +43,13 @@ let dayFetch: NSFetchRequest = {
     return Fetch
 }()
 
+let daysFetch: NSFetchRequest = {
+    let Fetch = NSFetchRequest(entityName: "Day")
+    let sort = NSSortDescriptor(key: "currentDate", ascending: false)
+    Fetch.sortDescriptors = [sort]
+    return Fetch
+}()
+
 let itemConsumedFetch: NSFetchRequest = {
     let Fetch = NSFetchRequest(entityName: "ItemConsumed")
     let sort = NSSortDescriptor(key: "unitCalories", ascending: true)

@@ -99,30 +99,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func applicationWillTerminate(application: UIApplication) {
-        updateAllRecord()
-    }
+//    func applicationWillTerminate(application: UIApplication) {
+//        updateAllRecord()
+//    }
+//    
+//    func applicationDidEnterBackground(application: UIApplication) {
+//        updateAllRecord()
+//    }
     
-    func applicationDidEnterBackground(application: UIApplication) {
-        updateAllRecord()
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        let tabCon = window?.rootViewController as! UITabBarController
+        tabCon.selectedIndex = 1
+        let navCon = tabCon.viewControllers![1] as! UINavigationController
+        let dailyCon = navCon.storyboard?.instantiateViewControllerWithIdentifier("daily") as! DailyConsumeTableViewController
+        do{
+            let lst = try coreDataStack.context.executeFetchRequest(daysFetch) as! [Day]
+            dailyCon.day = lst.first
+        }catch{
+            print(error)
+        }
+        navCon.pushViewController(dailyCon, animated: true)
+        return true
     }
 
     
-//    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
-//        let objectId: NSDate
-//        if userActivity.activityType == CSSearchableItemActionType{
-//            if let activityObjectId = userActivity.userInfo![CSSearchableItemActivityIdentifier] as? NSDate{
-//                objectId = activityObjectId
-//                print(objectId)
-//                
-//                return true
-//            }else{
-//                return false
-//            }
-//        }else{
-//            return false
-//        }
-//    }
+
+    
+
 }
 
 
