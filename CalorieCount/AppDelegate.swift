@@ -60,28 +60,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func indexAllRecord(){
-        let fetchRequest = NSFetchRequest(entityName: "Day")
-        do{
-            let context = coreDataStack.context
-            let lst = try context.executeFetchRequest(fetchRequest) as! [Day]
-            let items = lst.map{$0.searchableItem}
-            CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
-                if let error = error{
-                    print("\(error)")
+        if CSSearchableIndex.isIndexingAvailable(){
+            let fetchRequest = NSFetchRequest(entityName: "Day")
+            do{
+                let context = coreDataStack.context
+                let lst = try context.executeFetchRequest(fetchRequest) as! [Day]
+                let items = lst.map{$0.searchableItem}
+                
+                CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
+                    if let error = error{
+                        print("\(error)")
+                    }
                 }
+            }catch{
+                print(error)
             }
-        }catch{
-            print(error)
         }
     }
     
     func updateAllRecord(){
-        CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
-            error in
-            if let error = error{
-                print(error)
-            }else{
-                self.indexAllRecord()
+        if CSSearchableIndex.isIndexingAvailable(){
+            CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
+                error in
+                if let error = error{
+                    print(error)
+                }else{
+                    self.indexAllRecord()
+                }
             }
         }
     }
