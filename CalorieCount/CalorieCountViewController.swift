@@ -30,7 +30,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("1")
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(CalorieCountViewController.handleLongPress))
         tableView.addGestureRecognizer(longPress)
         longPress.cancelsTouchesInView = true
@@ -44,7 +44,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         var message: String
-        print(didTip)
+        
         if didTip == false{
             if NSUserDefaults.standardUserDefaults().boolForKey("knowDelete"){
                 switch NSUserDefaults.standardUserDefaults().valueForKey("tips") as? Int{

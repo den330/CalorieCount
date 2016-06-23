@@ -15,7 +15,7 @@ import MobileCoreServices
 class Day: NSManagedObject {
     
     var searchableItem: CSSearchableItem{
-        let item = CSSearchableItem(uniqueIdentifier: String(currentDate!), domainIdentifier: "Day", attributeSet: attributeSet)
+        let item = CSSearchableItem(uniqueIdentifier: dateFormatter.stringFromDate(currentDate!), domainIdentifier: "Day", attributeSet: attributeSet)
         return item
     }
     

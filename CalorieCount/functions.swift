@@ -13,11 +13,9 @@ import UIKit
 
 var dateFormatter: NSDateFormatter = {
     var dateformatter = NSDateFormatter()
-    dateformatter.dateStyle = .MediumStyle
-    //dateformatter.dateFormat = "dd-MM-yyyy"
+    dateformatter.dateFormat = "MMM d, yyyy"
     return dateformatter
 }()
-
 
 func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: Double?,unitContent: String?){
     cell.foodLabel.text = foodContent

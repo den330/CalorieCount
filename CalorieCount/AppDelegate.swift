@@ -68,16 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func updateAllRecord(){
-        CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
-            error in
-            if let error = error{
-                print(error)
-            }else{
-                self.indexAllRecord()
-            }
-        }
-    }
+
     
 
 
@@ -95,37 +86,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         caloriesController.managedContext = coreDataStack.context
         recordController.managedContext = coreDataStack.context
         favController.managedContext = coreDataStack.context
-        updateAllRecord()
+        indexAllRecord()
         return true
     }
     
-//    func applicationWillTerminate(application: UIApplication) {
-//        updateAllRecord()
-//    }
-//    
-//    func applicationDidEnterBackground(application: UIApplication) {
-//        updateAllRecord()
-//    }
+    func applicationWillTerminate(application: UIApplication) {
+        indexAllRecord()
+    }
+    
+    func applicationDidEnterBackground(application: UIApplication) {
+        indexAllRecord()
+    }
     
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        let objectID: NSDate
+        if userActivity.activityType == CSSearchableItemActionType, let activityObjId = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String{
+            
+            objectID = dateFormatter.dateFromString(activityObjId)!
+            
+        }else{
+            return false
+        }
         let tabCon = window?.rootViewController as! UITabBarController
         tabCon.selectedIndex = 1
         let navCon = tabCon.viewControllers![1] as! UINavigationController
         let dailyCon = navCon.storyboard?.instantiateViewControllerWithIdentifier("daily") as! DailyConsumeTableViewController
+        dailyCon.managedContext = coreDataStack.context
         do{
             let lst = try coreDataStack.context.executeFetchRequest(daysFetch) as! [Day]
-            dailyCon.day = lst.first
+            for rday in lst{
+                if sameDay([rday], day: objectID){
+                    dailyCon.day = rday
+                    break
+                }
+            }
+            if dailyCon.day == nil{
+                return false
+            }
         }catch{
             print(error)
         }
         navCon.pushViewController(dailyCon, animated: true)
         return true
     }
-
-    
-
-    
-
 }
 
 
