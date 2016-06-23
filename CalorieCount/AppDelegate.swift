@@ -63,6 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("\(error)")
                 }
             }
+            do{
+                try coreDataStack.context.save()
+            }catch{
+                print(error)
+            }
         }catch{
             print(error)
         }

@@ -36,7 +36,7 @@ class RecordTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         var i = 0
-        while i < tableView.numberOfRowsInSection(0){
+        while i < 2{
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath){
                 let dateLabel =  cell.viewWithTag(1000) as! UILabel

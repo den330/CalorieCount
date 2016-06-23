@@ -53,7 +53,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
                     makeAlert(message)
                     NSUserDefaults.standardUserDefaults().setValue(1, forKey: "tips")
                 case 1?:
-                    message = "For an item you frequently search, LONG PRESS it and add it to Fav, so next time" +
+                    message = "For an item you frequently search, Press And Hold it and add it to Fav, so next time" +
                     " you can add it directly from Fav tab without searching!"
                     makeAlert(message)
                     NSUserDefaults.standardUserDefaults().setValue(2, forKey: "tips")
