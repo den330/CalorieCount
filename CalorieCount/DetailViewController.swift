@@ -55,6 +55,7 @@ class DetailViewController: UIViewController {
         let hudView = HudView.hudInView(view, animated: true)
         hudView.text = "Saved"
         saveItem()
+        postNotification()
         let delayInSeconds = 0.6
         let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
         dispatch_after(when, dispatch_get_main_queue()){

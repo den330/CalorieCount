@@ -11,6 +11,12 @@ import CoreData
 import MessageUI
 import UIKit
 
+let IndexUpdateNotification = "Update Notification"
+
+func postNotification(){
+    NSNotificationCenter.defaultCenter().postNotificationName(IndexUpdateNotification, object: nil)
+}
+
 var dateFormatter: NSDateFormatter = {
     var dateformatter = NSDateFormatter()
     dateformatter.dateFormat = "MMM d, yyyy"

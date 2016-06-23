@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import MessageUI
+import CoreSpotlight
 
 
 class RecordTableViewController: UITableViewController {
@@ -36,7 +37,7 @@ class RecordTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         var i = 0
-        while i < 2{
+        while i < 3{
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath){
                 let dateLabel =  cell.viewWithTag(1000) as! UILabel
@@ -76,6 +77,7 @@ class RecordTableViewController: UITableViewController {
         
             do{
                 try managedContext.save()
+                postNotification()
             }catch let error as NSError{
                 print("Could not save delete: \(error)")
             }
@@ -157,6 +159,7 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
             managedContext.deleteObject(day)
             do{
                 try managedContext.save()
+                postNotification()
             }catch let error as NSError{
                 print("Could not save delete: \(error)")
             }

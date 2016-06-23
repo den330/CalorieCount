@@ -37,6 +37,7 @@ class DailyConsumeTableViewController: UITableViewController{
             
             do{
                 try managedContext.save()
+                postNotification()
             }catch let error as NSError{
                 print("Could not save delete: \(error)")
             }
@@ -93,6 +94,7 @@ class DailyConsumeTableViewController: UITableViewController{
         managedContext.deleteObject(day)
         do{
             try managedContext.save()
+            postNotification()
         }catch let error as NSError{
             print("Could not save delete: \(error)")
         }

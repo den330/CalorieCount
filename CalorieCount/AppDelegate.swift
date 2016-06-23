@@ -48,6 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print(error)
 //        }
 //    }
+
+    func listenForIndexUpdate(){
+        NSNotificationCenter.defaultCenter().addObserverForName(IndexUpdateNotification, object: nil, queue: nil){
+            notification in
+                self.updateAllRecord()
+        }
+    }
     
 
     
@@ -63,22 +70,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("\(error)")
                 }
             }
-            do{
-                try coreDataStack.context.save()
-            }catch{
-                print(error)
-            }
         }catch{
             print(error)
         }
     }
     
-
+    func updateAllRecord(){
+        CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
+            error in
+            if let error = error{
+                print(error)
+            }else{
+                self.indexAllRecord()
+            }
+        }
+    }
     
-
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        indexAllRecord()
         customizeAppearance()
+        listenForIndexUpdate()
         let TabController = window!.rootViewController as! UITabBarController
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController
@@ -91,17 +102,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         caloriesController.managedContext = coreDataStack.context
         recordController.managedContext = coreDataStack.context
         favController.managedContext = coreDataStack.context
-        indexAllRecord()
         return true
     }
     
-    func applicationWillTerminate(application: UIApplication) {
-        indexAllRecord()
-    }
-    
-    func applicationDidEnterBackground(application: UIApplication) {
-        indexAllRecord()
-    }
+
     
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
         let objectID: NSDate
