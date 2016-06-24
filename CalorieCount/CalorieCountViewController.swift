@@ -121,9 +121,11 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             hideLandscapeViewWithCoordinator(coordinator)
         }
     }
+
     
     func showLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator){
         precondition(landscapeViewController == nil)
+        self.tabBarController?.tabBar.hidden = true
         self.searchBar.resignFirstResponder()
         self.filterTextField.resignFirstResponder()
         if self.presentedViewController != nil{
@@ -138,9 +140,32 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             controller.didMoveToParentViewController(self)
         }
     }
+   
+    
+    
+//    func setTabBarVisible(visible: Bool, animated: Bool) {
+//        let frame = self.tabBarController?.tabBar.frame
+//        let height = frame?.size.height
+//        let offsetY = (visible ? -height! : height)
+//        let duration:NSTimeInterval = (animated ? 0.3 : 0.0)
+//        if frame != nil {
+//            UIView.animateWithDuration(duration) {
+//                self.tabBarController?.tabBar.frame = CGRectOffset(frame!, 0, offsetY!)
+//                self.view.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height + offsetY!)
+//                self.view.setNeedsDisplay()
+//                self.view.layoutIfNeeded()
+//                return
+//            }
+//        }
+//    }
+//    
+//    func tabBarIsVisible() -> Bool {
+//        return self.tabBarController?.tabBar.frame.origin.y < UIScreen.mainScreen().bounds.height
+//    }
     
     func hideLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator){
         if let controller = landscapeViewController{
+            self.tabBarController?.tabBar.hidden = false
             controller.willMoveToParentViewController(nil)
             controller.view.removeFromSuperview()
             controller.removeFromParentViewController()
