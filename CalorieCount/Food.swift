@@ -9,10 +9,10 @@
 import Foundation
 
 class Food{
-    var caloriesCount: Double? = nil
-    var foodContent: String? = nil
-    var brandContent: String? = nil
-    var quantity: Double? = nil
-    var unit: String? = nil
-    var id: String? = nil
+    var caloriesCount: Double = 0.0
+    var foodContent: String = ""
+    var brandContent: String = ""
+    var quantity: Double = 0.0
+    var unit: String = ""
+    var id: String = ""
 }

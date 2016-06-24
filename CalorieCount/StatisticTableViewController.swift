@@ -77,7 +77,7 @@ class StatisticTableViewController: UITableViewController{
             let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
             if sameDay(results,day: NSDate()){
                 daysInCalc = totalDays - 1
-                let items = results.first!.items!.mutableCopy() as! NSMutableOrderedSet
+                let items = results.first!.items.mutableCopy() as! NSMutableOrderedSet
                 var currentDayCal = 0.0
                 for i in items{
                     let singleItem = i as! ItemConsumed

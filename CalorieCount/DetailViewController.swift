@@ -74,14 +74,14 @@ class DetailViewController: UIViewController {
                 }else{
                     recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
                 }
-                let items = recentDay.items!.mutableCopy() as! NSMutableOrderedSet
+                let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
                 var existed: Bool = false
                 for i in items{
                     let singleItem = i as! ItemConsumed
                     if singleItem.id == foodS.id{
                         existed = true
                         singleItem.quantityConsumed = singleItem.quantityConsumed + currentfigure
-                        let newAddedCalories = foodS.caloriesCount! * Double(currentfigure)
+                        let newAddedCalories = foodS.caloriesCount * Double(currentfigure)
                         singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
                         break
                     }
@@ -90,16 +90,14 @@ class DetailViewController: UIViewController {
                     itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
                     itemForSelected.quantityConsumed = Int32(quantityLabel.text!)!
                     itemForSelected.name = foodS.foodContent
-                    itemForSelected.unitCalories = foodS.caloriesCount!
+                    itemForSelected.unitCalories = foodS.caloriesCount
                     itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)) * Double((itemForSelected.unitCalories))
-                    if let quantity = foodS.quantity, unit = foodS.unit{
-                        itemForSelected.quantity = String(quantity) + " " + unit
-                    }
+                    itemForSelected.quantity = String(foodS.quantity) + " " + foodS.unit
                     itemForSelected.brand = foodS.brandContent
-                    itemForSelected.id = foodS.id!
+                    itemForSelected.id = foodS.id
                     items.addObject(itemForSelected)
                 }
-                recentDay.items = items.copy() as? NSOrderedSet
+                recentDay.items = items.copy() as! NSOrderedSet
                 recentDay.currentDate = NSDate()
                 try managedContext.save()
             }catch let error as NSError{
@@ -113,7 +111,7 @@ class DetailViewController: UIViewController {
                 }else{
                     recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
                 }
-                let items = recentDay.items!.mutableCopy() as! NSMutableOrderedSet
+                let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
                 var existed: Bool = false
                 for i in items{
                     let singleItem = i as! ItemConsumed
@@ -137,7 +135,7 @@ class DetailViewController: UIViewController {
                     itemForSelected.totalCalories = itemForSelected.unitCalories * Double(itemForSelected.quantityConsumed)
                     items.addObject(itemForSelected)
                 }
-                recentDay.items = items.copy() as? NSOrderedSet
+                recentDay.items = items.copy() as! NSOrderedSet
                 recentDay.currentDate = NSDate()
                 try managedContext.save()
             }catch let error as NSError{
@@ -167,6 +165,7 @@ extension DetailViewController: UIViewControllerTransitioningDelegate{
         return transition
     }
 }
+
 
 
 

@@ -18,6 +18,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     var didTip = false
     var pendingFav: Food!
     
+    
     @IBOutlet weak var filterTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -131,17 +132,13 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)!
         let favFood = ItemConsumed(entity: itemEntity, insertIntoManagedObjectContext: managedContext)
         favFood.brand = pendingFav.brandContent
-        favFood.id = pendingFav.id!
+        favFood.id = pendingFav.id
         favFood.isFav = true
         favFood.name = pendingFav.foodContent
-        if let quantity = pendingFav.quantity, unit = pendingFav.unit{
-            favFood.quantity = String(quantity) + " " + unit
-        }else{
-            favFood.quantity = "NA"
-        }
+        favFood.quantity = String(pendingFav.quantity) + " " + pendingFav.unit
         favFood.quantityConsumed = 0
         favFood.totalCalories = 0
-        favFood.unitCalories = pendingFav.caloriesCount!
+        favFood.unitCalories = pendingFav.caloriesCount
         do{
             try managedContext.save()
         }catch{
@@ -168,7 +165,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             case .SearchSuccess(let lst):
                 cell.selectionStyle = .Default
                 let foodItem = lst[indexPath.row]
-                configureCell(cell, foodContent: foodItem.foodContent!, caloriesContent: foodItem.caloriesCount!, brandContent: foodItem.brandContent!,quantityContent: foodItem.quantity,unitContent: foodItem.unit)
+                configureCell(cell, foodContent: foodItem.foodContent, caloriesContent: foodItem.caloriesCount, brandContent: foodItem.brandContent,quantityContent: foodItem.quantity,unitContent: foodItem.unit)
                 return cell
             case .NotFound:
                 configureCell(cell, foodContent: "NA", caloriesContent: 0,brandContent: "NA",quantityContent: nil,unitContent: nil)

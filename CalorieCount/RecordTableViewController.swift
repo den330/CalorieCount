@@ -45,7 +45,7 @@ class RecordTableViewController: UITableViewController {
                 if sameDay([day], day: NSDate()){
                     dateLabel.text = "Today"
                 }else{
-                    dateLabel.text = dateFormatter.stringFromDate(day.currentDate!)
+                    dateLabel.text = dateFormatter.stringFromDate(day.currentDate)
                 }
             }
             i += 1
@@ -68,7 +68,7 @@ class RecordTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
             let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
-            for item in day.items!{
+            for item in day.items{
                 let i = item as! ItemConsumed
                 managedContext.deleteObject(i)
             }
@@ -85,7 +85,7 @@ class RecordTableViewController: UITableViewController {
     
     
     func configureCell(cell: UITableViewCell, day: Day){
-        let items = day.items!
+        let items = day.items
         var totalCalories = 0.0
         for i in items{
             let item = i as! ItemConsumed
@@ -93,7 +93,7 @@ class RecordTableViewController: UITableViewController {
         }
         let dateLabel =  cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1001) as! UILabel
-        let date = dateFormatter.stringFromDate(day.currentDate!)
+        let date = dateFormatter.stringFromDate(day.currentDate)
         dateLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         caloriesLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         dateLabel.text = date
@@ -153,7 +153,7 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
     func handleMotion(){
         let days = fetchedResultsController.fetchedObjects as! [Day]
         for day in days{
-            for item in day.items!{
+            for item in day.items{
                 managedContext.deleteObject(item as! ItemConsumed)
             }
             managedContext.deleteObject(day)

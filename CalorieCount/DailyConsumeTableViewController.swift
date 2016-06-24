@@ -23,15 +23,15 @@ class DailyConsumeTableViewController: UITableViewController{
         items = day.items
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 180
-        navigationItem.title = "on " + dateFormatter.stringFromDate(day.currentDate!)
+        navigationItem.title = "on " + dateFormatter.stringFromDate(day.currentDate)
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
-            let foodToRemove = day.items![indexPath.row] as! ItemConsumed
+            let foodToRemove = day.items[indexPath.row] as! ItemConsumed
             managedContext.deleteObject(foodToRemove)
             
-            if day.items!.count == 1{
+            if day.items.count == 1{
                 managedContext.deleteObject(day)
             }
             
@@ -64,16 +64,12 @@ class DailyConsumeTableViewController: UITableViewController{
         let quantityLabel = cell.viewWithTag(1001) as! UILabel
         let brandLabel = cell.viewWithTag(1003) as! UILabel
         let unitQuantityLabel = cell.viewWithTag(1004) as! UILabel
-        let item = day.items![indexPath.row] as! ItemConsumed
+        let item = day.items[indexPath.row] as! ItemConsumed
         contentLabel.text = item.name
         caloriesLabel.text = "Total Calories: " + String(format: "%.2f", Double(item.totalCalories)) + " Cal"
         quantityLabel.text = "Quantity Consumed: " + String(item.quantityConsumed)
-        brandLabel.text = "Brand: " + item.brand!
-        if let quantity = item.quantity{
-            unitQuantityLabel.text = "Unit: " + quantity
-        }else{
-            unitQuantityLabel.text = "Unit: NA"
-        }
+        brandLabel.text = "Brand: " + item.brand
+        unitQuantityLabel.text = "Unit: " + item.quantity
         return cell
     }
     
@@ -88,7 +84,7 @@ class DailyConsumeTableViewController: UITableViewController{
     }
     
     func handleMotion(){
-        for i in day.items!{
+        for i in day.items{
             managedContext.deleteObject(i as! ItemConsumed)
         }
         managedContext.deleteObject(day)

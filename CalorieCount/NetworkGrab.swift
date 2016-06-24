@@ -143,8 +143,8 @@ class NetworkGrab{
                             foodItem.quantity = qty
                             foodItem.unit = unit
                         }else{
-                            foodItem.quantity = nil
-                            foodItem.unit = nil
+                            foodItem.quantity = 0.0
+                            foodItem.unit = "Unknown"
                         }
                         foodItem.id = food_id
                         searchResults.append(foodItem)

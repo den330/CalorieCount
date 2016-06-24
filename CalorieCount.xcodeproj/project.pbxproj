@@ -43,6 +43,7 @@
 		902818251D0E351300A4E16A /* FavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
 		9029F6F51CFF99E5008914FC /* StatisticTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticTableViewController.swift; sourceTree = "<group>"; };
 		9075BF5B1D0CB1FB00F57575 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
+		90847DBD1D1CBEFC00996E8C /* Daily Calories 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 3.xcdatamodel"; sourceTree = "<group>"; };
 		9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableViewController.swift; sourceTree = "<group>"; };
 		908C41151D0B5FBA00C70A02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		908C41181D0B5FBA00C70A02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -414,10 +415,11 @@
 		908C411D1D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				90847DBD1D1CBEFC00996E8C /* Daily Calories 3.xcdatamodel */,
 				902818241D0E1C1D00A4E16A /* Daily Calories 2.xcdatamodel */,
 				908C411E1D0B5FBA00C70A02 /* Daily Calories.xcdatamodel */,
 			);
-			currentVersion = 902818241D0E1C1D00A4E16A /* Daily Calories 2.xcdatamodel */;
+			currentVersion = 90847DBD1D1CBEFC00996E8C /* Daily Calories 3.xcdatamodel */;
 			path = "Daily Calories.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -15,15 +15,15 @@ import MobileCoreServices
 class Day: NSManagedObject {
     
     var searchableItem: CSSearchableItem{
-        let item = CSSearchableItem(uniqueIdentifier: dateFormatter.stringFromDate(currentDate!), domainIdentifier: "Day", attributeSet: attributeSet)
+        let item = CSSearchableItem(uniqueIdentifier: dateFormatter.stringFromDate(currentDate), domainIdentifier: "Day", attributeSet: attributeSet)
         return item
     }
     
     internal var attributeSet: CSSearchableItemAttributeSet{
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeContact as String)
-        attributeSet.title = dateFormatter.stringFromDate(currentDate!)
+        attributeSet.title = dateFormatter.stringFromDate(currentDate)
         var calories:Double = 0
-        for i in items!{
+        for i in items{
             let item = i as! ItemConsumed
             calories += item.totalCalories
         }

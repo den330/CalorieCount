@@ -2,7 +2,7 @@
 //  Day+CoreDataProperties.swift
 //  CalorieCount
 //
-//  Created by Yaxin Yuan on 16/5/14.
+//  Created by Yaxin Yuan on 16/6/23.
 //  Copyright © 2016年 Yaxin Yuan. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,8 +13,8 @@ import Foundation
 import CoreData
 
 extension Day {
-    
-    @NSManaged var currentDate: NSDate?
-    @NSManaged var items: NSOrderedSet?
+
+    @NSManaged var currentDate: NSDate
+    @NSManaged var items: NSOrderedSet
 
 }
