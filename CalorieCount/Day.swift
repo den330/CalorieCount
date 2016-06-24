@@ -27,7 +27,7 @@ class Day: NSManagedObject {
             let item = i as! ItemConsumed
             calories += item.totalCalories
         }
-        attributeSet.contentDescription = "Total Calorie: \(calories)"
+        attributeSet.contentDescription = "Total Calorie: \(calories) Cal"
         attributeSet.keywords = ["CR"]
         return attributeSet
     }

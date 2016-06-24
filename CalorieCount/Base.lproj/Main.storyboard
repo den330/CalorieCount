@@ -83,7 +83,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Search" image="search-7" id="3cd-TT-XgF"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="search-7" id="vaE-Rh-dcp"/>
                     <connections>
                         <outlet property="filterTextField" destination="OUc-Ka-ObX" id="IxX-PY-IaO"/>
                         <outlet property="searchBar" destination="73R-3t-qYc" id="czm-yH-LpD"/>
@@ -264,6 +264,55 @@
             </objects>
             <point key="canvasLocation" x="590" y="-759"/>
         </scene>
+        <!--Landscape View Controller-->
+        <scene sceneID="QVd-ft-aEH">
+            <objects>
+                <viewController storyboardIdentifier="LandscapeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wqh-mi-4D5" customClass="LandscapeViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tu2-yP-JLT"/>
+                        <viewControllerLayoutGuide type="bottom" id="NMj-eU-UMW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="C9U-gE-Oe1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">Light, Simple To Use, Nothing Fancy 
+
+1. Search Tab: Search and Add Items You Consumed Today.(Tap = Add To Record, Press and Hold = Add To Fav) 
+
+2. Record Tab: Your Calorie Record In Each Day 
+
+3. Statistics Tab: You Calorie Stat So Far 
+
+4. Fav Tab: For Your Frequently-Searched Items, You Can Add Them To Record From Here 
+
+5. Delete One Item or Day or Fav: Swipe To The Left 
+
+6. Delete Everything In A Page: Shake Your Phone In That Page. 
+
+7. Contact Me: Shake Your Phone While Search Tab or Statistics Tab Is Selected. 
+
+8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2Pl-Nt-6DQ" firstAttribute="top" secondItem="C9U-gE-Oe1" secondAttribute="top" id="3Nf-5g-VL7"/>
+                            <constraint firstAttribute="trailing" secondItem="2Pl-Nt-6DQ" secondAttribute="trailing" id="WJE-S5-HJp"/>
+                            <constraint firstItem="2Pl-Nt-6DQ" firstAttribute="bottom" secondItem="NMj-eU-UMW" secondAttribute="top" id="oCg-O0-H4C"/>
+                            <constraint firstItem="2Pl-Nt-6DQ" firstAttribute="leading" secondItem="C9U-gE-Oe1" secondAttribute="leading" id="oRP-Mf-30T"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JYr-PP-jyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1393" y="-674"/>
+        </scene>
         <!--Calories Record-->
         <scene sceneID="dSq-nc-HgG">
             <objects>
@@ -335,7 +384,7 @@
         <!--Daily Calories-->
         <scene sceneID="FbU-fP-eVW">
             <objects>
-                <tableViewController restorationIdentifier="daily" storyboardIdentifier="daily" id="wfy-lH-oaM" customClass="DailyConsumeTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="daily" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wfy-lH-oaM" customClass="DailyConsumeTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="V8p-H8-ZhN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -620,6 +669,6 @@
         <image name="search-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ybx-fD-IYt"/>
+        <segue reference="wSO-tQ-y2A"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -14,6 +14,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     var managedContext: NSManagedObjectContext!
     var NaviController: UINavigationController?
+    var landscapeViewController: LandscapeViewController?
     
     var didTip = false
     var pendingFav: Food!
@@ -44,48 +45,13 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        var message: String
-        
-        if didTip == false{
-            if NSUserDefaults.standardUserDefaults().boolForKey("knowDelete"){
-                switch NSUserDefaults.standardUserDefaults().valueForKey("tips") as? Int{
-                case nil:
-                    message = "Idea for a new feature? SHAKE your phone(while Search Tab or Stat Tab is selected) and let me know!"
-                    makeAlert(message)
-                    NSUserDefaults.standardUserDefaults().setValue(1, forKey: "tips")
-                case 1?:
-                    message = "For an item you frequently search, Press And Hold it and add it to Fav, so next time" +
-                    " you can add it directly from Fav tab without searching!"
-                    makeAlert(message)
-                    NSUserDefaults.standardUserDefaults().setValue(2, forKey: "tips")
-                case 2?:
-                    message = "Instead of deleting one at a time, you can delete your record or fav all at once, just go to the page" +
-                    " you want to delete and SHAKE your phone, then you will be provided an option to remove all"
-                    makeAlert(message)
-                    NSUserDefaults.standardUserDefaults().setValue(3, forKey: "tips")
-                case 3?:
-                    message = "If you just want to take a look at your calorie record,you don't have to open this app, just type 'CR' in Spotlight"
-                    makeAlert(message)
-                    NSUserDefaults.standardUserDefaults().setValue(4,forKey: "tips")
-                case 4?:
-                    message = "If you are still unclear about how to take full advantage of this app, please visit the AppStore page of this app, the complete" +
-                    " and most up-to-date manual will always be presented in the description there"
-                    makeAlert(message)
-                    NSUserDefaults.standardUserDefaults().setValue(5, forKey: "tips")
-                default: break
-                }
-            }
-            switch NSUserDefaults.standardUserDefaults().objectForKey("knowDelete"){
-                case nil:
-                    message = "You can delete your calorie record(single item or entire day) by swiping (to the left)"
-                    makeAlert(message)
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "knowDelete")
-                default: break
-            }
-            didTip = true
+        if NSUserDefaults.standardUserDefaults().boolForKey("said it") == false{
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("knowDelete")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("tips")
+            let message = "For complete and the most up-to-date manual, unlock your rotation lock(if not already), and rotate your phone to horizontal(landscape) view with Search bar selected"
+            makeAlert(message)
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it")
         }
-
-
     }
     
     func makeAlert(message: String){
@@ -143,6 +109,42 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             try managedContext.save()
         }catch{
             print(error)
+        }
+    }
+    
+    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
+        switch newCollection.verticalSizeClass{
+        case .Compact:
+            showLandscapeViewWithCoordinator(coordinator)
+        case .Regular, .Unspecified:
+            hideLandscapeViewWithCoordinator(coordinator)
+        }
+    }
+    
+    func showLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator){
+        precondition(landscapeViewController == nil)
+        self.searchBar.resignFirstResponder()
+        self.filterTextField.resignFirstResponder()
+        if self.presentedViewController != nil{
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        landscapeViewController = storyboard!.instantiateViewControllerWithIdentifier("LandscapeViewController") as?LandscapeViewController
+        if let controller = landscapeViewController{
+            controller.view.frame = view.bounds
+            
+            view.addSubview(controller.view)
+            addChildViewController(controller)
+            controller.didMoveToParentViewController(self)
+        }
+    }
+    
+    func hideLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator){
+        if let controller = landscapeViewController{
+            controller.willMoveToParentViewController(nil)
+            controller.view.removeFromSuperview()
+            controller.removeFromParentViewController()
+            landscapeViewController = nil
         }
     }
 
