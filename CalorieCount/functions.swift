@@ -13,6 +13,7 @@ import UIKit
 
 let IndexUpdateNotification = "Update Notification"
 
+var landscapeViewController: LandscapeViewController?
 func postNotification(){
     NSNotificationCenter.defaultCenter().postNotificationName(IndexUpdateNotification, object: nil)
 }
@@ -60,3 +61,31 @@ let itemConsumedFetch: NSFetchRequest = {
     Fetch.sortDescriptors = [sort]
     return Fetch
 }()
+
+func showLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator, thisController: UIViewController){
+    if landscapeViewController != nil {return}
+    thisController.tabBarController?.tabBar.hidden = true
+    if thisController.presentedViewController != nil{
+        thisController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    landscapeViewController = thisController.storyboard!.instantiateViewControllerWithIdentifier("LandscapeViewController") as?LandscapeViewController
+    if let controller = landscapeViewController{
+        controller.view.frame = thisController.view.bounds
+        thisController.view.addSubview(controller.view)
+        thisController.addChildViewController(controller)
+        controller.didMoveToParentViewController(thisController)
+    }
+}
+
+func hideLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator, thisController: UIViewController){
+    if let controller = landscapeViewController{
+        thisController.tabBarController?.tabBar.hidden = false
+        controller.willMoveToParentViewController(nil)
+        controller.view.removeFromSuperview()
+        controller.removeFromParentViewController()
+        landscapeViewController = nil
+    }
+}
+
+
+

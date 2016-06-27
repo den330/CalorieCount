@@ -93,7 +93,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-266" y="-748"/>
+            <point key="canvasLocation" x="-2930" y="-2100"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dD9-P4-6R1">
@@ -113,7 +113,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IhO-j3-ivZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1175" y="152"/>
+            <point key="canvasLocation" x="-3839" y="-1200"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="P6j-6k-Orh">
@@ -262,7 +262,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymX-6t-3sC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="590" y="-759"/>
+            <point key="canvasLocation" x="-2074" y="-2111"/>
         </scene>
         <!--Landscape View Controller-->
         <scene sceneID="QVd-ft-aEH">
@@ -279,7 +279,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">Light, Simple To Use, Nothing Fancy 
+                                <string key="text">Light, Simple To Use, Nothing Fancy 
 
 1. Search Tab: Search and Add Items You Consumed Today.(Tap = Add To Record, Press and Hold = Add To Fav) 
 
@@ -295,7 +295,7 @@
 
 7. Contact Me: Shake Your Phone While Search Tab or Statistics Tab Is Selected. 
 
-8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!</mutableString>
+8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -311,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYr-PP-jyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1393" y="-674"/>
+            <point key="canvasLocation" x="-1271" y="-2026"/>
         </scene>
         <!--Calories Record-->
         <scene sceneID="dSq-nc-HgG">
@@ -379,7 +379,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o6h-EI-8eG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="662" y="152"/>
+            <point key="canvasLocation" x="-2002" y="-1200"/>
         </scene>
         <!--Daily Calories-->
         <scene sceneID="FbU-fP-eVW">
@@ -391,7 +391,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="item" rowHeight="150" id="PFT-ge-gBH">
-                                <rect key="frame" x="0.0" y="92" width="600" height="150"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PFT-ge-gBH" id="I7o-6u-MRF">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="149"/>
@@ -481,7 +481,57 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A17-pp-hBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1435" y="152"/>
+            <point key="canvasLocation" x="-1229" y="-1200"/>
+        </scene>
+        <!--Record Collection Controller-->
+        <scene sceneID="S9a-76-IZq">
+            <objects>
+                <collectionViewController storyboardIdentifier="Collection" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IGl-EJ-RUT" customClass="RecordCollectionController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="nMF-i6-tmE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ELI-IJ-jQO">
+                            <size key="itemSize" width="124" height="112"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Jm9-Fh-F9g">
+                                <rect key="frame" x="0.0" y="0.0" width="124" height="112"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="124" height="112"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ff-YP-9Se">
+                                            <rect key="frame" x="25" y="38" width="75" height="37"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.62745098040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="6ff-YP-9Se" firstAttribute="centerY" secondItem="Jm9-Fh-F9g" secondAttribute="centerY" id="PGJ-f9-KBr"/>
+                                    <constraint firstItem="6ff-YP-9Se" firstAttribute="centerX" secondItem="Jm9-Fh-F9g" secondAttribute="centerX" id="kf8-uk-3nR"/>
+                                </constraints>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="IGl-EJ-RUT" id="OZR-ry-EvF"/>
+                            <outlet property="delegate" destination="IGl-EJ-RUT" id="H8q-vH-gHq"/>
+                        </connections>
+                    </collectionView>
+                    <connections>
+                        <segue destination="wfy-lH-oaM" kind="presentation" identifier="showDaily" id="Lc3-He-cEI"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="71E-OH-4rH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1339" y="-386"/>
         </scene>
         <!--Statistics-->
         <scene sceneID="Wof-H5-Qvw">
@@ -498,7 +548,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cLp-Bv-ATD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-327" y="945"/>
+            <point key="canvasLocation" x="-2991" y="-407"/>
         </scene>
         <!--StatisticTableViewController-->
         <scene sceneID="Kxx-D7-mYS">
@@ -587,7 +637,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4r3-yR-AXP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="348" y="945"/>
+            <point key="canvasLocation" x="-2316" y="-407"/>
         </scene>
         <!--Fav-->
         <scene sceneID="t1t-Ea-jcA">
@@ -604,7 +654,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="obl-K8-8uV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-707" y="1738"/>
+            <point key="canvasLocation" x="-3371" y="386"/>
         </scene>
         <!--Favorite-->
         <scene sceneID="b9Z-b1-amv">
@@ -639,7 +689,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7N9-eP-PRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-16" y="1737"/>
+            <point key="canvasLocation" x="-2680" y="385"/>
         </scene>
         <!--Record-->
         <scene sceneID="ZeB-Jd-fvH">
@@ -658,7 +708,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dM6-uE-Stg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-344" y="152"/>
+            <point key="canvasLocation" x="-3008" y="-1200"/>
         </scene>
     </scenes>
     <resources>
@@ -669,6 +719,7 @@
         <image name="search-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wSO-tQ-y2A"/>
+        <segue reference="ybx-fD-IYt"/>
+        <segue reference="Lc3-He-cEI"/>
     </inferredMetricsTieBreakers>
 </document>

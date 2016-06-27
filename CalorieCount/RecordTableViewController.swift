@@ -19,6 +19,7 @@ class RecordTableViewController: UITableViewController {
     var managedContext: NSManagedObjectContext!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 60
@@ -163,6 +164,17 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
             }catch let error as NSError{
                 print("Could not save delete: \(error)")
             }
+        }
+    }
+    
+    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        if tabBarController?.selectedIndex != 1 {return}
+        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
+        switch newCollection.verticalSizeClass{
+        case .Compact:
+            showLandscapeViewWithCoordinator(coordinator, thisController: navigationController!)
+        case .Regular, .Unspecified:
+            hideLandscapeViewWithCoordinator(coordinator, thisController: navigationController!)
         }
     }
 }

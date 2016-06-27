@@ -14,7 +14,8 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     var managedContext: NSManagedObjectContext!
     var NaviController: UINavigationController?
-    var landscapeViewController: LandscapeViewController?
+    
+    
     
     var didTip = false
     var pendingFav: Food!
@@ -113,69 +114,19 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        if tabBarController?.selectedIndex != 0 {return}
         super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
         switch newCollection.verticalSizeClass{
         case .Compact:
-            showLandscapeViewWithCoordinator(coordinator)
+            self.searchBar.resignFirstResponder()
+            self.filterTextField.resignFirstResponder()
+            showLandscapeViewWithCoordinator(coordinator,thisController: self)
         case .Regular, .Unspecified:
-            hideLandscapeViewWithCoordinator(coordinator)
+            hideLandscapeViewWithCoordinator(coordinator, thisController: self)
         }
+        print(landscapeViewController == nil)
     }
 
-    
-    func showLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator){
-        precondition(landscapeViewController == nil)
-        self.tabBarController?.tabBar.hidden = true
-        self.searchBar.resignFirstResponder()
-        self.filterTextField.resignFirstResponder()
-        if self.presentedViewController != nil{
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        landscapeViewController = storyboard!.instantiateViewControllerWithIdentifier("LandscapeViewController") as?LandscapeViewController
-        if let controller = landscapeViewController{
-            controller.view.frame = view.bounds
-            
-            view.addSubview(controller.view)
-            addChildViewController(controller)
-            controller.didMoveToParentViewController(self)
-        }
-    }
-   
-    
-    
-//    func setTabBarVisible(visible: Bool, animated: Bool) {
-//        let frame = self.tabBarController?.tabBar.frame
-//        let height = frame?.size.height
-//        let offsetY = (visible ? -height! : height)
-//        let duration:NSTimeInterval = (animated ? 0.3 : 0.0)
-//        if frame != nil {
-//            UIView.animateWithDuration(duration) {
-//                self.tabBarController?.tabBar.frame = CGRectOffset(frame!, 0, offsetY!)
-//                self.view.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height + offsetY!)
-//                self.view.setNeedsDisplay()
-//                self.view.layoutIfNeeded()
-//                return
-//            }
-//        }
-//    }
-//    
-//    func tabBarIsVisible() -> Bool {
-//        return self.tabBarController?.tabBar.frame.origin.y < UIScreen.mainScreen().bounds.height
-//    }
-    
-    func hideLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator){
-        if let controller = landscapeViewController{
-            self.tabBarController?.tabBar.hidden = false
-            controller.willMoveToParentViewController(nil)
-            controller.view.removeFromSuperview()
-            controller.removeFromParentViewController()
-            landscapeViewController = nil
-        }
-    }
-
-
-
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
             case .NotFound, .Searching: return 1
