@@ -22,9 +22,16 @@ class NetworkGrab{
     private var keyInUse: String?
     private(set) var state: State = .NotSearchedYet
     private let fields: [String]
-
-
+    private var request: Alamofire.Request?
     
+    init(){
+        appID1 = "8b36dac9"
+        appKey1 = "c79b530ed299ec9f53d64be135311b09"
+        appID2 = "0a714183"
+        appKey2 = "67d0f5774ec4e02095a3cc1b36a5ccc8"
+        baseUrl = NSURL(string: "https://api.nutritionix.com/v1_1/search/")
+        fields = ["nf_calories","item_name","brand_name","nf_serving_size_unit","nf_serving_size_qty","item_id"]
+    }
     
     func connectedToNetwork() -> Bool {
         
@@ -61,7 +68,6 @@ class NetworkGrab{
         }
     }
     
-    
     enum State{
         case NotSearchedYet
         case Searching
@@ -69,29 +75,20 @@ class NetworkGrab{
         case NotFound
         case NoConnection
         
-        
         func get() -> [Food]?{
             switch self{
-                case SearchSuccess(let lst):
-                    return lst
-                default: return nil
+            case SearchSuccess(let lst):
+                return lst
+            default: return nil
             }
         }
     }
     
-    init(){
-        appID1 = "8b36dac9"
-        appKey1 = "c79b530ed299ec9f53d64be135311b09"
-        appID2 = "0a714183"
-        appKey2 = "67d0f5774ec4e02095a3cc1b36a5ccc8"
-        baseUrl = NSURL(string: "https://api.nutritionix.com/v1_1/search/")
-        
-        state = .NotSearchedYet
-        fields = ["nf_calories","item_name","brand_name","nf_serving_size_unit","nf_serving_size_qty","item_id"]
-    }
-    
     func performSearch(mainText: String, filterText: String, completion: Void->Void){
         var success = false
+        if let req = request{
+            req.cancel()
+        }
         if !connectedToNetwork(){
             state = .NoConnection
             return
@@ -106,17 +103,18 @@ class NetworkGrab{
             parameter = ["appId": idInUse!, "appKey": keyInUse!, "queries": ["item_name":mainText, "brand_name": filterText], "offset": 0, "limit": 50]
         }
         parameter["fields"] = fields
-        Alamofire.request(.POST, baseUrl!, parameters: parameter, encoding: .JSON, headers: headers).responseJSON{
+        request = Alamofire.request(.POST, baseUrl!, parameters: parameter, encoding: .JSON, headers: headers)
+        request!.responseJSON{
             response in
             var dict: [String: AnyObject]
             switch response.result{
             case .Success(let value):
                 dict = value as! [String : AnyObject]
             case .Failure(let error):
+                if error.code == -999 {return}
                 print(error)
                 return
             }
-            
                 success = true
                 var searchResults = [Food]()
                 let hitsLst = dict["hits"]! as! NSArray
@@ -150,8 +148,7 @@ class NetworkGrab{
             }
             if success{
                     self.state = .SearchSuccess(searchResults)
-                    postDoneSearching()
-                }else{
+            }else{
                     self.state = .NotFound
                 }
             dispatch_async(dispatch_get_main_queue()){

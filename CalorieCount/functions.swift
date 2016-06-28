@@ -12,16 +12,12 @@ import MessageUI
 import UIKit
 
 let IndexUpdateNotification = "Update Notification"
-let DoneSearchingNotification = "Done Searching"
+
 
 var landscapeViewController: LandscapeViewController?
 
 func postNotification(){
     NSNotificationCenter.defaultCenter().postNotificationName(IndexUpdateNotification, object: nil)
-}
-
-func postDoneSearching(){
-    NSNotificationCenter.defaultCenter().postNotificationName(DoneSearchingNotification,object: nil)
 }
 
 var dateFormatter: NSDateFormatter = {
