@@ -21,9 +21,7 @@ class NetworkGrab{
     private var idInUse: String?
     private var keyInUse: String?
     private(set) var state: State = .NotSearchedYet
-    private var dataTask: NSURLSessionDataTask? = nil
-    private let numOfResults: String
-    private let fields: String
+    private let fields: [String]
 
 
     
@@ -87,56 +85,55 @@ class NetworkGrab{
         appID2 = "0a714183"
         appKey2 = "67d0f5774ec4e02095a3cc1b36a5ccc8"
         baseUrl = NSURL(string: "https://api.nutritionix.com/v1_1/search/")
-        numOfResults = "0%3A50"
+        
         state = .NotSearchedYet
-        fields = "\"fields\":[\"nf_calories\",\"item_name\",\"brand_name\",\"nf_serving_size_unit\",\"nf_serving_size_qty\",\"item_id\"]"
+        fields = ["nf_calories","item_name","brand_name","nf_serving_size_unit","nf_serving_size_qty","item_id"]
     }
     
-    func performSearch(mainText: String, filterText: String, completion: (Void) -> Void){
+    func performSearch(mainText: String, filterText: String, completion: Void->Void){
+        var success = false
         if !connectedToNetwork(){
             state = .NoConnection
             return
         }
         state = .Searching
-        dataTask?.cancel()
         getInUse()
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: configuration)
-        let request = NSMutableURLRequest(URL: baseUrl!)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPMethod = "Post"
-        var postString: String
+        let headers = ["Content-Type":"application/json"]
+        var parameter: [String: AnyObject]
         if filterText == ""{
-            postString = "{\"appId\":\"\(idInUse!)\", \"appKey\":\"\(keyInUse!)\",\"query\":\"\(mainText)\",\(fields),\"offset\":0,\"limit\":50}"
+            parameter = ["appId": idInUse!, "appKey": keyInUse!, "query": mainText, "offset": 0, "limit": 50]
         }else{
-            postString = "{\"appId\":\"\(idInUse!)\", \"appKey\":\"\(keyInUse!)\",\"queries\":{\"item_name\":\"\(mainText)\", \"brand_name\":\"\(filterText)\"},\(fields),\"offset\":0,\"limit\":50}"
+            parameter = ["appId": idInUse!, "appKey": keyInUse!, "queries": ["item_name":mainText, "brand_name": filterText], "offset": 0, "limit": 50]
         }
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        dataTask = session.dataTaskWithRequest(request, completionHandler: {data, response, error in
-            var success: Bool = false
-            if let error = error where error.code == -999{
+        parameter["fields"] = fields
+        Alamofire.request(.POST, baseUrl!, parameters: parameter, encoding: .JSON, headers: headers).responseJSON{
+            response in
+            var dict: [String: AnyObject]
+            switch response.result{
+            case .Success(let value):
+                dict = value as! [String : AnyObject]
+            case .Failure(let error):
+                print(error)
                 return
             }
             
-            if let httpResponse = response  as? NSHTTPURLResponse where httpResponse.statusCode == 200{
-                let dict = self.parseJson(data!)
                 success = true
                 var searchResults = [Food]()
-                let hitsLst = dict!["hits"]! as! NSArray
+                let hitsLst = dict["hits"]! as! NSArray
                 let totalNum = min(hitsLst.count, 50)
                 if totalNum == 0 {
                     success = false
                 }else{
                     for index in 0..<totalNum{
                         let foodItem = Food()
-                        let fields = dict!["hits"]![index]!["fields"]!!
+                        let fields = dict["hits"]![index]!["fields"]!!
                         let calories = fields["nf_calories"]!! as! Double
                         let name = fields["item_name"]!! as! String
                         let brandName = fields["brand_name"]!! as! String
                         let serve_unit = fields["nf_serving_size_unit"]!! as? String
                         let serve_qty = fields["nf_serving_size_qty"]!! as? Double
                         let food_id = fields["item_id"]!! as! String
+                        
                         foodItem.caloriesCount = calories
                         foodItem.foodContent = name
                         foodItem.brandContent = brandName
@@ -150,28 +147,17 @@ class NetworkGrab{
                         foodItem.id = food_id
                         searchResults.append(foodItem)
                         }
-                }
-                if success{
+            }
+            if success{
                     self.state = .SearchSuccess(searchResults)
+                    postDoneSearching()
                 }else{
                     self.state = .NotFound
                 }
-            }
             dispatch_async(dispatch_get_main_queue()){
                 completion()
             }
-        })
-        
-        dataTask!.resume()
-    }
-    
-    func parseJson(data:NSData) -> [String: AnyObject]?{
-        do{
-            return try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject]
-        }catch{
-            print("JSON ERROR: \(error)")
-            return nil
+           
         }
     }
-    
 }

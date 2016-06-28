@@ -205,7 +205,6 @@ extension CalorieCountViewController: UISearchBarDelegate{
             net.performSearch(text, filterText: filtertext){
                 self.tableView.reloadData()
             }
-            tableView.reloadData()
         }
     }
     
