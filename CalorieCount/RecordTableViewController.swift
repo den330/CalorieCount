@@ -166,17 +166,6 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
             }
         }
     }
-    
-    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        if tabBarController?.selectedIndex != 1 {return}
-        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
-        switch newCollection.verticalSizeClass{
-        case .Compact:
-            showLandscapeViewWithCoordinator(coordinator, thisController: navigationController!)
-        case .Regular, .Unspecified:
-            hideLandscapeViewWithCoordinator(coordinator, thisController: navigationController!)
-        }
-    }
 }
 
 extension RecordTableViewController: UITabBarControllerDelegate{

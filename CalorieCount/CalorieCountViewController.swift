@@ -14,16 +14,14 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     var managedContext: NSManagedObjectContext!
     var NaviController: UINavigationController?
-    
-    
-    
     var didTip = false
     var pendingFav: Food!
     
-    
+    @IBOutlet weak var filterHeight: NSLayoutConstraint!
     @IBOutlet weak var filterTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    
     let net = NetworkGrab()
     
     private struct commonConstants{
@@ -33,7 +31,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(CalorieCountViewController.handleLongPress))
         tableView.addGestureRecognizer(longPress)
         longPress.cancelsTouchesInView = true
@@ -53,6 +50,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             makeAlert(message)
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it")
         }
+        //filterHeight.constant = 0
     }
     
     func makeAlert(message: String){
@@ -114,7 +112,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        if tabBarController?.selectedIndex != 0 {return}
+        if tabBarController?.selectedIndex != 0 || presentedViewController != nil{return}
         super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
         switch newCollection.verticalSizeClass{
         case .Compact:
@@ -124,7 +122,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         case .Regular, .Unspecified:
             hideLandscapeViewWithCoordinator(coordinator, thisController: self)
         }
-        print(landscapeViewController == nil)
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -221,9 +218,6 @@ extension CalorieCountViewController: UITextFieldDelegate{
             return false
     }
 }
-
-
-
 
 extension CalorieCountViewController: MFMailComposeViewControllerDelegate{
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {

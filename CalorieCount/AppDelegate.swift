@@ -18,15 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack()
     
     func customizeAppearance(){
+        window?.tintColor = UIColor.whiteColor()
         let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
-        let tabBarTintColor = UIColor.clearColor()
-        let cellColor = UIColor(red: 255, green: 255, blue: 0, alpha: 1.0)
         UINavigationBar.appearance().barTintColor = barTintColor
         UISearchBar.appearance().barTintColor = barTintColor
-        UITabBar.appearance().barTintColor = tabBarTintColor
-        UITableViewCell.appearance().backgroundColor = cellColor
-        UITableView.appearance().backgroundColor = cellColor
-        window!.tintColor = UIColor.whiteColor()
+        UITabBar.appearance().barTintColor = UIColor.clearColor()
     }
     
 //    func removeLeaks(){
