@@ -32,7 +32,6 @@ class DetailAnimationController: NSObject, UIViewControllerAnimatedTransitioning
                 }, completion: {_ in
                     transitionContext.completeTransition(true)
             })
-
         }else{
             let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)!
             containerView.addSubview(fromView)

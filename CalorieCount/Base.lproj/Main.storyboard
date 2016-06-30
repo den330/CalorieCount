@@ -282,7 +282,9 @@
 
 7. Contact Me: Shake Your Phone While Search Tab or Statistics Tab Is Selected. 
 
-8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!</string>
+8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!                 
+
+9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.                </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
