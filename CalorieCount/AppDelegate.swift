@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
+    var observer: AnyObject!
     
     func customizeAppearance(){
         window?.tintColor = UIColor.whiteColor()
@@ -46,9 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    }
 
     func listenForIndexUpdate(){
-        NSNotificationCenter.defaultCenter().addObserverForName(IndexUpdateNotification, object: nil, queue: nil){
-            notification in
-                self.updateAllRecord()
+        observer = NSNotificationCenter.defaultCenter().addObserverForName(IndexUpdateNotification, object: nil, queue: nil){
+            [weak self] notification in
+            if let strongSelf = self{
+                strongSelf.updateAllRecord()
+            }
         }
     }
     
@@ -62,7 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let context = coreDataStack.context
                 let lst = try context.executeFetchRequest(fetchRequest) as! [Day]
                 let items = lst.map{$0.searchableItem}
-                
                 CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
                     if let error = error{
                         print("\(error)")
@@ -77,11 +79,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func updateAllRecord(){
         if CSSearchableIndex.isIndexingAvailable(){
             CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
-                error in
+                [weak self] error in
                 if let error = error{
                     print(error)
                 }else{
-                    self.indexAllRecord()
+                    if let strongSelf = self{
+                        strongSelf.indexAllRecord()
+                    }
                 }
             }
         }
@@ -106,7 +110,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-
+    func applicationWillTerminate(application: UIApplication) {
+        NSNotificationCenter.defaultCenter().removeObserver(observer)
+    }
     
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
         let objectID: NSDate
