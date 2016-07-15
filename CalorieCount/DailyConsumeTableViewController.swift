@@ -12,7 +12,7 @@ import CoreData
 import MessageUI
 
 class DailyConsumeTableViewController: UITableViewController{
-    var day: Day!
+    weak var day: Day!
     var items: NSOrderedSet?
     var managedContext: NSManagedObjectContext!
   
