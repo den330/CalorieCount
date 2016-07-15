@@ -144,7 +144,7 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake{
             let alert = UIAlertController(title: "Delete", message: "Delete All Records?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {_ in self.handleMotion()}))
+            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {[unowned self] _ in self.handleMotion()}))
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
             presentViewController(alert,animated: true, completion: nil)
             alert.view.tintColor = UIColor.redColor()

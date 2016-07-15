@@ -70,7 +70,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     func makeFavAlert(){
         let alert = MyAlertController(title: "Favorite", message: "Add to Favorite", preferredStyle: UIAlertControllerStyle.Alert)
         alert.delegate = self
-        alert.addAction(UIAlertAction(title: "Add it!", style: .Default, handler: {_ in self.handleFav()}))
+        alert.addAction(UIAlertAction(title: "Add it!", style: .Default, handler: {[unowned self] _ in self.handleFav()}))
         alert.addAction(UIAlertAction(title: "Don't", style: .Default, handler: nil))
         presentViewController(alert,animated: true, completion: nil)
         alert.view.tintColor = UIColor.redColor()
@@ -116,8 +116,8 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
         switch newCollection.verticalSizeClass{
         case .Compact:
-            self.searchBar.resignFirstResponder()
-            self.filterTextField.resignFirstResponder()
+            searchBar.resignFirstResponder()
+            filterTextField.resignFirstResponder()
             showLandscapeViewWithCoordinator(coordinator,thisController: self)
         case .Regular, .Unspecified:
             hideLandscapeViewWithCoordinator(coordinator, thisController: self)

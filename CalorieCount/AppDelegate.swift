@@ -48,11 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func listenForIndexUpdate(){
         observer = NSNotificationCenter.defaultCenter().addObserverForName(IndexUpdateNotification, object: nil, queue: nil){
-            [weak self] notification in
-            if let strongSelf = self{
-                strongSelf.updateAllRecord()
+            [unowned self] notification in
+                self.updateAllRecord()
             }
-        }
     }
     
 
@@ -79,13 +77,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func updateAllRecord(){
         if CSSearchableIndex.isIndexingAvailable(){
             CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
-                [weak self] error in
+                [unowned self] error in
                 if let error = error{
                     print(error)
                 }else{
-                    if let strongSelf = self{
-                        strongSelf.indexAllRecord()
-                    }
+                    self.indexAllRecord()
                 }
             }
         }

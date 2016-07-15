@@ -35,7 +35,7 @@ class NetworkGrab{
         let parameter = pickParameter(filterText, mainText: mainText)
         request = Alamofire.request(.POST, baseUrl, parameters: parameter, encoding: .JSON, headers: headers)
         request!.responseJSON{
-            response in
+            [unowned self] response in
             var dict: [String: AnyObject]
             switch response.result{
             case .Success(let value):
