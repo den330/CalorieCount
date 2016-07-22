@@ -50,14 +50,18 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         if NSUserDefaults.standardUserDefaults().boolForKey("said it") == false{
-            NSUserDefaults.standardUserDefaults().removeObjectForKey("knowDelete")
-            NSUserDefaults.standardUserDefaults().removeObjectForKey("tips")
             let message = "For complete and the most up-to-date manual, unlock your rotation lock(if not already), and rotate your phone to horizontal(landscape) view with Search bar selected"
             makeAlert(message)
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it")
         }
-        //filterHeight.constant = 0
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("Update Informed") == false{
+            let message = "If You Simply Want To Add 1 Unit Of The Item You Choose, Instead Of Tapping, Try 'Slide To The Right'"
+            makeAlert(message)
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Update Informed")
+        }
     }
     
     func makeAlert(message: String){
