@@ -16,7 +16,6 @@ class HudView: UIView{
         hudView.opaque = false
         view.addSubview(hudView)
         view.userInteractionEnabled = false
-        
         return hudView
     }
     
@@ -49,6 +48,5 @@ class HudView: UIView{
         let textSize = text.sizeWithAttributes(attribs)
         let textPoint = CGPoint(x: center.x - round(textSize.width/2), y: center.y - round(textSize.height/2) + boxHeight/4)
         text.drawAtPoint(textPoint,withAttributes: attribs)
-        
     }
 }

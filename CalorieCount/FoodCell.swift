@@ -19,7 +19,7 @@ class FoodCell: UITableViewCell{
     override func awakeFromNib() {
         super.awakeFromNib()
         let selectedView = UIView(frame: CGRect.zero)
-        selectedView.backgroundColor = UIColor.redColor()
+        selectedView.backgroundColor = UIColor.cyanColor()
         selectedBackgroundView = selectedView
     }
 

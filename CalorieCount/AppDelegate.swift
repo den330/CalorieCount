@@ -101,6 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let favController = thirdNavController.topViewController as! FavViewController
         statisticController.managedContext = coreDataStack.context
         caloriesController.managedContext = coreDataStack.context
+        caloriesController.appdelegate = self
         recordController.managedContext = coreDataStack.context
         favController.managedContext = coreDataStack.context
         return true

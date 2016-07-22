@@ -12,7 +12,7 @@ import CoreData
 import MessageUI
 
 class DailyConsumeTableViewController: UITableViewController{
-    weak var day: Day!
+    var day: Day!
     var items: NSOrderedSet?
     var managedContext: NSManagedObjectContext!
   
@@ -88,6 +88,7 @@ class DailyConsumeTableViewController: UITableViewController{
             managedContext.deleteObject(i as! ItemConsumed)
         }
         managedContext.deleteObject(day)
+       
         do{
             try managedContext.save()
             postNotification()
