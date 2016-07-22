@@ -12,12 +12,13 @@ import MessageUI
 
 class DetailViewController: UIViewController {
     
-    var foodSelected: Food?
+    var foodSelected: Food!
     var managedContext: NSManagedObjectContext!
     var recentDay: Day!
     var itemForSelected: ItemConsumed!
     var itemCon: ItemConsumed!
     let transition = DetailAnimationController()
+    var fromMain = false
     
     @IBOutlet weak var quantityLabel: UILabel!
     var currentfigure = 1
@@ -54,7 +55,11 @@ class DetailViewController: UIViewController {
     @IBAction func saveButton(){
         let hudView = HudView.hudInView(view, animated: true)
         hudView.text = "Saved"
-        saveItem()
+        if fromMain{
+            saveMainPageItem()
+        }else{
+            saveFavPage()
+        }
         postNotification()
         let delayInSeconds = 0.6
         let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
@@ -63,89 +68,83 @@ class DetailViewController: UIViewController {
         }
     }
     
-    func saveItem(){
+    func saveMainPageItem(){
         let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
-        if let foodS = foodSelected{
-            do{
-                let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
-                if sameDay(results,day: NSDate()){
-                    recentDay = results.first!
-                }else{
-                    recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
-                }
-                let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
-                var existed: Bool = false
-                for i in items{
-                    let singleItem = i as! ItemConsumed
-                    if singleItem.id == foodS.id{
-                        existed = true
-                        singleItem.quantityConsumed = singleItem.quantityConsumed + currentfigure
-                        let newAddedCalories = foodS.caloriesCount * Double(currentfigure)
-                        singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
-                        break
-                    }
-                }
-                if !existed{
-                    itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
-                    itemForSelected.quantityConsumed = Int32(quantityLabel.text!)!
-                    itemForSelected.name = foodS.foodContent
-                    itemForSelected.unitCalories = foodS.caloriesCount
-                    itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)) * Double((itemForSelected.unitCalories))
-                    itemForSelected.quantity = String(foodS.quantity) + " " + foodS.unit
-                    itemForSelected.brand = foodS.brandContent
-                    itemForSelected.id = foodS.id
-                    items.addObject(itemForSelected)
-                }
-                recentDay.items = items.copy() as! NSOrderedSet
-                recentDay.currentDate = NSDate()
-                try managedContext.save()
-            }catch let error as NSError{
-                print("Error: \(error)" + "description \(error.localizedDescription)")
-            }
+        let results = try! managedContext.executeFetchRequest(dayFetch) as! [Day]
+        if sameDay(results,day: NSDate()){
+            recentDay = results.first!
         }else{
-           do{
-                let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
-            if sameDay(results,day:NSDate()){
-                    recentDay = results.first!
-                }else{
-                    recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
-                }
-                let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
-                var existed: Bool = false
-                for i in items{
-                    let singleItem = i as! ItemConsumed
-                    if singleItem.id == itemCon.id{
-                        existed = true
-                        singleItem.quantityConsumed = singleItem.quantityConsumed + currentfigure
-                        let newAddedCalories = itemCon.unitCalories * Double(currentfigure)
-                        singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
-                        break
-                    }
-                }
-                if !existed{
-                    itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
-                    itemForSelected.brand = itemCon.brand
-                    itemForSelected.id = itemCon.id
-                    itemForSelected.unitCalories = itemCon.unitCalories
-                    itemForSelected.name = itemCon.name
-                    itemForSelected.isFav = false
-                    itemForSelected.quantity = itemCon.quantity
-                    itemForSelected.quantityConsumed = Int32(currentfigure)
-                    itemForSelected.totalCalories = itemForSelected.unitCalories * Double(itemForSelected.quantityConsumed)
-                    items.addObject(itemForSelected)
-                }
-                recentDay.items = items.copy() as! NSOrderedSet
-                recentDay.currentDate = NSDate()
-                try managedContext.save()
-            }catch let error as NSError{
-                print("Error: \(error)" + "description \(error.localizedDescription)")
-            }
-            
+            recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
         }
+        let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
+        var existed: Bool = false
+        for i in items{
+            let singleItem = i as! ItemConsumed
+            if singleItem.id == foodSelected.id{
+                existed = true
+                singleItem.quantityConsumed = singleItem.quantityConsumed + currentfigure
+                let newAddedCalories = foodSelected.caloriesCount * Double(currentfigure)
+                singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
+                break
+            }
+        }
+        if !existed{
+            itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
+            itemForSelected.quantityConsumed = Int32(quantityLabel.text!)!
+            itemForSelected.name = foodSelected.foodContent
+            itemForSelected.unitCalories = foodSelected.caloriesCount
+            itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)) * Double((itemForSelected.unitCalories))
+            itemForSelected.quantity = String(foodSelected.quantity) + " " + foodSelected.unit
+            itemForSelected.brand = foodSelected.brandContent
+            itemForSelected.id = foodSelected.id
+            items.addObject(itemForSelected)
+        }
+        recentDay.items = items.copy() as! NSOrderedSet
+        recentDay.currentDate = NSDate()
+        try! managedContext.save()
     }
     
-    
+    func saveFavPage(){
+        let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
+        let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
+        let results = try! managedContext.executeFetchRequest(dayFetch) as! [Day]
+        if sameDay(results,day:NSDate()){
+            recentDay = results.first!
+        }else{
+            recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
+        }
+        let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
+        var existed: Bool = false
+        for i in items{
+            let singleItem = i as! ItemConsumed
+            if singleItem.id == itemCon.id{
+                existed = true
+                singleItem.quantityConsumed = singleItem.quantityConsumed + currentfigure
+                let newAddedCalories = itemCon.unitCalories * Double(currentfigure)
+                singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
+                break
+            }
+        }
+        if !existed{
+            itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
+            itemForSelected.brand = itemCon.brand
+            itemForSelected.id = itemCon.id
+            itemForSelected.unitCalories = itemCon.unitCalories
+            itemForSelected.name = itemCon.name
+            itemForSelected.isFav = false
+            itemForSelected.quantity = itemCon.quantity
+            itemForSelected.quantityConsumed = Int32(currentfigure)
+            itemForSelected.totalCalories = itemForSelected.unitCalories * Double(itemForSelected.quantityConsumed)
+            items.addObject(itemForSelected)
+        }
+        recentDay.items = items.copy() as! NSOrderedSet
+        recentDay.currentDate = NSDate()
+        try! managedContext.save()
+    }
+
+
+
     @IBAction func close(){
         dismissViewControllerAnimated(true, completion: nil)
     }

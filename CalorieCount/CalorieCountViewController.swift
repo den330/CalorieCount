@@ -186,64 +186,65 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         }
     }
     
+    func quickSave(indexPath: NSIndexPath){
+        if let lst = net.state.get(){
+            let food = lst[indexPath.row]
+            let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
+            let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
+            let results = try! managedContext.executeFetchRequest(dayFetch) as! [Day]
+            if sameDay(results,day: NSDate()){
+                recentDay = results.first!
+            }else{
+                recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
+            }
+            let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
+            var existed: Bool = false
+            for i in items{
+                let singleItem = i as! ItemConsumed
+                if singleItem.id == food.id{
+                    existed = true
+                    singleItem.quantityConsumed = singleItem.quantityConsumed + 1
+                    let newAddedCalories = food.caloriesCount * Double(1)
+                    singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
+                    break
+                }
+            }
+            if !existed{
+                itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
+                itemForSelected.name = food.foodContent
+                itemForSelected.unitCalories = food.caloriesCount
+                itemForSelected.totalCalories = Double(1) * Double(itemForSelected.unitCalories)
+                itemForSelected.quantity = String(food.quantity) + " " + food.unit
+                itemForSelected.brand = food.brandContent
+                itemForSelected.id = food.id
+                itemForSelected.quantityConsumed = 1
+                items.addObject(itemForSelected)
+            }
+            recentDay.items = items.copy() as! NSOrderedSet
+            recentDay.currentDate = NSDate()
+            try! managedContext.save()
+            let hudView: HudView = HudView.hudInView(view, animated: true)
+            hudView.text = "1 Unit Saved"
+            postNotification()
+            let delayInSeconds = 0.6
+            let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
+            dispatch_after(when, dispatch_get_main_queue()){
+                hudView.removeFromSuperview()
+                self.view.userInteractionEnabled = true
+            }
+        }
+    }
+    
     func handleSwipe(sender: UISwipeGestureRecognizer){
         if sender.direction == .Right{
             let slidePoint = sender.locationInView(tableView)
             if let indexPath = tableView.indexPathForRowAtPoint(slidePoint){
-                if let lst = net.state.get(){
-                    let food = lst[indexPath.row]
-                    let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
-                    let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
-                    do{
-                        let results = try managedContext.executeFetchRequest(dayFetch) as! [Day]
-                        if sameDay(results,day: NSDate()){
-                            recentDay = results.first!
-                        }else{
-                            recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
-                        }
-                        let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
-                        var existed: Bool = false
-                        for i in items{
-                            let singleItem = i as! ItemConsumed
-                            if singleItem.id == food.id{
-                                existed = true
-                                singleItem.quantityConsumed = singleItem.quantityConsumed + 1
-                                let newAddedCalories = food.caloriesCount * Double(1)
-                                singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
-                                break
-                            }
-                        }
-                        if !existed{
-                            itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
-                            itemForSelected.name = food.foodContent
-                            itemForSelected.unitCalories = food.caloriesCount
-                            itemForSelected.totalCalories = Double(1) * Double(itemForSelected.unitCalories)
-                            itemForSelected.quantity = String(food.quantity) + " " + food.unit
-                            itemForSelected.brand = food.brandContent
-                            itemForSelected.id = food.id
-                            itemForSelected.quantityConsumed = 1
-                            items.addObject(itemForSelected)
-                        }
-                        recentDay.items = items.copy() as! NSOrderedSet
-                        recentDay.currentDate = NSDate()
-                        try managedContext.save()
-                        let hudView: HudView = HudView.hudInView(view, animated: true)
-                        hudView.text = "1 Unit Saved"
-                        postNotification()
-                        let delayInSeconds = 0.6
-                        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-                        dispatch_after(when, dispatch_get_main_queue()){
-                            hudView.removeFromSuperview()
-                            self.view.userInteractionEnabled = true
-                        }
-                        
-                    }catch let error as NSError{
-                        print("Error: \(error)" + "description \(error.localizedDescription)")
-                    }
-                }
+                quickSave(indexPath)
             }
         }
     }
+    
+    
 
 
 
@@ -255,6 +256,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             if let lst = net.state.get(){
                 detailController.foodSelected = lst[index.row]
                 detailController.managedContext = managedContext
+                detailController.fromMain = true
             }
         }
     }
