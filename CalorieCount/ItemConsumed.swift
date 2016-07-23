@@ -10,8 +10,34 @@ import Foundation
 import CoreData
 
 
-class ItemConsumed: NSManagedObject {
-
-// Insert code here to add functionality to your managed object subclass
-
+class ItemConsumed: NSManagedObject, FoodProtocol {
+    var foodProContent: String{
+        get{
+            return name
+        }
+    }
+    
+    var foodProCalorie: Double{
+        get{
+            return unitCalories
+        }
+    }
+    
+    var foodProBrand: String{
+        get{
+            return brand
+        }
+    }
+    
+    var foodProId: String{
+        get{
+            return id
+        }
+    }
+    
+    var foodProUnit: String{
+        get{
+            return quantity
+        }
+    }
 }

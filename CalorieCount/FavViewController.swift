@@ -65,41 +65,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
     func quickSave(indexPath: NSIndexPath?){
         if let indexPath = indexPath{
             let item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
-            let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: managedContext)
-            let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
-            let results = try! managedContext.executeFetchRequest(dayFetch) as! [Day]
-            if sameDay(results,day:NSDate()){
-                recentDay = results.first!
-            }else{
-                recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: managedContext)
-            }
-            let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
-            var existed: Bool = false
-            for i in items{
-                let singleItem = i as! ItemConsumed
-                if singleItem.id == item.id{
-                    existed = true
-                    singleItem.quantityConsumed = singleItem.quantityConsumed + 1
-                    let newAddedCalories = item.unitCalories * Double(1)
-                    singleItem.totalCalories = Double(singleItem.totalCalories) + newAddedCalories
-                    break
-                }
-            }
-            if !existed{
-                itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
-                itemForSelected.brand = item.brand
-                itemForSelected.id = item.id
-                itemForSelected.unitCalories = item.unitCalories
-                itemForSelected.name = item.name
-                itemForSelected.isFav = false
-                itemForSelected.quantity = item.quantity
-                itemForSelected.quantityConsumed = Int32(1)
-                itemForSelected.totalCalories = itemForSelected.unitCalories * Double(itemForSelected.quantityConsumed)
-                items.addObject(itemForSelected)
-            }
-            recentDay.items = items.copy() as! NSOrderedSet
-            recentDay.currentDate = NSDate()
-            try! managedContext.save()
+            save(managedContext, food: item, quantity: 1)
             let hudView: HudView = HudView.hudInView(view, animated: true)
             hudView.text = "1 Unit Saved"
             postNotification()

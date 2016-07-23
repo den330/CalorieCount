@@ -16,6 +16,55 @@ let IndexUpdateNotification = "Update Notification"
 
 var landscapeViewController: LandscapeViewController?
 
+
+protocol FoodProtocol {
+    var foodProId: String {get}
+    var foodProCalorie: Double {get}
+    var foodProContent: String {get}
+    var foodProBrand: String {get}
+    var foodProUnit: String{get}
+}
+
+func save<T:FoodProtocol>(thisManagedContext: NSManagedObjectContext, food: T, quantity: Int){
+    var recentDay: Day!
+    var itemForSelected: ItemConsumed!
+    let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: thisManagedContext)
+    let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: thisManagedContext)
+    let results = try! thisManagedContext.executeFetchRequest(dayFetch) as! [Day]
+    if sameDay(results,day: NSDate()){
+        recentDay = results.first!
+    }else{
+        recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: thisManagedContext)
+    }
+    let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
+    var existed: Bool = false
+    for i in items{
+        let singleItem = i as! ItemConsumed
+        if singleItem.id == food.foodProId{
+            existed = true
+            singleItem.quantityConsumed = singleItem.quantityConsumed + quantity
+            let newAddedCalories = food.foodProCalorie * Double(quantity)
+            singleItem.totalCalories = singleItem.totalCalories + newAddedCalories
+            break
+        }
+    }
+    if !existed{
+        itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: thisManagedContext)
+        itemForSelected.quantityConsumed = Int32(quantity)
+        itemForSelected.name = food.foodProContent
+        itemForSelected.unitCalories = food.foodProCalorie
+        itemForSelected.totalCalories = Double((itemForSelected.quantityConsumed)) * Double((itemForSelected.unitCalories))
+        itemForSelected.quantity = food.foodProUnit
+        itemForSelected.brand = food.foodProBrand
+        itemForSelected.id = food.foodProId
+        items.addObject(itemForSelected)
+    }
+    recentDay.items = items.copy() as! NSOrderedSet
+    recentDay.currentDate = NSDate()
+    try! thisManagedContext.save()
+}
+
+
 func postNotification(){
     NSNotificationCenter.defaultCenter().postNotificationName(IndexUpdateNotification, object: nil)
 }
