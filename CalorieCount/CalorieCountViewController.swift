@@ -227,11 +227,15 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             try! managedContext.save()
             let hudView: HudView = HudView.hudInView(view, animated: true)
             hudView.text = "1 Unit Saved"
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! FoodCell
+            let storedCal = cell.calorieLabel.text
+            cell.calorieLabel.text = "1 Added"
             postNotification()
             let delayInSeconds = 0.6
             let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
             dispatch_after(when, dispatch_get_main_queue()){
                 hudView.removeFromSuperview()
+                cell.calorieLabel.text = storedCal
                 self.view.userInteractionEnabled = true
             }
         }

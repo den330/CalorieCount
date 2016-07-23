@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 class Food{
     var caloriesCount: Double = 0.0
     var foodContent: String = ""
