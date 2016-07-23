@@ -120,7 +120,7 @@ extension DetailViewController: MFMailComposeViewControllerDelegate{
         if MFMailComposeViewController.canSendMail(){
             let controller = MFMailComposeViewController()
             controller.mailComposeDelegate = self
-            controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
+            controller.setSubject(NSLocalizedString("New Feature Idea", comment: "Email Sub"))
             controller.setToRecipients(["yaxinyuan0910@gmail.com"])
             presentViewController(controller, animated: true, completion: nil)
         }

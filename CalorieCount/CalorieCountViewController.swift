@@ -52,11 +52,11 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         super.viewDidAppear(animated)
         
         if NSUserDefaults.standardUserDefaults().boolForKey("said it") == false{
-            let message = "For complete and the most up-to-date manual, unlock your rotation lock(if not already), and rotate your phone to horizontal(landscape) view with Search bar selected"
+            let message = "For complete and the most up-to-date manual, unlock your rotation lock(if not already), and rotate your phone to horizontal(landscape) view with Search Tab selected"
             makeAlert(message)
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it")
         }else if NSUserDefaults.standardUserDefaults().boolForKey("Update Informed") == false{
-            let message = "If You Simply Want To Add 1 Unit Of The Item You Choose, Instead Of Tapping, Try 'Slide To The Right'"
+            let message = "Quick Add Feature: If You Simply Want To Add 1 Unit Of The Item You Choose, Instead Of Tapping, Try Sliding To The Right'"
             makeAlert(message)
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Update Informed")
         }
@@ -196,7 +196,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
             hudView.text = "1 Unit Saved"
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! FoodCell
             let storedCal = cell.calorieLabel.text
-            cell.calorieLabel.text = "1 Added"
+            cell.calorieLabel.text = "1 Unit Added"
             postNotification()
             let delayInSeconds = 0.6
             let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))

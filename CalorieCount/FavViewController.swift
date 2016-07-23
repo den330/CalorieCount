@@ -68,10 +68,14 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
             save(managedContext, food: item, quantity: 1)
             let hudView: HudView = HudView.hudInView(view, animated: true)
             hudView.text = "1 Unit Saved"
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! FoodCell
+            let calorieText = cell.calorieLabel.text
+            cell.calorieLabel.text = "1 Unit Added"
             postNotification()
             let delayInSeconds = 0.6
             let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
             dispatch_after(when, dispatch_get_main_queue()){
+                cell.calorieLabel.text = calorieText
                 hudView.removeFromSuperview()
                 self.view.userInteractionEnabled = true
             }
