@@ -54,16 +54,26 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ve2-K9-oiO"/>
                                 </connections>
                             </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tsA-Yl-ydi">
+                                <rect key="frame" x="240" y="92" width="121" height="29"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="5pz-0L-r5z"/>
+                            <constraint firstItem="tsA-Yl-ydi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7W4-M4-3za"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Cqq-ar-Iwb"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="E3J-sb-PBP"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="GNR-gM-2NP"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GiG-8F-2tC"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKr-Nh-Cv9"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="Kzw-Ra-5b5"/>
+                            <constraint firstItem="tsA-Yl-ydi" firstAttribute="centerX" secondItem="QFG-Cm-VTq" secondAttribute="centerX" id="M3O-s1-x78"/>
                             <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="WZu-5l-31J"/>
                             <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="X7d-uq-E9e"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Z6d-ZO-Cjp"/>
@@ -72,6 +82,7 @@
                             <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dyl-OU-nyR"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="fdP-eJ-VVy"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jZ0-vV-OtV"/>
+                            <constraint firstItem="tsA-Yl-ydi" firstAttribute="top" secondItem="OUc-Ka-ObX" secondAttribute="bottom" id="nxX-cF-cHg"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ycp-pI-irW"/>
                         </constraints>
                         <variation key="default">
@@ -82,6 +93,7 @@
                                 <exclude reference="Z6d-ZO-Cjp"/>
                                 <exclude reference="bHW-Ik-Imj"/>
                                 <exclude reference="fdP-eJ-VVy"/>
+                                <exclude reference="M3O-s1-x78"/>
                             </mask>
                         </variation>
                     </view>
@@ -96,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2930" y="-2100"/>
+            <point key="canvasLocation" x="-2934" y="-2111"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dD9-P4-6R1">
@@ -266,7 +278,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">Light, Simple To Use, Nothing Fancy 
+                                <string key="text">Light, Simple To Use, Nothing Fancy 
 
 1. Search Tab: Search and Add Items You Consumed Today.(Tap = Add To Record, Press and Hold = Add To Fav, Slide To The Right = Quick Add 1 Unit) 
 
@@ -276,15 +288,15 @@
 
 4. Fav Tab: For Your Frequently-Searched Items, You Can Add Them To Record From Here 
 
-5. Delete One Item or Day or Fav: Swipe To The Left 
+5. Delete One Item or Day or Fav: Slide To The Left 
 
-6. Delete Everything In A Page: Shake Your Phone In That Page. 
+6. Delete Everything In A Page(Day, Daily Detail Or Fav): Shake Your Phone In That Page. 
 
 7. Contact Me: Shake Your Phone While Search Tab or Statistics Tab Is Selected. 
 
 8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!                 
 
-9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.                                             </mutableString>
+9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.                                             </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>

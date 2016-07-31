@@ -29,7 +29,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     let net = NetworkGrab()
     
     private struct commonConstants{
-        static let topInsets:CGFloat = 92
+        static let topInsets:CGFloat = 121
         static let cellXib = "FoodCell"
     }
     
