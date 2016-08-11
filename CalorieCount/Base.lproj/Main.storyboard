@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2st-lB-0p8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2st-lB-0p8">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -54,26 +54,16 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ve2-K9-oiO"/>
                                 </connections>
                             </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tsA-Yl-ydi">
-                                <rect key="frame" x="240" y="92" width="121" height="29"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="5pz-0L-r5z"/>
-                            <constraint firstItem="tsA-Yl-ydi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7W4-M4-3za"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Cqq-ar-Iwb"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="E3J-sb-PBP"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="GNR-gM-2NP"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GiG-8F-2tC"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKr-Nh-Cv9"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="Kzw-Ra-5b5"/>
-                            <constraint firstItem="tsA-Yl-ydi" firstAttribute="centerX" secondItem="QFG-Cm-VTq" secondAttribute="centerX" id="M3O-s1-x78"/>
                             <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="WZu-5l-31J"/>
                             <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="X7d-uq-E9e"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Z6d-ZO-Cjp"/>
@@ -82,7 +72,6 @@
                             <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dyl-OU-nyR"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="fdP-eJ-VVy"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jZ0-vV-OtV"/>
-                            <constraint firstItem="tsA-Yl-ydi" firstAttribute="top" secondItem="OUc-Ka-ObX" secondAttribute="bottom" id="nxX-cF-cHg"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ycp-pI-irW"/>
                         </constraints>
                         <variation key="default">
@@ -93,7 +82,6 @@
                                 <exclude reference="Z6d-ZO-Cjp"/>
                                 <exclude reference="bHW-Ik-Imj"/>
                                 <exclude reference="fdP-eJ-VVy"/>
-                                <exclude reference="M3O-s1-x78"/>
                             </mask>
                         </variation>
                     </view>

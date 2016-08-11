@@ -35,24 +35,6 @@ class RecordTableViewController: UITableViewController {
         tabBarController?.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        var i = 0
-        while i < 3{
-            let indexPath = NSIndexPath(forRow: i, inSection: 0)
-            if let cell = tableView.cellForRowAtIndexPath(indexPath){
-                let dateLabel =  cell.viewWithTag(1000) as! UILabel
-                let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
-                if sameDay([day], day: NSDate()){
-                    dateLabel.text = "Today"
-                }else{
-                    dateLabel.text = dateFormatter.stringFromDate(day.currentDate)
-                }
-            }
-            i += 1
-        }
-    }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         let rowNum = sectionInfo.numberOfObjects
@@ -84,6 +66,10 @@ class RecordTableViewController: UITableViewController {
             }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
     
     func configureCell(cell: UITableViewCell, day: Day){
         let items = day.items
@@ -97,7 +83,11 @@ class RecordTableViewController: UITableViewController {
         let date = dateFormatter.stringFromDate(day.currentDate)
         dateLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         caloriesLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
-        dateLabel.text = date
+        if sameDay([day], day: NSDate()){
+            dateLabel.text = "Today"
+        }else{
+            dateLabel.text = date
+        }
         caloriesLabel.text = "Total: " + String(format: "%.2f", Double(totalCalories)) + " Cal"
     }
     
