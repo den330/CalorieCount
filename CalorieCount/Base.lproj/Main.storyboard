@@ -280,11 +280,11 @@
 
 6. Delete Everything In A Page(Day, Daily Detail Or Fav): Shake Your Phone In That Page. 
 
-7. Contact Me: Shake Your Phone While Search Tab or Statistics Tab Is Selected. 
+7. Email Me: Shake Your Phone While Search Tab Is Selected. 
 
 8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!                 
 
-9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.                                              </mutableString>
+9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>

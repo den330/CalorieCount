@@ -148,13 +148,11 @@ extension DIYListViewController: NSFetchedResultsControllerDelegate{
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake{
-            if motion == .MotionShake{
-                let alert = UIAlertController(title: "Delete", message: "Delete All DIY?", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {[unowned self] _ in self.handleMotion()}))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-                presentViewController(alert,animated: true, completion: nil)
-                alert.view.tintColor = UIColor.redColor()
-            }
+            let alert = UIAlertController(title: "Delete", message: "Delete All DIY?", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {[unowned self] _ in self.handleMotion()}))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+            presentViewController(alert,animated: true, completion: nil)
+            alert.view.tintColor = UIColor.redColor()
         }
     }
     

@@ -45,10 +45,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if NSUserDefaults.standardUserDefaults().boolForKey("said it") == false{
+        if NSUserDefaults.standardUserDefaults().boolForKey("said it before") == false{
             let message = "For complete and the most up-to-date manual, click 'Manual' in Fav Tab"
             makeAlert(message, vc: self, title: "Tips")
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it")
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it before")
         }
     }
     
