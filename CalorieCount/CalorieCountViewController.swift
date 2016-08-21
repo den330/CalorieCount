@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import MessageUI
 
-class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,MyAlertControllerDelegate{
+class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
     
     var managedContext: NSManagedObjectContext!
     var NaviController: UINavigationController?
@@ -48,32 +48,17 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         
         if NSUserDefaults.standardUserDefaults().boolForKey("said it") == false{
             let message = "For complete and the most up-to-date manual, unlock your rotation lock(if not already), and rotate your phone to horizontal(landscape) view with Search Tab selected"
-            makeAlert(message)
+            makeAlert(message, vc: self, title: "Tips")
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it")
         }else if NSUserDefaults.standardUserDefaults().boolForKey("Update Informed") == false{
             let message = "Quick Add Feature: If You Simply Want To Add 1 Unit Of The Item You Choose, Instead Of Tapping, Try Sliding To The Right'"
-            makeAlert(message)
+            makeAlert(message,vc: self, title: "Tips")
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Update Informed")
         }
     }
     
-    func makeAlert(message: String){
-        let title = "Tips"
-        let alert = MyAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.delegate = self
-        alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
-        alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15),NSForegroundColorAttributeName : UIColor.yellowColor()]), forKey: "attributedMessage")
-        alert.addAction(UIAlertAction(title: "Got it", style: .Default, handler: nil))
-        let subview = alert.view.subviews.first! as UIView
-        let alertContentView = subview.subviews.first! as UIView
-        alertContentView.backgroundColor = UIColor.darkGrayColor()
-        presentViewController(alert, animated: true, completion: nil)
-        alert.view.tintColor = UIColor.greenColor()
-    }
-    
     func makeFavAlert(){
-        let alert = MyAlertController(title: "Favorite", message: "Add to Favorite", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.delegate = self
+        let alert = UIAlertController(title: "Favorite", message: "Add to Favorite", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Add it!", style: .Default, handler: {[unowned self] _ in self.handleFav()}))
         alert.addAction(UIAlertAction(title: "Don't", style: .Default, handler: nil))
         presentViewController(alert,animated: true, completion: nil)

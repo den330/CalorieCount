@@ -600,12 +600,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Rwt-dF-LXf" id="kGR-yT-slu"/>
-                        <segue destination="B1B-gE-HR5" kind="show" identifier="showEditEntry" id="2r3-dH-dt2"/>
+                        <segue destination="uog-p9-HYp" kind="presentation" identifier="presentPopUp" id="Twd-5c-8zy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CpK-N8-O8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1675" y="-407"/>
+            <point key="canvasLocation" x="-1703" y="-227"/>
         </scene>
         <!--EntryViewController-->
         <scene sceneID="U1d-I9-fht">
@@ -840,7 +840,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1t7-vc-7zF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1022" y="-407"/>
+            <point key="canvasLocation" x="-650" y="-395"/>
         </scene>
     </scenes>
     <resources>
@@ -850,7 +850,6 @@
         <image name="search-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2r3-dH-dt2"/>
-        <segue reference="wSO-tQ-y2A"/>
+        <segue reference="Twd-5c-8zy"/>
     </inferredMetricsTieBreakers>
 </document>

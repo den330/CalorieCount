@@ -20,41 +20,34 @@ class EntryViewController: UIViewController{
     @IBOutlet weak var unitField: UITextField!
     
     var managedContext: NSManagedObjectContext!
-    var entryToEdit: ItemConsumed?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        guard let editEntry = entryToEdit else{
-           return
-        }
-        nameField.text = editEntry.foodProContent
-        brandField.text = editEntry.brand
-        calorieField.text = String(editEntry.unitCalories)
-        unitField.text = editEntry.foodProUnit
-    }
     
     @IBAction func Save(sender: UIBarButtonItem) {
         if !isValidNumber(calorieField.text!){
+            makeAlert("Invalid Input On Calorie Field", vc: self, title: "Warning")
             return
         }
-        var entry: ItemConsumed
-        if let editEntry = entryToEdit{
-            entry = editEntry
-        }else{
-            let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
-            entry = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
-            entry.id = String(NSUserDefaults.standardUserDefaults().integerForKey("DIYID") + 1)
-            entry.isMy = true
-            NSUserDefaults.standardUserDefaults().setInteger(Int(entry.id)!, forKey: "DIYID")
-        }
+        let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
+        let entry = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
+        entry.isMy = true
+        entry.id = String(NSUserDefaults.standardUserDefaults().integerForKey("DIYID") + 1)
+        NSUserDefaults.standardUserDefaults().setInteger(Int(entry.id)!, forKey: "DIYID")
         if brandField.text! != ""{
             entry.brand = brandField.text!
+        }
+        if nameField.text! != ""{
+            entry.name = nameField.text!
         }
         entry.unitCalories = Double(calorieField.text!)!
         if unitField.text! != ""{
             entry.quantity = unitField.text!
         }
         try! managedContext.save()
-        navigationController?.popViewControllerAnimated(true)
+        let hudView: HudView = HudView.hudInView(view, animated: true)
+        hudView.text = "Saved"
+        let delayInSeconds = 0.6
+        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
+        dispatch_after(when, dispatch_get_main_queue()){
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
 }

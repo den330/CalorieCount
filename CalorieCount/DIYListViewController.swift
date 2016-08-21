@@ -55,12 +55,12 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let indexPath = indexPath{
             let item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
             save(managedContext, food: item, quantity: 1)
-            let hudView: HudView = HudView.hudInView(view, animated: true)
-            hudView.text = "1 Unit Saved"
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! FoodCell
             let calorieText = cell.calorieLabel.text
             cell.calorieLabel.text = "1 Unit Added"
             postNotification()
+            let hudView: HudView = HudView.hudInView(view, animated: true)
+            hudView.text = "1 Unit Saved"
             let delayInSeconds = 0.6
             let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
             dispatch_after(when, dispatch_get_main_queue()){
@@ -89,16 +89,31 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        performSegueWithIdentifier("showEditEntry", sender: indexPath)
+        let item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
+        performSegueWithIdentifier("presentPopUp", sender: item)
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            let item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
+            managedContext.deleteObject(item)
+        }
+        do{
+            try managedContext.save()
+        }catch let error as NSError{
+            print("Could not save delete: \(error)")
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let desCon = segue.destinationViewController as! EntryViewController
-        desCon.managedContext = managedContext
-        if segue.identifier == "showEditEntry"{
-            let index = sender as! NSIndexPath
-            let item = fetchedResultsController.objectAtIndexPath(index) as! ItemConsumed
-            desCon.entryToEdit = item
+        if segue.identifier == "showAddEntry"{
+            let desCon = segue.destinationViewController as! EntryViewController
+            desCon.managedContext = managedContext
+        }else if segue.identifier == "presentPopUp"{
+            let item = sender as! ItemConsumed
+            let DestController = segue.destinationViewController as! DetailViewController
+            DestController.itemCon = item
+            DestController.managedContext = managedContext
         }
     }
     
@@ -121,7 +136,8 @@ extension DIYListViewController: NSFetchedResultsControllerDelegate{
         case .Move:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
-        default: break
+        case .Update:
+            tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
         }
     }
     
