@@ -95,7 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let caloriesController = TabController.viewControllers![0] as! CalorieCountViewController
         let NavController = TabController.viewControllers![1] as! UINavigationController
         let recordController = NavController.topViewController as! RecordTableViewController
-        //let secondNavController = TabController.viewControllers![2] as! UINavigationController
+        let secondNavController = TabController.viewControllers![2] as! UINavigationController
+        let diyController = secondNavController.topViewController as! DIYListViewController
         let thirdNavController = TabController.viewControllers![3] as! UINavigationController
         let favController = thirdNavController.topViewController as! FavViewController
         
@@ -103,6 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         caloriesController.appdelegate = self
         recordController.managedContext = coreDataStack.context
         favController.managedContext = coreDataStack.context
+        diyController.managedContext = coreDataStack.context
         return true
     }
     

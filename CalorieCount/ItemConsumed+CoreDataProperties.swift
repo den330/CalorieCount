@@ -2,7 +2,7 @@
 //  ItemConsumed+CoreDataProperties.swift
 //  CalorieCount
 //
-//  Created by Yaxin Yuan on 16/6/23.
+//  Created by Yaxin Yuan on 16/8/21.
 //  Copyright © 2016年 Yaxin Yuan. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -22,6 +22,6 @@ extension ItemConsumed {
     @NSManaged var quantityConsumed: Int32
     @NSManaged var totalCalories: Double
     @NSManaged var unitCalories: Double
+    @NSManaged var isMy: Bool
     @NSManaged var days: Day?
-
 }

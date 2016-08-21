@@ -19,16 +19,10 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
     var itemForSelected: ItemConsumed!
     var recentDay: Day!
     
-    private struct commonConstants{
-        static let topInsets:CGFloat = 0
-        static let cellXib = "FoodCell"
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.estimatedRowHeight = 100

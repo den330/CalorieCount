@@ -28,11 +28,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     let net = NetworkGrab()
     
-    private struct commonConstants{
-        static let topInsets:CGFloat = 92
-        static let cellXib = "FoodCell"
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(CalorieCountViewController.handleLongPress))

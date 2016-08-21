@@ -577,6 +577,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rwt-dF-LXf">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="nMB-3x-WHp" id="FsA-rl-xVy"/>
+                                    <outlet property="delegate" destination="nMB-3x-WHp" id="xo6-F5-PPf"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -590,7 +594,6 @@
                     <navigationItem key="navigationItem" title="DIY LIST" id="qC9-I9-D3H">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="iHo-MK-kf7">
                             <connections>
-                                <action selector="addEntry:" destination="nMB-3x-WHp" id="1BV-v4-i9W"/>
                                 <segue destination="B1B-gE-HR5" kind="show" identifier="showAddEntry" id="b4c-LM-15i"/>
                             </connections>
                         </barButtonItem>
@@ -847,7 +850,7 @@
         <image name="search-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="b4c-LM-15i"/>
+        <segue reference="2r3-dH-dt2"/>
         <segue reference="wSO-tQ-y2A"/>
     </inferredMetricsTieBreakers>
 </document>
