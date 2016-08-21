@@ -138,5 +138,22 @@ func hideLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoo
     }
 }
 
+func isValidNumber(str:String) -> Bool{
+    if str.isEmpty {
+        return false
+    }
+    let newChar = NSCharacterSet(charactersInString: str)
+    let boolValid = NSCharacterSet.decimalDigitCharacterSet().isSupersetOfSet(newChar)
+    if boolValid{
+        return true
+    }else{
+        let lst = str.componentsSeparatedByString(".")
+        if lst.count != 2 || lst.contains(""){
+            return false
+        }
+        return true
+    }
+}
+
 
 
