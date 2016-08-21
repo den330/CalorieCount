@@ -23,7 +23,7 @@ class EntryViewController: UIViewController{
     
     @IBAction func Save(sender: UIBarButtonItem) {
         if !isValidNumber(calorieField.text!){
-            makeAlert("Invalid Input On Calorie Field", vc: self, title: "Warning")
+            makeAlert("Invalid Input On Calorie Field", vc: self.parentViewController!, title: "Warning")
             return
         }
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)

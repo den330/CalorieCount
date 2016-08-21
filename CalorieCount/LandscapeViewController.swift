@@ -11,4 +11,16 @@ import UIKit
 
 class LandscapeViewController: UIViewController{
     
+    @IBOutlet weak var textView: UITextView!
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        textView.scrollEnabled = false
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        textView.scrollEnabled = true
+    }
+
 }

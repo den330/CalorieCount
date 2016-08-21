@@ -45,15 +45,10 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         if NSUserDefaults.standardUserDefaults().boolForKey("said it") == false{
-            let message = "For complete and the most up-to-date manual, unlock your rotation lock(if not already), and rotate your phone to horizontal(landscape) view with Search Tab selected"
+            let message = "For complete and the most up-to-date manual, click 'Manual' in Fav Tab"
             makeAlert(message, vc: self, title: "Tips")
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it")
-        }else if NSUserDefaults.standardUserDefaults().boolForKey("Update Informed") == false{
-            let message = "Quick Add Feature: If You Simply Want To Add 1 Unit Of The Item You Choose, Instead Of Tapping, Try Sliding To The Right'"
-            makeAlert(message,vc: self, title: "Tips")
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Update Informed")
         }
     }
     
@@ -100,19 +95,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         }
     }
     
-    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        if tabBarController?.selectedIndex != 0 || presentedViewController != nil{return}
-        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
-        switch newCollection.verticalSizeClass{
-        case .Compact:
-            searchBar.resignFirstResponder()
-            filterTextField.resignFirstResponder()
-            showLandscapeViewWithCoordinator(coordinator,thisController: self)
-        case .Regular, .Unspecified:
-            hideLandscapeViewWithCoordinator(coordinator, thisController: self)
-        }
-    }
-
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
             case .NotFound, .Searching: return 1
