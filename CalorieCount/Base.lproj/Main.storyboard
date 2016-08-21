@@ -266,13 +266,13 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Light, Simple To Use, Nothing Fancy 
+                                <mutableString key="text">Light, Simple To Use, Nothing Fancy 
 
-1. Search Tab: Search and Add Items You Consumed Today.(Tap = Add To Record, Press and Hold = Add To Fav, Slide To The Right = Quick Add 1 Unit) 
+1. Search Tab: Search and Add Items You Consumed Today.(Tap = Add To Record, Press and Hold = Add To Fav, Swipe To The Right = Quick Add 1 Unit) 
 
 2. Record Tab: Your Calorie Record In Each Day 
 
-3. Statistics Tab: You Calorie Stat So Far 
+3. DIY Tab: Can’t Find What You Want From Our Server Yet You Did Learn the Calorie Amount Of a Certain Item From Some Other Source? Then Build An Item For Yourself So That You Can Add It To Your Daily Record Directly From This Tab
 
 4. Fav Tab: For Your Frequently-Searched Items, You Can Add Them To Record From Here 
 
@@ -284,7 +284,7 @@
 
 8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!                 
 
-9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.                                             </string>
+9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.                                              </mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -628,7 +628,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8nE-lQ-88o">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Optional" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8nE-lQ-88o">
                                 <rect key="frame" x="265" y="91" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.090503635599999993" green="1" blue="0.0058474998739999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -659,7 +659,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lTY-92-h9C">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Number Only" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lTY-92-h9C">
                                 <rect key="frame" x="266" y="148" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.090503635599999993" green="1" blue="0.0058474998739999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -701,7 +701,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bIk-vR-2I9">
                                 <rect key="frame" x="20" y="208" width="166" height="27"/>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Rm-ys-eSq">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Optional" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Rm-ys-eSq">
                                 <rect key="frame" x="264" y="205" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.090503635599999993" green="1" blue="0.0058474998739999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -739,7 +739,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JMI-3f-Dje">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Optional" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JMI-3f-Dje">
                                 <rect key="frame" x="264" y="262" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.090503635599999993" green="1" blue="0.0058474998739999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>

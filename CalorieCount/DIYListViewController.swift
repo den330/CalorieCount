@@ -22,6 +22,11 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if !NSUserDefaults.standardUserDefaults().boolForKey("DIYAgain"){
+            let message = "Can’t Find What You Want From Our Server Yet You Did Learn the Calorie Amount Of a Certain Item From Some Other Source? Then Build An Item For Yourself So That You Can Add It To Your Daily Record Directly From This Tab"
+            makeAlert(message, vc: self.parentViewController!, title: "Tips")
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "DIYAgain")
+        }
         tableView.delegate = self
         tableView.dataSource = self
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
@@ -116,10 +121,6 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
             DestController.managedContext = managedContext
         }
     }
-    
-    
-
-    
 }
 
 extension DIYListViewController: NSFetchedResultsControllerDelegate{
