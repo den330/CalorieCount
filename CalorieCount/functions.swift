@@ -174,5 +174,16 @@ func makeAlert(message: String, vc: UIViewController, title: String){
     alert.view.tintColor = UIColor.greenColor()
 }
 
+func makeAlertNoButton(message: String, vc: UIViewController, title: String){
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
+    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15),NSForegroundColorAttributeName : UIColor.yellowColor()]), forKey: "attributedMessage")
+    let subview = alert.view.subviews.first! as UIView
+    let alertContentView = subview.subviews.first! as UIView
+    alertContentView.backgroundColor = UIColor.darkGrayColor()
+    vc.presentViewController(alert, animated: true, completion: nil)
+    alert.view.tintColor = UIColor.greenColor()
+}
+
 
 

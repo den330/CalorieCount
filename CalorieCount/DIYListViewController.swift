@@ -76,6 +76,76 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    
+    @IBAction func addEntry(sender: UIBarButtonItem) {
+        let title = "DIY"
+        let message = "Add Your Item Here"
+        let color = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
+        let ac = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        ac.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(25),NSForegroundColorAttributeName : color]), forKey: "attributedTitle")
+        ac.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(20),NSForegroundColorAttributeName : color]), forKey: "attributedMessage")
+        ac.addTextFieldWithConfigurationHandler({textfield in
+        textfield.placeholder = "Calorie Amount"} )
+        ac.addTextFieldWithConfigurationHandler({textfield in
+            textfield.placeholder = "Brand(Optional)"} )
+        ac.addTextFieldWithConfigurationHandler({textfield in
+            textfield.placeholder = "Unit(Optional)"} )
+        ac.addTextFieldWithConfigurationHandler({textfield in
+            textfield.placeholder = "Name(Optional)"} )
+        let action = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: { _ in
+            if !isValidNumber(ac.textFields![0].text!){
+                makeAlert("Invalid Input As Calorie Amount", vc: self, title: "Invalid Input")
+            }else{
+                let brandField = ac.textFields![1]
+                let nameField = ac.textFields![3]
+                let unitField = ac.textFields![2]
+                let calorieField = ac.textFields![0]
+                self.saveEntry(brandField, nameField: nameField, unitField: unitField, calorieField: calorieField)
+                makeAlertNoButton("Successfully Saved", vc: self, title: "Success")
+                let delayInSeconds = 2.0
+                let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
+                dispatch_after(when, dispatch_get_main_queue()){
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+        })
+        ac.addAction(action)
+        let action2 = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+        ac.addAction(action2)
+        presentViewController(ac, animated: true, completion: nil)
+        ac.view.tintColor = color
+    }
+    
+    func doSth(){
+        print("haha")
+    }
+    
+    func saveEntry(brandField: UITextField, nameField: UITextField, unitField: UITextField, calorieField: UITextField){
+        let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)
+        let entry = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: managedContext)
+        entry.isMy = true
+        entry.id = String(NSUserDefaults.standardUserDefaults().integerForKey("DIYID") + 1)
+        NSUserDefaults.standardUserDefaults().setInteger(Int(entry.id)!, forKey: "DIYID")
+        if brandField.text! != ""{
+            entry.brand = brandField.text!
+        }
+        if nameField.text! != ""{
+            entry.name = nameField.text!
+        }
+        entry.unitCalories = Double(calorieField.text!)!
+        if unitField.text! != ""{
+            entry.quantity = unitField.text!
+        }
+        try! managedContext.save()
+    }
+    
+
+    
+        
+    
+    
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         let rowNum = sectionInfo.numberOfObjects
