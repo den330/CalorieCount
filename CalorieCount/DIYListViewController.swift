@@ -97,11 +97,7 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
                 makeAlert("Invalid Input As Calorie Amount", vc: self, title: "Invalid Input")
             }else{
                 makeAlertNoButton("Successfully Saved", vc: self, title: "Success")
-                let delayInSeconds = 2.0
-                let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-                dispatch_after(when, dispatch_get_main_queue()){
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
+                dismissPopup(self, time: 1.0)
                 let brandField = ac.textFields![1]
                 let nameField = ac.textFields![3]
                 let unitField = ac.textFields![2]
@@ -181,10 +177,7 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showAddEntry"{
-            let desCon = segue.destinationViewController as! EntryViewController
-            desCon.managedContext = managedContext
-        }else if segue.identifier == "presentPopUp"{
+        if segue.identifier == "presentPopUp"{
             let item = sender as! ItemConsumed
             let DestController = segue.destinationViewController as! DetailViewController
             DestController.itemCon = item

@@ -61,12 +61,6 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     func handleFav(){
-        makeAlertNoButton("Successfully Added To Fav", vc: self, title: "Added")
-        let delayInSeconds = 2.0
-        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-        dispatch_after(when, dispatch_get_main_queue()){
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
         let fetchRequest = NSFetchRequest(entityName: "ItemConsumed")
         fetchRequest.predicate = NSPredicate(format: "isFav==%@", true)
         var results:[ItemConsumed]?
@@ -81,9 +75,13 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         }
         for i in lst{
             if i.id == pendingFav.id{
+                makeAlertNoButton("This Item Is Already In Fav", vc: self, title: "Already There")
+                dismissPopup(self, time: 1.0)
                 return
             }
         }
+        makeAlertNoButton("Successfully Added To Fav", vc: self, title: "Added")
+        dismissPopup(self, time: 1.0)
         let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)!
         let favFood = ItemConsumed(entity: itemEntity, insertIntoManagedObjectContext: managedContext)
         favFood.brand = pendingFav.brandContent
