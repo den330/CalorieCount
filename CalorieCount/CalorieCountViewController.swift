@@ -55,12 +55,18 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     func makeFavAlert(){
         let alert = UIAlertController(title: "Favorite", message: "Add to Favorite", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Add it!", style: .Default, handler: {[unowned self] _ in self.handleFav()}))
-        alert.addAction(UIAlertAction(title: "Don't", style: .Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Don't!", style: .Default, handler: nil))
         presentViewController(alert,animated: true, completion: nil)
         alert.view.tintColor = UIColor.redColor()
     }
     
     func handleFav(){
+        makeAlertNoButton("Successfully Added To Fav", vc: self, title: "Added")
+        let delayInSeconds = 2.0
+        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
+        dispatch_after(when, dispatch_get_main_queue()){
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
         let fetchRequest = NSFetchRequest(entityName: "ItemConsumed")
         fetchRequest.predicate = NSPredicate(format: "isFav==%@", true)
         var results:[ItemConsumed]?
