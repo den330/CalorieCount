@@ -135,13 +135,6 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
         try! managedContext.save()
     }
     
-
-    
-        
-    
-    
-    
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         let rowNum = sectionInfo.numberOfObjects

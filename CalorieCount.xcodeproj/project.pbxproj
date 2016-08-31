@@ -55,6 +55,7 @@
 		908C411A1D0B5FBA00C70A02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		908C411E1D0B5FBA00C70A02 /* Daily Calories.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories.xcdatamodel"; sourceTree = "<group>"; };
 		908C411F1D0B5FBA00C70A02 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
+		9090B2571D778D2B003B729C /* Daily Calories 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 5.xcdatamodel"; sourceTree = "<group>"; };
 		90B8BC7E1CE397DE0083DF72 /* CalorieCount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalorieCount.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B8BC811CE397DE0083DF72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieCountViewController.swift; sourceTree = "<group>"; };
@@ -495,12 +496,13 @@
 		908C411D1D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9090B2571D778D2B003B729C /* Daily Calories 5.xcdatamodel */,
 				9010A56F1D697369004A6C9D /* Daily Calories 4.xcdatamodel */,
 				90847DBD1D1CBEFC00996E8C /* Daily Calories 3.xcdatamodel */,
 				902818241D0E1C1D00A4E16A /* Daily Calories 2.xcdatamodel */,
 				908C411E1D0B5FBA00C70A02 /* Daily Calories.xcdatamodel */,
 			);
-			currentVersion = 9010A56F1D697369004A6C9D /* Daily Calories 4.xcdatamodel */;
+			currentVersion = 9090B2571D778D2B003B729C /* Daily Calories 5.xcdatamodel */;
 			path = "Daily Calories.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
