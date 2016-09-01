@@ -266,9 +266,9 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Light, Simple To Use, Nothing Fancy 
+                                <mutableString key="text">Light, Simple To Use, Nothing Fancy 
 
-1. Search Tab: Search and Add Items You Consumed Today.(Tap = Add To Record, Press and Hold = Add To Fav, Swipe To The Right = Quick Add 1 Unit) 
+1. Search Tab: Search and Add Items You Consumed Today.(Tap = Add To Record, Press and Hold = Add To Fav, Swipe To The Right = Quickly Add 1 Unit To Record) 
 
 2. Record Tab: Your Calorie Record In Each Day 
 
@@ -278,13 +278,13 @@
 
 5. Delete One Item or Day or Fav: Slide To The Left 
 
-6. Delete Everything In A Page(Day, Daily Detail Or Fav): Shake Your Phone In That Page. 
+6. Delete Everything In A Page(Day, Daily Detail, DIY Or Fav): Shake Your Phone In That Page. 
 
 7. Email Me: Shake Your Phone While Search Tab Is Selected. 
 
 8. Spotlight Feature(iPhone 5 or Later): Without Opening This App, You Can Check Your Calorie Record By Typing In: "cr" In Spotlight. Try Tap it!                 
 
-9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.</string>
+9. To Cancel and Dismiss a Pop-up Window, Tap Anywhere Outside Of It.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
