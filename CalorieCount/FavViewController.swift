@@ -201,6 +201,9 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
         }
         do{
             try managedContext.save()
+            if searchController.active && searchController.searchBar.text != ""{
+                filterItemForSearchText(searchController.searchBar.text!)
+            }
         }catch let error as NSError{
             print("Could not save delete: \(error)")
         }
