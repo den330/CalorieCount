@@ -19,32 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var observer: AnyObject!
     
     func customizeAppearance(){
-        window?.tintColor = UIColor.whiteColor()
         let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
         UINavigationBar.appearance().barTintColor = barTintColor
         UISearchBar.appearance().barTintColor = barTintColor
         UITabBar.appearance().barTintColor = UIColor.clearColor()
+        window!.tintColor = UIColor.whiteColor()
     }
-    
-//    func removeLeaks(){
-//        do{
-//            let results = try coreDataStack.context.executeFetchRequest(itemConsumedFetch)
-//            for i in results{
-//                let item = i as! ItemConsumed
-//                if item.days == nil{
-//                    coreDataStack.context.deleteObject(item)
-//                }
-//            }
-//            
-//            do{
-//                try coreDataStack.context.save()
-//            }catch let error as NSError{
-//                print("Could not save delete: \(error)")
-//            }
-//        }catch{
-//            print(error)
-//        }
-//    }
 
     func listenForIndexUpdate(){
         observer = NSNotificationCenter.defaultCenter().addObserverForName(IndexUpdateNotification, object: nil, queue: nil){
@@ -101,7 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let favController = thirdNavController.topViewController as! FavViewController
         
         caloriesController.managedContext = coreDataStack.context
-        caloriesController.appdelegate = self
         recordController.managedContext = coreDataStack.context
         favController.managedContext = coreDataStack.context
         diyController.managedContext = coreDataStack.context
@@ -115,9 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
         let objectID: NSDate
         if userActivity.activityType == CSSearchableItemActionType, let activityObjId = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String{
-            
             objectID = dateFormatter.dateFromString(activityObjId)!
-            
         }else{
             return false
         }

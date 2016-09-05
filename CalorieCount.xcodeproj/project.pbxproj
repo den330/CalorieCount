@@ -90,6 +90,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		90809B101D7D0F9D00D16244 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */,
+				906535AA1D1DC870004F7514 /* LandscapeViewController.swift */,
+				9010A56B1D696228004A6C9D /* DIYListViewController.swift */,
+				902818251D0E351300A4E16A /* FavViewController.swift */,
+				90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */,
+				90D11A1E1CE6ABBA005F8E13 /* DetailPresentationController.swift */,
+				900596B51CFD0A25001E1321 /* DetailAnimationController.swift */,
+				90D11A1C1CE6A737005F8E13 /* DetailViewController.swift */,
+				9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		90809B111D7D0FCE00D16244 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				90D11A201CE788DF005F8E13 /* CoreDataStack.swift */,
+				908C411D1D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld */,
+				90D11A271CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift */,
+				90D11A281CE790EC005F8E13 /* ItemConsumed.swift */,
+				90D11A261CE790EC005F8E13 /* Day.swift */,
+				90D11A251CE790EC005F8E13 /* Day+CoreDataProperties.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		90809B131D7D0FFE00D16244 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				908C411F1D0B5FBA00C70A02 /* EmptyCell.xib */,
+				90B8BC961CE39C740083DF72 /* FoodCell.xib */,
+				90B8BC981CE3D4010083DF72 /* FoodCell.swift */,
+				9075BF5B1D0CB1FB00F57575 /* HudView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		90809B141D7D104300D16244 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
+				90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */,
+				90CD30CA1CFE30B60063A7B9 /* functions.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 		908C41161D0B5FBA00C70A02 /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,34 +170,16 @@
 		90B8BC801CE397DE0083DF72 /* CalorieCount */ = {
 			isa = PBXGroup;
 			children = (
-				908C41151D0B5FBA00C70A02 /* Assets.xcassets */,
-				908C41161D0B5FBA00C70A02 /* Base.lproj */,
-				908C411D1D0B5FBA00C70A02 /* Daily Calories.xcdatamodeld */,
-				908C411F1D0B5FBA00C70A02 /* EmptyCell.xib */,
-				90D11A251CE790EC005F8E13 /* Day+CoreDataProperties.swift */,
-				90D11A261CE790EC005F8E13 /* Day.swift */,
-				90D11A271CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift */,
-				90D11A281CE790EC005F8E13 /* ItemConsumed.swift */,
-				9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */,
 				90B8BC811CE397DE0083DF72 /* AppDelegate.swift */,
-				90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */,
-				906535AA1D1DC870004F7514 /* LandscapeViewController.swift */,
-				90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */,
-				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
-				9010A56B1D696228004A6C9D /* DIYListViewController.swift */,
-				902818251D0E351300A4E16A /* FavViewController.swift */,
-				9075BF5B1D0CB1FB00F57575 /* HudView.swift */,
-				90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */,
-				90CD30CA1CFE30B60063A7B9 /* functions.swift */,
-				90D11A1E1CE6ABBA005F8E13 /* DetailPresentationController.swift */,
-				900596B51CFD0A25001E1321 /* DetailAnimationController.swift */,
-				90D11A1C1CE6A737005F8E13 /* DetailViewController.swift */,
-				90D11A201CE788DF005F8E13 /* CoreDataStack.swift */,
-				90B8BC961CE39C740083DF72 /* FoodCell.xib */,
-				90B8BC981CE3D4010083DF72 /* FoodCell.swift */,
 				90B8BC8D1CE397DE0083DF72 /* LaunchScreen.storyboard */,
 				90B8BC901CE397DE0083DF72 /* Info.plist */,
+				908C41151D0B5FBA00C70A02 /* Assets.xcassets */,
+				908C41161D0B5FBA00C70A02 /* Base.lproj */,
+				90809B101D7D0F9D00D16244 /* Controllers */,
+				90809B111D7D0FCE00D16244 /* CoreData */,
+				90809B131D7D0FFE00D16244 /* Views */,
+				90809B141D7D104300D16244 /* Helper */,
 			);
 			path = CalorieCount;
 			sourceTree = "<group>";

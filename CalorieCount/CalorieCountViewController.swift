@@ -18,7 +18,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     var pendingFav: Food!
     var recentDay: Day!
     var itemForSelected: ItemConsumed!
-    var appdelegate: AppDelegate!
+    
     
     
     @IBOutlet weak var filterHeight: NSLayoutConstraint!
