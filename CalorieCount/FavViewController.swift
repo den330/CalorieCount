@@ -110,7 +110,6 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         if editingStyle == UITableViewCellEditingStyle.Delete{
             let item: ItemConsumed
             if searchController.active  && searchController.searchBar.text != ""{
-                print("haha")
                 item = filteredItem[indexPath.row]
                 managedContext.deleteObject(item)
                 try! managedContext.save()
