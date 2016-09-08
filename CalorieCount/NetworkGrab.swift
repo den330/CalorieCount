@@ -40,17 +40,15 @@ class NetworkGrab{
             switch response.result{
             case .Success(let value):
                 dict = value as! [String : AnyObject]
-            case .Failure(let error):
-                if error.code == -999 {return}
-                print(error)
-                return
-            }
-            let searchResults = self.putInFood(dict)
-            if self.success{
+                let searchResults = self.putInFood(dict)
+                if self.success{
                     self.state = .SearchSuccess(searchResults!)
-            }else{
+                }else{
                     self.state = .NotFound
                 }
+            case .Failure:
+                self.state = .NotFound
+            }
             dispatch_async(dispatch_get_main_queue()){
                 completion()
             }
