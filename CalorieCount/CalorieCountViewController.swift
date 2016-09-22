@@ -61,11 +61,11 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     }
     
     func handleFav(){
-        let fetchRequest = NSFetchRequest(entityName: "ItemConsumed")
-        fetchRequest.predicate = NSPredicate(format: "isFav==%@", true)
+        let fetchRequest = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
+        fetchRequest.predicate = NSPredicate(format: "isFav==%@", true as CVarArg)
         var results:[ItemConsumed]?
         do{
-            results = try managedContext.fetch(fetchRequest) as? [ItemConsumed]
+            results = try managedContext.fetch(fetchRequest)
         }catch let error as NSError{
             print("Could not fetch \(error), \(error.userInfo)")
         }

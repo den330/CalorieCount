@@ -13,8 +13,9 @@ import MessageUI
 class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
-    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
-    let fetchRequest = NSFetchRequest(entityName: "ItemConsumed")
+    var fetchedResultsController: NSFetchedResultsController<ItemConsumed>!
+    let fetchRequest = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
+    
     var managedContext: NSManagedObjectContext!
     var itemForSelected: ItemConsumed!
     var recentDay: Day!
@@ -38,7 +39,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         slideToRight.cancelsTouchesInView = true
         let sortDescriptor = NSSortDescriptor(key: "unitCalories", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.predicate = NSPredicate(format: "isFav==%@", true)
+        fetchRequest.predicate = NSPredicate(format: "isFav==%@", true as CVarArg)
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         do{
@@ -71,7 +72,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
             if searchController.isActive && searchController.searchBar.text != ""{
                 item = filteredItem[(indexPath as NSIndexPath).row]
             }else{
-                item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+                item = fetchedResultsController.object(at: indexPath) 
             }
             save(managedContext, food: item, quantity: 1)
             let hudView: HudView = HudView.hudInView(view, animated: true)
@@ -97,7 +98,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         if searchController.isActive && searchController.searchBar.text != ""{
             item = filteredItem[(indexPath as NSIndexPath).row]
         }else{
-            item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+            item = fetchedResultsController.object(at: indexPath) 
         }
         cell.brandLabel.text = item.brand
         cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
@@ -115,7 +116,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
                 try! managedContext.save()
                 filterItemForSearchText(searchController.searchBar.text!)
             }else{
-                item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+                item = fetchedResultsController.object(at: indexPath) 
                 managedContext.delete(item)
                 try! managedContext.save()
             }
@@ -126,7 +127,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         if searchController.isActive  && searchController.searchBar.text != ""{
             performSegue(withIdentifier: "showPop", sender: filteredItem[(indexPath as NSIndexPath).row])
         }else{
-            performSegue(withIdentifier: "showPop", sender: fetchedResultsController.object(at: indexPath) as! ItemConsumed)
+            performSegue(withIdentifier: "showPop", sender: fetchedResultsController.object(at: indexPath) )
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -193,7 +194,7 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
         if searchController.isActive && searchController.searchBar.text != ""{
             objects = filteredItem
         }else{
-            objects = fetchedResultsController.fetchedObjects as! [ItemConsumed]
+            objects = fetchedResultsController.fetchedObjects!
         }
         for object in objects{
             managedContext.delete(object)
@@ -215,7 +216,7 @@ extension FavViewController: UISearchResultsUpdating{
     }
     
     func filterItemForSearchText(_ searchText: String){
-        let list = fetchedResultsController.fetchedObjects as! [ItemConsumed]
+        let list = fetchedResultsController.fetchedObjects!
         filteredItem = list.filter{ item in return item.foodProContent.lowercased().contains(searchText.lowercased())}
         tableView.reloadData()
     }

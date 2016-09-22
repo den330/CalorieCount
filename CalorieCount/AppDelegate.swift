@@ -38,10 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func indexAllRecord(){
         if CSSearchableIndex.isIndexingAvailable(){
-            let fetchRequest = NSFetchRequest(entityName: "Day")
+            let fetchRequest = NSFetchRequest<Day>(entityName: "Day")
             do{
                 let context = coreDataStack.context
-                let lst = try context.fetch(fetchRequest) as! [Day]
+                let lst = try context.fetch(fetchRequest) 
                 let items = lst.map{$0.searchableItem}
                 CSSearchableIndex.default().indexSearchableItems(items){error in
                     if let error = error{
@@ -104,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dailyCon = navCon.storyboard?.instantiateViewController(withIdentifier: "daily") as! DailyConsumeTableViewController
         dailyCon.managedContext = coreDataStack.context
         do{
-            let lst = try coreDataStack.context.fetch(daysFetch) as! [Day]
+            let lst = try coreDataStack.context.fetch(dayFetch)
             for rday in lst{
                 if sameDay([rday], day: objectID){
                     dailyCon.day = rday

@@ -30,7 +30,7 @@ func save<T:FoodProtocol>(_ thisManagedContext: NSManagedObjectContext, food: T,
     var itemForSelected: ItemConsumed!
     let dayEntity = NSEntityDescription.entity(forEntityName: "Day", in: thisManagedContext)
     let itemEntity = NSEntityDescription.entity(forEntityName: "ItemConsumed", in: thisManagedContext)
-    let results = try! thisManagedContext.fetch(dayFetch) as! [Day]
+    let results = try! thisManagedContext.fetch(dayFetch) 
     if sameDay(results,day: Date()){
         recentDay = results.first!
     }else{
@@ -91,23 +91,23 @@ func sameDay(_ dayLst:[Day],day: Date) -> Bool{
     return calendar.isDate(day, inSameDayAs: recentDate! as Date)
 }
 
-let dayFetch: NSFetchRequest = {
-    let Fetch = NSFetchRequest(entityName: "Day")
+let dayFetch: NSFetchRequest = { () -> NSFetchRequest<Day> in 
+    let Fetch = NSFetchRequest<Day>(entityName: "Day")
     let sort = NSSortDescriptor(key: "currentDate", ascending: false)
     Fetch.sortDescriptors = [sort]
     Fetch.fetchLimit = 1
     return Fetch
 }()
 
-let daysFetch: NSFetchRequest = {
-    let Fetch = NSFetchRequest(entityName: "Day")
+let daysFetch: NSFetchRequest = { () -> NSFetchRequest<Day> in 
+    let Fetch = NSFetchRequest<Day>(entityName: "Day")
     let sort = NSSortDescriptor(key: "currentDate", ascending: false)
     Fetch.sortDescriptors = [sort]
     return Fetch
 }()
 
-let itemConsumedFetch: NSFetchRequest = {
-    let Fetch = NSFetchRequest(entityName: "ItemConsumed")
+let itemConsumedFetch: NSFetchRequest = { () -> NSFetchRequest<ItemConsumed> in 
+    let Fetch = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
     let sort = NSSortDescriptor(key: "unitCalories", ascending: true)
     Fetch.sortDescriptors = [sort]
     return Fetch

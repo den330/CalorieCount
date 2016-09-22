@@ -14,8 +14,8 @@ import CoreSpotlight
 
 class RecordTableViewController: UITableViewController {
     
-    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
-    let fetchRequest = NSFetchRequest(entityName: "Day")
+    var fetchedResultsController: NSFetchedResultsController<Day>!
+    let fetchRequest = NSFetchRequest<Day>(entityName: "Day")
     var managedContext: NSManagedObjectContext!
     
     
@@ -43,14 +43,14 @@ class RecordTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recordCell", for: indexPath)
-        let day = fetchedResultsController.object(at: indexPath) as! Day
+        let day = fetchedResultsController.object(at: indexPath)
         configureCell(cell, day: day)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete{
-            let day = fetchedResultsController.object(at: indexPath) as! Day
+            let day = fetchedResultsController.object(at: indexPath)
             for item in day.items{
                 let i = item as! ItemConsumed
                 managedContext.delete(i)
@@ -100,7 +100,7 @@ class RecordTableViewController: UITableViewController {
         if segue.identifier == "showthatday"{
             let index = sender as! IndexPath
             let dayController = segue.destination as! DailyConsumeTableViewController
-            dayController.day = fetchedResultsController.object(at: index) as! Day
+            dayController.day = fetchedResultsController.object(at: index)
             dayController.managedContext = managedContext
         }
     }
@@ -119,7 +119,7 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
             tableView.deleteRows(at: [indexPath!], with: .automatic)
         case .update:
             let cell = tableView.cellForRow(at: indexPath!)
-            let day = fetchedResultsController.object(at: indexPath!) as! Day
+            let day = fetchedResultsController.object(at: indexPath!)
             configureCell(cell!, day: day)
         case .move:
             tableView.deleteRows(at: [indexPath!], with: .automatic)
@@ -142,7 +142,7 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
     }
     
     func handleMotion(){
-        let days = fetchedResultsController.fetchedObjects as! [Day]
+        let days = fetchedResultsController.fetchedObjects!
         for day in days{
             for item in day.items{
                 managedContext.delete(item as! ItemConsumed)

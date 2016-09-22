@@ -14,8 +14,8 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     
-    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
-    let fetchRequest = NSFetchRequest(entityName: "ItemConsumed")
+    var fetchedResultsController: NSFetchedResultsController<ItemConsumed>!
+    let fetchRequest = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
     var managedContext: NSManagedObjectContext!
     var itemForSelected: ItemConsumed!
     var recentDay: Day!
@@ -38,7 +38,7 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
         slideToRight.cancelsTouchesInView = true
         let sortDescriptor = NSSortDescriptor(key: "unitCalories", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.predicate = NSPredicate(format: "isMy==%@", true)
+        fetchRequest.predicate = NSPredicate(format: "isMy==%@", true as CVarArg)
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         do{
@@ -58,7 +58,7 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func quickSave(_ indexPath: IndexPath?){
         if let indexPath = indexPath{
-            let item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+            let item = fetchedResultsController.object(at: indexPath) 
             save(managedContext, food: item, quantity: 1)
             let cell = tableView.cellForRow(at: indexPath) as! FoodCell
             let calorieText = cell.calorieLabel.text
@@ -143,7 +143,7 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: commonConstants.cellXib, for: indexPath) as! FoodCell
-        let item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+        let item = fetchedResultsController.object(at: indexPath) 
         cell.brandLabel.text = item.brand
         cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
         cell.foodLabel.text = item.name
@@ -153,13 +153,13 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+        let item = fetchedResultsController.object(at: indexPath) 
         performSegue(withIdentifier: "presentPopUp", sender: item)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete{
-            let item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+            let item = fetchedResultsController.object(at: indexPath) 
             managedContext.delete(item)
         }
         do{
@@ -213,7 +213,7 @@ extension DIYListViewController: NSFetchedResultsControllerDelegate{
     }
     
     func handleMotion(){
-        let objects = fetchedResultsController.fetchedObjects as! [ItemConsumed]
+        let objects = fetchedResultsController.fetchedObjects!
         for object in objects{
             managedContext.delete(object)
         }

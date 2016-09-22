@@ -20,59 +20,66 @@ class NetworkGrab{
     fileprivate var keyInUse: String?
     fileprivate(set) var state = State.notSearchedYet
     fileprivate let fields = ["nf_calories","item_name","brand_name","nf_serving_size_unit","nf_serving_size_qty","item_id"]
-    fileprivate var request: Alamofire.Request?
+    fileprivate var request: DataRequest?
     fileprivate var success = true
     
     func performSearch(_ mainText: String, filterText: String, completion: @escaping (Void)->Void){
         request?.cancel()
-        if !connectedToNetwork(){
-            state = .noConnection
-            return
-        }
+//        if !connectedToNetwork(){
+//            state = .noConnection
+//            return
+//        }
         state = .searching
         getInUse()
         let headers = ["Content-Type":"application/json"]
         let parameter = pickParameter(filterText, mainText: mainText)
-        request = Alamofire.request(.POST, baseUrl, parameters: parameter, encoding: .JSON, headers: headers)
-        request!.responseJSON{
-            [unowned self] response in
-            var dict: [String: AnyObject]
-            switch response.result{
-            case .Success(let value):
-                dict = value as! [String : AnyObject]
-                let searchResults = self.putInFood(dict)
-                if self.success{
-                    self.state = .SearchSuccess(searchResults!)
-                }else{
-                    self.state = .NotFound
-                }
-            case .Failure:
-                self.state = .NotFound
-            }
-            dispatch_async(dispatch_get_main_queue()){
-                completion()
-            }
+        
+        request = Alamofire.request(baseUrl, method:  .post , parameters: parameter, encoding: JSONEncoding.default, headers: headers)
+        
+        request?.responseJSON{
+            response in
+            print(response)
+//            [unowned self] response in
+//            var dict: [String: AnyObject]
+//            switch response{
+//            case .Success(let value):
+//                dict = value as! [String : AnyObject]
+//                let searchResults = self.putInFood(dict)
+//                if self.success{
+//                    self.state = .searchSuccess(searchResults!)
+//                }else{
+//                    self.state = .notFound
+//                }
+//            case .Failure:
+//                self.state = .notFound
+//            }
+//            DispatchQueue.async(dispatchMain()){
+//                completion()
+//            }
+//        }
         }
     }
+
+
     
-    func connectedToNetwork() -> Bool {
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
-        }) else {
-            return false
-        }
-        var flags : SCNetworkReachabilityFlags = []
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
-            return false
-        }
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        return (isReachable && !needsConnection)
-    }
-    
+//    func connectedToNetwork() -> Bool {
+//        var zeroAddress = sockaddr_in()
+//        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+//        zeroAddress.sin_family = sa_family_t(AF_INET)
+//        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+//            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+//        }) else {
+//            return false
+//        }
+//        var flags : SCNetworkReachabilityFlags = []
+//        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+//            return false
+//        }
+//        let isReachable = flags.contains(.reachable)
+//        let needsConnection = flags.contains(.connectionRequired)
+//        return (isReachable && !needsConnection)
+//    }
+//    
     func getInUse(){
         if idInUse == nil{
             idInUse = appID1
@@ -104,10 +111,11 @@ class NetworkGrab{
     
     func pickParameter(_ filterText: String, mainText: String) -> [String: AnyObject]{
         var parameter: [String: AnyObject]
+        let queries = ["item_name":mainText, "brand_name": filterText]
         if filterText == ""{
             parameter = ["appId": idInUse! as AnyObject, "appKey": keyInUse! as AnyObject, "query": mainText as AnyObject, "offset": 0 as AnyObject, "limit": 50 as AnyObject]
         }else{
-            parameter = ["appId": idInUse! as AnyObject, "appKey": keyInUse! as AnyObject, "queries": ["item_name":mainText, "brand_name": filterText], "offset": 0, "limit": 50]
+            parameter = ["appId": idInUse! as AnyObject, "appKey": keyInUse! as AnyObject, "queries":  queries as AnyObject , "offset": 0 as AnyObject, "limit": 50 as AnyObject]
         }
         parameter["fields"] = fields as AnyObject?
         return parameter
@@ -124,7 +132,8 @@ class NetworkGrab{
         }else{
             for index in 0..<totalNum{
                 let foodItem = Food()
-                let fields = dict["hits"]![index]!["fields"]!!
+                let dic = hitsLst[index] as! [String: AnyObject]
+                let fields = dic["fields"]!
                 let calories = fields["nf_calories"]!! as! Double
                 let name = fields["item_name"]!! as! String
                 let brandName = fields["brand_name"]!! as! String
