@@ -37,28 +37,26 @@ class NetworkGrab{
         request = Alamofire.request(baseUrl, method:  .post , parameters: parameter, encoding: JSONEncoding.default, headers: headers)
         
         request?.responseJSON{
-            response in
-            print(response)
-//            [unowned self] response in
-//            var dict: [String: AnyObject]
-//            switch response{
-//            case .Success(let value):
-//                dict = value as! [String : AnyObject]
-//                let searchResults = self.putInFood(dict)
-//                if self.success{
-//                    self.state = .searchSuccess(searchResults!)
-//                }else{
-//                    self.state = .notFound
-//                }
-//            case .Failure:
-//                self.state = .notFound
-//            }
-//            DispatchQueue.async(dispatchMain()){
-//                completion()
-//            }
-//        }
+            [unowned self] response in
+            var dict: [String: AnyObject]
+            switch response.result{
+            case Result.success(let data):
+                dict = data as! [String: AnyObject]
+                let searchResults = self.putInFood(dict)
+                if self.success{
+                    self.state = .searchSuccess(searchResults!)
+                }else{
+                    self.state = .notFound
+                }
+            case Result.failure:
+                self.state = .notFound
+            }
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
+    
 
 
     

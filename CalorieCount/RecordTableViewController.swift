@@ -160,8 +160,10 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
 
 extension RecordTableViewController: UITabBarControllerDelegate{
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        navigationController?.popViewController(animated: true)
+            navigationController!.popViewController(animated: true)
     }
+    
+    
 }
 
 

@@ -164,25 +164,25 @@ func isValidNumber(_ str:String) -> Bool{
 
 func makeAlert(_ message: String, vc: UIViewController, title: String){
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 17),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedTitle")
-    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedMessage")
+    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 17),NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
+    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedMessage")
     alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
     let subview = alert.view.subviews.first! as UIView
     let alertContentView = subview.subviews.first! as UIView
     alertContentView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
-    vc.present(alert, animated: true, completion: nil)
     alert.view.tintColor = UIColor.green
+    vc.present(alert, animated: true, completion: nil)
 }
 
 func makeAlertNoButton(_ message: String, vc: UIViewController, title: String){
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 17),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedTitle")
-    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedMessage")
+    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 17),NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
+    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedMessage")
     let subview = alert.view.subviews.first! as UIView
     let alertContentView = subview.subviews.first! as UIView
     alertContentView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
-    vc.present(alert, animated: true, completion: nil)
     alert.view.tintColor = UIColor.green
+    vc.present(alert, animated: true, completion: nil)
 }
 
 func dismissPopup(_ vc: UIViewController, time: Double){
