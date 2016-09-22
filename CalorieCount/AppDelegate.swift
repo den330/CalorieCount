@@ -22,12 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
         UINavigationBar.appearance().barTintColor = barTintColor
         UISearchBar.appearance().barTintColor = barTintColor
-        UITabBar.appearance().barTintColor = UIColor.clearColor()
-        window!.tintColor = UIColor.whiteColor()
+        UITabBar.appearance().barTintColor = UIColor.clear
+        window!.tintColor = UIColor.white
     }
 
     func listenForIndexUpdate(){
-        observer = NSNotificationCenter.defaultCenter().addObserverForName(IndexUpdateNotification, object: nil, queue: nil){
+        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: IndexUpdateNotification), object: nil, queue: nil){
             [unowned self] notification in
                 self.updateAllRecord()
             }
@@ -41,9 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let fetchRequest = NSFetchRequest(entityName: "Day")
             do{
                 let context = coreDataStack.context
-                let lst = try context.executeFetchRequest(fetchRequest) as! [Day]
+                let lst = try context.fetch(fetchRequest) as! [Day]
                 let items = lst.map{$0.searchableItem}
-                CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(items){error in
+                CSSearchableIndex.default().indexSearchableItems(items){error in
                     if let error = error{
                         print("\(error)")
                     }
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func updateAllRecord(){
         if CSSearchableIndex.isIndexingAvailable(){
-            CSSearchableIndex.defaultSearchableIndex().deleteAllSearchableItemsWithCompletionHandler{
+            CSSearchableIndex.default().deleteAllSearchableItems{
                 [unowned self] error in
                 if let error = error{
                     print(error)
@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         indexAllRecord()
         customizeAppearance()
         listenForIndexUpdate()
@@ -87,24 +87,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func applicationWillTerminate(application: UIApplication) {
-        NSNotificationCenter.defaultCenter().removeObserver(observer)
+    func applicationWillTerminate(_ application: UIApplication) {
+        NotificationCenter.default.removeObserver(observer)
     }
     
-    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
-        let objectID: NSDate
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        let objectID: Date
         if userActivity.activityType == CSSearchableItemActionType, let activityObjId = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String{
-            objectID = dateFormatter.dateFromString(activityObjId)!
+            objectID = dateFormatter.date(from: activityObjId)!
         }else{
             return false
         }
         let tabCon = window?.rootViewController as! UITabBarController
         tabCon.selectedIndex = 1
         let navCon = tabCon.viewControllers![1] as! UINavigationController
-        let dailyCon = navCon.storyboard?.instantiateViewControllerWithIdentifier("daily") as! DailyConsumeTableViewController
+        let dailyCon = navCon.storyboard?.instantiateViewController(withIdentifier: "daily") as! DailyConsumeTableViewController
         dailyCon.managedContext = coreDataStack.context
         do{
-            let lst = try coreDataStack.context.executeFetchRequest(daysFetch) as! [Day]
+            let lst = try coreDataStack.context.fetch(daysFetch) as! [Day]
             for rday in lst{
                 if sameDay([rday], day: objectID){
                     dailyCon.day = rday

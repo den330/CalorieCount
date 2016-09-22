@@ -15,29 +15,29 @@ class DetailAnimationController: NSObject, UIViewControllerAnimatedTransitioning
     var presenting = true
     var count = 0
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()!
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
         if presenting{
-            let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
+            let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)!
             containerView.addSubview(toView)
             toView.center.y += containerView.bounds.size.height
-            toView.transform = CGAffineTransformMakeScale(0.5, 0.5)
-            UIView.animateWithDuration(duration-0.1, animations: {
-                toView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            toView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            UIView.animate(withDuration: duration-0.1, animations: {
+                toView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 toView.center.y -= containerView.bounds.size.height
                 }, completion: {_ in
                     transitionContext.completeTransition(true)
             })
         }else{
-            let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)!
+            let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from)!
             containerView.addSubview(fromView)
             fromView.alpha = 1.0
-            UIView.animateWithDuration(duration, animations: {
-                fromView.transform = CGAffineTransformMakeScale(0.5, 0.5)
+            UIView.animate(withDuration: duration, animations: {
+                fromView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
                 fromView.center.y -= containerView.bounds.height
                 }, completion: { _ in
                 transitionContext.completeTransition(true)})

@@ -23,16 +23,16 @@ class DailyConsumeTableViewController: UITableViewController{
         items = day.items
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 180
-        navigationItem.title = "on " + dateFormatter.stringFromDate(day.currentDate)
+        navigationItem.title = "on " + dateFormatter.string(from: day.currentDate)
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete{
-            let foodToRemove = day.items[indexPath.row] as! ItemConsumed
-            managedContext.deleteObject(foodToRemove)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete{
+            let foodToRemove = day.items[(indexPath as NSIndexPath).row] as! ItemConsumed
+            managedContext.delete(foodToRemove)
             
             if day.items.count == 1{
-                managedContext.deleteObject(day)
+                managedContext.delete(day)
             }
             
             do{
@@ -42,29 +42,29 @@ class DailyConsumeTableViewController: UITableViewController{
                 print("Could not save delete: \(error)")
             }
             
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
         
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items!.count
     }
     
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("item", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "item", for: indexPath)
         let contentLabel = cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1002) as! UILabel
         let quantityLabel = cell.viewWithTag(1001) as! UILabel
         let brandLabel = cell.viewWithTag(1003) as! UILabel
         let unitQuantityLabel = cell.viewWithTag(1004) as! UILabel
-        let item = day.items[indexPath.row] as! ItemConsumed
+        let item = day.items[(indexPath as NSIndexPath).row] as! ItemConsumed
         contentLabel.text = item.name
         caloriesLabel.text = "Total Calories: " + String(format: "%.2f", Double(item.totalCalories)) + " Cal"
         quantityLabel.text = "Quantity Consumed: " + String(item.quantityConsumed)
@@ -73,21 +73,21 @@ class DailyConsumeTableViewController: UITableViewController{
         return cell
     }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake{
-            let alert = UIAlertController(title: "Delete", message: "Delete All Records On This Day?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {[unowned self] _ in self.handleMotion()}))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-            presentViewController(alert,animated: true, completion: nil)
-            alert.view.tintColor = UIColor.redColor()
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake{
+            let alert = UIAlertController(title: "Delete", message: "Delete All Records On This Day?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            present(alert,animated: true, completion: nil)
+            alert.view.tintColor = UIColor.red
         }
     }
     
     func handleMotion(){
         for i in day.items{
-            managedContext.deleteObject(i as! ItemConsumed)
+            managedContext.delete(i as! ItemConsumed)
         }
-        managedContext.deleteObject(day)
+        managedContext.delete(day)
        
         do{
             try managedContext.save()

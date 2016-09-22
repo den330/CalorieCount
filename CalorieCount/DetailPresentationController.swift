@@ -9,7 +9,7 @@
 import UIKit
 
 class DetailPresentationController: UIPresentationController{
-    override func shouldRemovePresentersView() -> Bool {
+    override var shouldRemovePresentersView : Bool {
         return false
     }
 }

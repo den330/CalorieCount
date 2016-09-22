@@ -25,16 +25,16 @@ protocol FoodProtocol {
     var foodProUnit: String{get}
 }
 
-func save<T:FoodProtocol>(thisManagedContext: NSManagedObjectContext, food: T, quantity: Int){
+func save<T:FoodProtocol>(_ thisManagedContext: NSManagedObjectContext, food: T, quantity: Int){
     var recentDay: Day!
     var itemForSelected: ItemConsumed!
-    let dayEntity = NSEntityDescription.entityForName("Day", inManagedObjectContext: thisManagedContext)
-    let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: thisManagedContext)
-    let results = try! thisManagedContext.executeFetchRequest(dayFetch) as! [Day]
-    if sameDay(results,day: NSDate()){
+    let dayEntity = NSEntityDescription.entity(forEntityName: "Day", in: thisManagedContext)
+    let itemEntity = NSEntityDescription.entity(forEntityName: "ItemConsumed", in: thisManagedContext)
+    let results = try! thisManagedContext.fetch(dayFetch) as! [Day]
+    if sameDay(results,day: Date()){
         recentDay = results.first!
     }else{
-        recentDay = Day(entity: dayEntity!, insertIntoManagedObjectContext: thisManagedContext)
+        recentDay = Day(entity: dayEntity!, insertInto: thisManagedContext)
     }
     let items = recentDay.items.mutableCopy() as! NSMutableOrderedSet
     var existed: Bool = false
@@ -49,7 +49,7 @@ func save<T:FoodProtocol>(thisManagedContext: NSManagedObjectContext, food: T, q
         }
     }
     if !existed{
-        itemForSelected = ItemConsumed(entity: itemEntity!, insertIntoManagedObjectContext: thisManagedContext)
+        itemForSelected = ItemConsumed(entity: itemEntity!, insertInto: thisManagedContext)
         itemForSelected.quantityConsumed = Int32(quantity)
         itemForSelected.name = food.foodProContent
         itemForSelected.unitCalories = food.foodProCalorie
@@ -57,38 +57,38 @@ func save<T:FoodProtocol>(thisManagedContext: NSManagedObjectContext, food: T, q
         itemForSelected.quantity = food.foodProUnit
         itemForSelected.brand = food.foodProBrand
         itemForSelected.id = food.foodProId
-        items.addObject(itemForSelected)
+        items.add(itemForSelected)
     }
     recentDay.items = items.copy() as! NSOrderedSet
-    recentDay.currentDate = NSDate()
+    recentDay.currentDate = Date()
     try! thisManagedContext.save()
 }
 
 
 func postNotification(){
-    NSNotificationCenter.defaultCenter().postNotificationName(IndexUpdateNotification, object: nil)
+    NotificationCenter.default.post(name: Notification.Name(rawValue: IndexUpdateNotification), object: nil)
 }
 
-var dateFormatter: NSDateFormatter = {
-    var dateformatter = NSDateFormatter()
+var dateFormatter: DateFormatter = {
+    var dateformatter = DateFormatter()
     dateformatter.dateFormat = "MMM d, yyyy"
     return dateformatter
 }()
 
-func configureCell(cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: Double?,unitContent: String?){
+func configureCell(_ cell: FoodCell, foodContent: String, caloriesContent: Double, brandContent: String, quantityContent: Double?,unitContent: String?){
     cell.foodLabel.text = foodContent
     cell.calorieLabel.text = String(caloriesContent) + " Cal"
     cell.brandLabel.text = brandContent
     cell.quantityLabel.text = (quantityContent == nil) ? "NA" : String(quantityContent!) + " " + unitContent!
 }
 
-func sameDay(dayLst:[Day],day: NSDate) -> Bool{
+func sameDay(_ dayLst:[Day],day: Date) -> Bool{
     if dayLst.count == 0{
         return false
     }
-    let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+    let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
     let recentDate = dayLst.first?.currentDate
-    return calendar!.isDate(day, inSameDayAsDate: recentDate!)
+    return calendar.isDate(day, inSameDayAs: recentDate! as Date)
 }
 
 let dayFetch: NSFetchRequest = {
@@ -113,25 +113,25 @@ let itemConsumedFetch: NSFetchRequest = {
     return Fetch
 }()
 
-func showLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator, thisController: UIViewController){
+func showLandscapeViewWithCoordinator(_ coordinator: UIViewControllerTransitionCoordinator, thisController: UIViewController){
     if landscapeViewController != nil {return}
-    thisController.tabBarController?.tabBar.hidden = true
+    thisController.tabBarController?.tabBar.isHidden = true
     if thisController.presentedViewController != nil{
-        thisController.dismissViewControllerAnimated(true, completion: nil)
+        thisController.dismiss(animated: true, completion: nil)
     }
-    landscapeViewController = thisController.storyboard!.instantiateViewControllerWithIdentifier("LandscapeViewController") as?LandscapeViewController
+    landscapeViewController = thisController.storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as?LandscapeViewController
     if let controller = landscapeViewController{
         controller.view.frame = thisController.view.bounds
         thisController.view.addSubview(controller.view)
         thisController.addChildViewController(controller)
-        controller.didMoveToParentViewController(thisController)
+        controller.didMove(toParentViewController: thisController)
     }
 }
 
-func hideLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator, thisController: UIViewController){
+func hideLandscapeViewWithCoordinator(_ coordinator: UIViewControllerTransitionCoordinator, thisController: UIViewController){
     if let controller = landscapeViewController{
-        thisController.tabBarController?.tabBar.hidden = false
-        controller.willMoveToParentViewController(nil)
+        thisController.tabBarController?.tabBar.isHidden = false
+        controller.willMove(toParentViewController: nil)
         controller.view.removeFromSuperview()
         controller.removeFromParentViewController()
         landscapeViewController = nil
@@ -143,53 +143,53 @@ struct commonConstants{
     static let topInsets:CGFloat = 92
 }
 
-func isValidNumber(str:String) -> Bool{
+func isValidNumber(_ str:String) -> Bool{
     if str.isEmpty {
         return false
     }
-    let newChar = NSCharacterSet(charactersInString: str)
-    let boolValid = NSCharacterSet.decimalDigitCharacterSet().isSupersetOfSet(newChar)
+    let newChar = CharacterSet(charactersIn: str)
+    let boolValid = CharacterSet.decimalDigits.isSuperset(of: newChar)
     if boolValid{
         return true
     }else{
-        let lst = str.componentsSeparatedByString(".")
-        let newStr = lst.joinWithSeparator("")
-        let currentChar = NSCharacterSet(charactersInString: newStr)
-        if lst.count == 2 && !lst.contains("") && NSCharacterSet.decimalDigitCharacterSet().isSupersetOfSet(currentChar){
+        let lst = str.components(separatedBy: ".")
+        let newStr = lst.joined(separator: "")
+        let currentChar = CharacterSet(charactersIn: newStr)
+        if lst.count == 2 && !lst.contains("") && CharacterSet.decimalDigits.isSuperset(of: currentChar){
             return true
         }
         return false
     }
 }
 
-func makeAlert(message: String, vc: UIViewController, title: String){
-    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
-    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedMessage")
-    alert.addAction(UIAlertAction(title: "Got it", style: .Default, handler: nil))
+func makeAlert(_ message: String, vc: UIViewController, title: String){
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 17),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedTitle")
+    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedMessage")
+    alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
     let subview = alert.view.subviews.first! as UIView
     let alertContentView = subview.subviews.first! as UIView
     alertContentView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
-    vc.presentViewController(alert, animated: true, completion: nil)
-    alert.view.tintColor = UIColor.greenColor()
+    vc.present(alert, animated: true, completion: nil)
+    alert.view.tintColor = UIColor.green
 }
 
-func makeAlertNoButton(message: String, vc: UIViewController, title: String){
-    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedTitle")
-    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15),NSForegroundColorAttributeName : UIColor.whiteColor()]), forKey: "attributedMessage")
+func makeAlertNoButton(_ message: String, vc: UIViewController, title: String){
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.setValue(NSAttributedString(string: title, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 17),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedTitle")
+    alert.setValue(NSAttributedString(string: message, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 15),NSForegroundColorAttributeName : UIColor.white]), forKey: "attributedMessage")
     let subview = alert.view.subviews.first! as UIView
     let alertContentView = subview.subviews.first! as UIView
     alertContentView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
-    vc.presentViewController(alert, animated: true, completion: nil)
-    alert.view.tintColor = UIColor.greenColor()
+    vc.present(alert, animated: true, completion: nil)
+    alert.view.tintColor = UIColor.green
 }
 
-func dismissPopup(vc: UIViewController, time: Double){
+func dismissPopup(_ vc: UIViewController, time: Double){
     let delayInSeconds = time
-    let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-    dispatch_after(when, dispatch_get_main_queue()){
-        vc.dismissViewControllerAnimated(true, completion: nil)
+    let when = DispatchTime.now() + Double(Int64(delayInSeconds*Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: when){
+        vc.dismiss(animated: true, completion: nil)
     }
 }
 

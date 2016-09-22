@@ -25,7 +25,7 @@ class DetailViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
-        modalPresentationStyle = .Custom
+        modalPresentationStyle = .custom
         transitioningDelegate = self
     }
 
@@ -62,27 +62,27 @@ class DetailViewController: UIViewController {
         }
         postNotification()
         let delayInSeconds = 0.6
-        let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-        dispatch_after(when, dispatch_get_main_queue()){
-            self.dismissViewControllerAnimated(true, completion: nil)
+        let when = DispatchTime.now() + Double(Int64(delayInSeconds*Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: when){
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
     @IBAction func close(){
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
 extension DetailViewController: UIViewControllerTransitioningDelegate{
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-        return DetailPresentationController(presentedViewController: presented, presentingViewController: presenting)
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return DetailPresentationController(presentedViewController: presented, presenting: presenting)
     }
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return transition
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.presenting = false
         return transition
     }
@@ -92,26 +92,26 @@ extension DetailViewController: UIViewControllerTransitioningDelegate{
 
 
 extension DetailViewController: UIGestureRecognizerDelegate{
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return(touch.view === self.view)
     }
 }
 
 
 extension DetailViewController: MFMailComposeViewControllerDelegate{
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake{
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake{
             showEmail()
         }
     }
     
     func showEmail(){
         if presentedViewController != nil{
-            dismissViewControllerAnimated(true,completion: nil)
+            dismiss(animated: true,completion: nil)
         }
         makeEmail()
     }
@@ -122,7 +122,7 @@ extension DetailViewController: MFMailComposeViewControllerDelegate{
             controller.mailComposeDelegate = self
             controller.setSubject(NSLocalizedString("New Feature Idea", comment: "Email Sub"))
             controller.setToRecipients(["yaxinyuan0910@gmail.com"])
-            presentViewController(controller, animated: true, completion: nil)
+            present(controller, animated: true, completion: nil)
         }
     }
 }

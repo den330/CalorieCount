@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A34407E64E10FE72F0DAE24 /* Pods_CalorieCount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C55B310F08CD7E0250B228 /* Pods_CalorieCount.framework */; };
+		3307F57BADC64AC82AD00EC4 /* Pods_CalorieCount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32BB3A1C2C8CAFCE58E05E37 /* Pods_CalorieCount.framework */; };
 		900596B61CFD0A25001E1321 /* DetailAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900596B51CFD0A25001E1321 /* DetailAnimationController.swift */; };
 		9010A56C1D696228004A6C9D /* DIYListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010A56B1D696228004A6C9D /* DIYListViewController.swift */; };
 		902818261D0E351300A4E16A /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902818251D0E351300A4E16A /* FavViewController.swift */; };
@@ -39,8 +39,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		18920808592885C4B3F94796 /* Pods-CalorieCount.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalorieCount.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CalorieCount/Pods-CalorieCount.debug.xcconfig"; sourceTree = "<group>"; };
-		88C55B310F08CD7E0250B228 /* Pods_CalorieCount.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalorieCount.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F04B2A88FC3F4D987686BA5 /* Pods-CalorieCount.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalorieCount.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CalorieCount/Pods-CalorieCount.debug.xcconfig"; sourceTree = "<group>"; };
+		32BB3A1C2C8CAFCE58E05E37 /* Pods_CalorieCount.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalorieCount.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CBD2C2851EE7446380BAC9F /* Pods-CalorieCount.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalorieCount.release.xcconfig"; path = "Pods/Target Support Files/Pods-CalorieCount/Pods-CalorieCount.release.xcconfig"; sourceTree = "<group>"; };
 		900596B51CFD0A25001E1321 /* DetailAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailAnimationController.swift; sourceTree = "<group>"; };
 		9010A56B1D696228004A6C9D /* DIYListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIYListViewController.swift; sourceTree = "<group>"; };
 		9010A56F1D697369004A6C9D /* Daily Calories 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 4.xcdatamodel"; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		90D11A271CE790EC005F8E13 /* ItemConsumed+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemConsumed+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		90D11A281CE790EC005F8E13 /* ItemConsumed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemConsumed.swift; sourceTree = "<group>"; };
 		90F5B8EC1CE8DD790089E72E /* DailyConsumeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyConsumeTableViewController.swift; sourceTree = "<group>"; };
-		BAE7559A3A4A5A735EFE7398 /* Pods-CalorieCount.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalorieCount.release.xcconfig"; path = "Pods/Target Support Files/Pods-CalorieCount/Pods-CalorieCount.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,13 +83,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A34407E64E10FE72F0DAE24 /* Pods_CalorieCount.framework in Frameworks */,
+				3307F57BADC64AC82AD00EC4 /* Pods_CalorieCount.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76D9E6097C5D505715B95251 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				32BB3A1C2C8CAFCE58E05E37 /* Pods_CalorieCount.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		90809B101D7D0F9D00D16244 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,8 +162,8 @@
 			children = (
 				90B8BC801CE397DE0083DF72 /* CalorieCount */,
 				90B8BC7F1CE397DE0083DF72 /* Products */,
-				CA3B78AF5D15C6F2ED3DCC6B /* Pods */,
-				A2F52527E98EEA7263CF58CE /* Frameworks */,
+				D62CCFDFCD55DCF27D5B39BC /* Pods */,
+				76D9E6097C5D505715B95251 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -184,19 +192,11 @@
 			path = CalorieCount;
 			sourceTree = "<group>";
 		};
-		A2F52527E98EEA7263CF58CE /* Frameworks */ = {
+		D62CCFDFCD55DCF27D5B39BC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				88C55B310F08CD7E0250B228 /* Pods_CalorieCount.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CA3B78AF5D15C6F2ED3DCC6B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				18920808592885C4B3F94796 /* Pods-CalorieCount.debug.xcconfig */,
-				BAE7559A3A4A5A735EFE7398 /* Pods-CalorieCount.release.xcconfig */,
+				0F04B2A88FC3F4D987686BA5 /* Pods-CalorieCount.debug.xcconfig */,
+				8CBD2C2851EE7446380BAC9F /* Pods-CalorieCount.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -231,12 +231,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Yaxin Yuan";
 				TargetAttributes = {
 					90B8BC7D1CE397DE0083DF72 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = KG4ZLSV952;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -288,7 +289,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		23F4B13008CCD143B97D3DE7 /* [CP] Embed Pods Frameworks */ = {
@@ -404,8 +405,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -427,7 +430,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -449,8 +452,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -466,37 +471,42 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		90B8BC941CE397DE0083DF72 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 18920808592885C4B3F94796 /* Pods-CalorieCount.debug.xcconfig */;
+			baseConfigurationReference = 0F04B2A88FC3F4D987686BA5 /* Pods-CalorieCount.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CalorieCount/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JYuan.CalorieCount;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		90B8BC951CE397DE0083DF72 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BAE7559A3A4A5A735EFE7398 /* Pods-CalorieCount.release.xcconfig */;
+			baseConfigurationReference = 8CBD2C2851EE7446380BAC9F /* Pods-CalorieCount.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CalorieCount/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JYuan.CalorieCount;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

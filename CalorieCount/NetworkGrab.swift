@@ -8,28 +8,28 @@
 
 import Foundation
 import SystemConfiguration
-import Alamofire
+import  Alamofire
 
 class NetworkGrab{
-    private let baseUrl = NSURL(string: "https://api.nutritionix.com/v1_1/search/")!
-    private let appID1 = "8b36dac9"
-    private let appKey1 = "c79b530ed299ec9f53d64be135311b09"
-    private let appKey2 = "67d0f5774ec4e02095a3cc1b36a5ccc8"
-    private let appID2 = "0a714183"
-    private var idInUse: String?
-    private var keyInUse: String?
-    private(set) var state = State.NotSearchedYet
-    private let fields = ["nf_calories","item_name","brand_name","nf_serving_size_unit","nf_serving_size_qty","item_id"]
-    private var request: Alamofire.Request?
-    private var success = true
+    fileprivate let baseUrl = URL(string: "https://api.nutritionix.com/v1_1/search/")!
+    fileprivate let appID1 = "8b36dac9"
+    fileprivate let appKey1 = "c79b530ed299ec9f53d64be135311b09"
+    fileprivate let appKey2 = "67d0f5774ec4e02095a3cc1b36a5ccc8"
+    fileprivate let appID2 = "0a714183"
+    fileprivate var idInUse: String?
+    fileprivate var keyInUse: String?
+    fileprivate(set) var state = State.notSearchedYet
+    fileprivate let fields = ["nf_calories","item_name","brand_name","nf_serving_size_unit","nf_serving_size_qty","item_id"]
+    fileprivate var request: Alamofire.Request?
+    fileprivate var success = true
     
-    func performSearch(mainText: String, filterText: String, completion: Void->Void){
+    func performSearch(_ mainText: String, filterText: String, completion: @escaping (Void)->Void){
         request?.cancel()
         if !connectedToNetwork(){
-            state = .NoConnection
+            state = .noConnection
             return
         }
-        state = .Searching
+        state = .searching
         getInUse()
         let headers = ["Content-Type":"application/json"]
         let parameter = pickParameter(filterText, mainText: mainText)
@@ -57,9 +57,9 @@ class NetworkGrab{
     
     func connectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)
-        guard let defaultRouteReachability = withUnsafePointer(&zeroAddress, {
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
             SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
         }) else {
             return false
@@ -68,8 +68,8 @@ class NetworkGrab{
         if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
             return false
         }
-        let isReachable = flags.contains(.Reachable)
-        let needsConnection = flags.contains(.ConnectionRequired)
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
         return (isReachable && !needsConnection)
     }
     
@@ -87,33 +87,33 @@ class NetworkGrab{
     }
     
     enum State{
-        case NotSearchedYet
-        case Searching
-        case SearchSuccess([Food])
-        case NotFound
-        case NoConnection
+        case notSearchedYet
+        case searching
+        case searchSuccess([Food])
+        case notFound
+        case noConnection
         
         func get() -> [Food]?{
             switch self{
-            case SearchSuccess(let lst):
+            case .searchSuccess(let lst):
                 return lst
             default: return nil
             }
         }
     }
     
-    func pickParameter(filterText: String, mainText: String) -> [String: AnyObject]{
+    func pickParameter(_ filterText: String, mainText: String) -> [String: AnyObject]{
         var parameter: [String: AnyObject]
         if filterText == ""{
-            parameter = ["appId": idInUse!, "appKey": keyInUse!, "query": mainText, "offset": 0, "limit": 50]
+            parameter = ["appId": idInUse! as AnyObject, "appKey": keyInUse! as AnyObject, "query": mainText as AnyObject, "offset": 0 as AnyObject, "limit": 50 as AnyObject]
         }else{
-            parameter = ["appId": idInUse!, "appKey": keyInUse!, "queries": ["item_name":mainText, "brand_name": filterText], "offset": 0, "limit": 50]
+            parameter = ["appId": idInUse! as AnyObject, "appKey": keyInUse! as AnyObject, "queries": ["item_name":mainText, "brand_name": filterText], "offset": 0, "limit": 50]
         }
-        parameter["fields"] = fields
+        parameter["fields"] = fields as AnyObject?
         return parameter
     }
     
-    func putInFood(dict: [String: AnyObject]) -> [Food]?{
+    func putInFood(_ dict: [String: AnyObject]) -> [Food]?{
         success = true
         var searchResults = [Food]()
         let hitsLst = dict["hits"]! as! NSArray
@@ -134,7 +134,7 @@ class NetworkGrab{
                 foodItem.caloriesCount = calories
                 foodItem.foodContent = name
                 foodItem.brandContent = brandName
-                if let unit = serve_unit, qty = serve_qty{
+                if let unit = serve_unit, let qty = serve_qty{
                     foodItem.quantity = qty
                     foodItem.unit = unit
                 }else{

@@ -14,7 +14,7 @@ import CoreSpotlight
 
 class RecordTableViewController: UITableViewController {
     
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
     let fetchRequest = NSFetchRequest(entityName: "Day")
     var managedContext: NSManagedObjectContext!
     
@@ -35,27 +35,27 @@ class RecordTableViewController: UITableViewController {
         tabBarController?.delegate = self
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         let rowNum = sectionInfo.numberOfObjects
         return rowNum
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("recordCell", forIndexPath: indexPath)
-        let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "recordCell", for: indexPath)
+        let day = fetchedResultsController.object(at: indexPath) as! Day
         configureCell(cell, day: day)
         return cell
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete{
-            let day = fetchedResultsController.objectAtIndexPath(indexPath) as! Day
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete{
+            let day = fetchedResultsController.object(at: indexPath) as! Day
             for item in day.items{
                 let i = item as! ItemConsumed
-                managedContext.deleteObject(i)
+                managedContext.delete(i)
             }
-            managedContext.deleteObject(day)
+            managedContext.delete(day)
         }
         
             do{
@@ -66,12 +66,12 @@ class RecordTableViewController: UITableViewController {
             }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
     }
     
-    func configureCell(cell: UITableViewCell, day: Day){
+    func configureCell(_ cell: UITableViewCell, day: Day){
         let items = day.items
         var totalCalories = 0.0
         for i in items{
@@ -80,10 +80,10 @@ class RecordTableViewController: UITableViewController {
         }
         let dateLabel =  cell.viewWithTag(1000) as! UILabel
         let caloriesLabel = cell.viewWithTag(1001) as! UILabel
-        let date = dateFormatter.stringFromDate(day.currentDate)
+        let date = dateFormatter.string(from: day.currentDate)
         dateLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
         caloriesLabel.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1.0)
-        if sameDay([day], day: NSDate()){
+        if sameDay([day], day: Date()){
             dateLabel.text = "Today"
         }else{
             dateLabel.text = date
@@ -91,53 +91,53 @@ class RecordTableViewController: UITableViewController {
         caloriesLabel.text = "Total: " + String(format: "%.2f", Double(totalCalories)) + " Cal"
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("showthatday", sender: indexPath)
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showthatday", sender: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showthatday"{
-            let index = sender as! NSIndexPath
-            let dayController = segue.destinationViewController as! DailyConsumeTableViewController
-            dayController.day = fetchedResultsController.objectAtIndexPath(index) as! Day
+            let index = sender as! IndexPath
+            let dayController = segue.destination as! DailyConsumeTableViewController
+            dayController.day = fetchedResultsController.object(at: index) as! Day
             dayController.managedContext = managedContext
         }
     }
 }
 
 extension RecordTableViewController: NSFetchedResultsControllerDelegate{
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type{
-        case .Insert:
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-        case .Update:
-            let cell = tableView.cellForRowAtIndexPath(indexPath!)
-            let day = fetchedResultsController.objectAtIndexPath(indexPath!) as! Day
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .update:
+            let cell = tableView.cellForRow(at: indexPath!)
+            let day = fetchedResultsController.object(at: indexPath!) as! Day
             configureCell(cell!, day: day)
-        case .Move:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
         }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake{
-            let alert = UIAlertController(title: "Delete", message: "Delete All Records?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {[unowned self] _ in self.handleMotion()}))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-            presentViewController(alert,animated: true, completion: nil)
-            alert.view.tintColor = UIColor.redColor()
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake{
+            let alert = UIAlertController(title: "Delete", message: "Delete All Records?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            present(alert,animated: true, completion: nil)
+            alert.view.tintColor = UIColor.red
         }
     }
     
@@ -145,9 +145,9 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
         let days = fetchedResultsController.fetchedObjects as! [Day]
         for day in days{
             for item in day.items{
-                managedContext.deleteObject(item as! ItemConsumed)
+                managedContext.delete(item as! ItemConsumed)
             }
-            managedContext.deleteObject(day)
+            managedContext.delete(day)
             do{
                 try managedContext.save()
                 postNotification()
@@ -159,8 +159,8 @@ extension RecordTableViewController: NSFetchedResultsControllerDelegate{
 }
 
 extension RecordTableViewController: UITabBarControllerDelegate{
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        navigationController?.popViewControllerAnimated(true)
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        navigationController?.popViewController(animated: true)
     }
 }
 

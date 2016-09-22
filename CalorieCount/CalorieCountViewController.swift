@@ -38,26 +38,26 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         slideToRight.cancelsTouchesInView = true
         tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
+        tableView.register(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if NSUserDefaults.standardUserDefaults().boolForKey("said it before") == false{
+        if UserDefaults.standard.bool(forKey: "said it before") == false{
             let message = "For complete and the most up-to-date manual, click 'Manual' in Fav Tab"
             makeAlert(message, vc: self, title: "Tips")
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "said it before")
+            UserDefaults.standard.set(true, forKey: "said it before")
         }
     }
     
     func makeFavAlert(){
-        let alert = UIAlertController(title: "Favorite", message: "Add to Favorite", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Add it!", style: .Default, handler: {[unowned self] _ in self.handleFav()}))
-        alert.addAction(UIAlertAction(title: "Don't!", style: .Default, handler: nil))
-        presentViewController(alert,animated: true, completion: nil)
-        alert.view.tintColor = UIColor.redColor()
+        let alert = UIAlertController(title: "Favorite", message: "Add to Favorite", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Add it!", style: .default, handler: {[unowned self] _ in self.handleFav()}))
+        alert.addAction(UIAlertAction(title: "Don't!", style: .default, handler: nil))
+        present(alert,animated: true, completion: nil)
+        alert.view.tintColor = UIColor.red
     }
     
     func handleFav(){
@@ -65,7 +65,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         fetchRequest.predicate = NSPredicate(format: "isFav==%@", true)
         var results:[ItemConsumed]?
         do{
-            results = try managedContext.executeFetchRequest(fetchRequest) as? [ItemConsumed]
+            results = try managedContext.fetch(fetchRequest) as? [ItemConsumed]
         }catch let error as NSError{
             print("Could not fetch \(error), \(error.userInfo)")
         }
@@ -82,8 +82,8 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         }
         makeAlertNoButton("Successfully Added To Fav", vc: self, title: "Added")
         dismissPopup(self, time: 1.0)
-        let itemEntity = NSEntityDescription.entityForName("ItemConsumed", inManagedObjectContext: managedContext)!
-        let favFood = ItemConsumed(entity: itemEntity, insertIntoManagedObjectContext: managedContext)
+        let itemEntity = NSEntityDescription.entity(forEntityName: "ItemConsumed", in: managedContext)!
+        let favFood = ItemConsumed(entity: itemEntity, insertInto: managedContext)
         favFood.brand = pendingFav.brandContent
         favFood.id = pendingFav.id
         favFood.isFav = true
@@ -99,85 +99,85 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch net.state{
-            case .NotFound, .Searching: return 1
-            case .NotSearchedYet: return 1
-            case .SearchSuccess(let lst): return lst.count
-            case .NoConnection: return 1
+            case .notFound, .searching: return 1
+            case .notSearchedYet: return 1
+            case .searchSuccess(let lst): return lst.count
+            case .noConnection: return 1
             }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(commonConstants.cellXib, forIndexPath: indexPath) as! FoodCell
-        cell.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: commonConstants.cellXib, for: indexPath) as! FoodCell
+        cell.selectionStyle = .none
         switch net.state{
-            case .SearchSuccess(let lst):
-                cell.selectionStyle = .Default
-                let foodItem = lst[indexPath.row]
+            case .searchSuccess(let lst):
+                cell.selectionStyle = .default
+                let foodItem = lst[(indexPath as NSIndexPath).row]
                 configureCell(cell, foodContent: foodItem.foodContent, caloriesContent: foodItem.caloriesCount, brandContent: foodItem.brandContent,quantityContent: foodItem.quantity,unitContent: foodItem.unit)
                 return cell
-            case .NotFound:
+            case .notFound:
                 configureCell(cell, foodContent: "NA", caloriesContent: 0,brandContent: "NA",quantityContent: nil,unitContent: nil)
-            case .NoConnection:
+            case .noConnection:
                 configureCell(cell, foodContent: "No Connection", caloriesContent: 0, brandContent: "NA", quantityContent: nil, unitContent: nil)
-            case .Searching:
+            case .searching:
                 configureCell(cell, foodContent: "Searching", caloriesContent: 0, brandContent: "Searching",quantityContent: nil,unitContent: nil)
-            case .NotSearchedYet:
+            case .notSearchedYet:
                 configureCell(cell, foodContent: "Click Search bar to start search", caloriesContent: 0, brandContent: "", quantityContent: nil,unitContent: nil)
         }
         return cell
     }
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         switch net.state{
-            case .SearchSuccess( _):
+            case .searchSuccess( _):
                 return indexPath
             default: return nil
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        performSegueWithIdentifier("showDetail", sender: indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "showDetail", sender: indexPath)
     }
     
-    func handleLongPress(sender: UILongPressGestureRecognizer){
-        if sender.state == UIGestureRecognizerState.Began {
-            let touchPoint = sender.locationInView(tableView)
-            if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
+    func handleLongPress(_ sender: UILongPressGestureRecognizer){
+        if sender.state == UIGestureRecognizerState.began {
+            let touchPoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 if let lst = net.state.get(){
-                    pendingFav = lst[indexPath.row]
+                    pendingFav = lst[(indexPath as NSIndexPath).row]
                     makeFavAlert()
                 }
             }
         }
     }
     
-    func quickSave(indexPath: NSIndexPath){
+    func quickSave(_ indexPath: IndexPath){
         if let lst = net.state.get(){
-            let food = lst[indexPath.row]
+            let food = lst[(indexPath as NSIndexPath).row]
             save(managedContext, food: food, quantity: 1)
             let hudView: HudView = HudView.hudInView(view, animated: true)
             hudView.text = "1 Unit Saved"
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! FoodCell
+            let cell = tableView.cellForRow(at: indexPath) as! FoodCell
             let storedCal = cell.calorieLabel.text
             cell.calorieLabel.text = "1 Unit Added"
             postNotification()
             let delayInSeconds = 0.6
-            let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-            dispatch_after(when, dispatch_get_main_queue()){
+            let when = DispatchTime.now() + Double(Int64(delayInSeconds*Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: when){
                 hudView.removeFromSuperview()
                 cell.calorieLabel.text = storedCal
-                self.view.userInteractionEnabled = true
+                self.view.isUserInteractionEnabled = true
             }
         }
     }
     
-    func handleSwipe(sender: UISwipeGestureRecognizer){
-        if sender.direction == .Right{
-            let slidePoint = sender.locationInView(tableView)
-            if let indexPath = tableView.indexPathForRowAtPoint(slidePoint){
+    func handleSwipe(_ sender: UISwipeGestureRecognizer){
+        if sender.direction == .right{
+            let slidePoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: slidePoint){
                 quickSave(indexPath)
             }
         }
@@ -188,12 +188,12 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
 
 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail"{
-            let detailController = segue.destinationViewController as! DetailViewController
-            let index = sender as! NSIndexPath
+            let detailController = segue.destination as! DetailViewController
+            let index = sender as! IndexPath
             if let lst = net.state.get(){
-                detailController.foodSelected = lst[index.row]
+                detailController.foodSelected = lst[(index as NSIndexPath).row]
                 detailController.managedContext = managedContext
                 detailController.fromMain = true
             }
@@ -202,7 +202,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
 }
 
 extension CalorieCountViewController: UISearchBarDelegate{
-    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         searchBar.resignFirstResponder()
         let text = searchBar.text!
         let filtertext = filterTextField.text!
@@ -214,13 +214,13 @@ extension CalorieCountViewController: UISearchBarDelegate{
         }
     }
     
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return .TopAttached
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
     }
 }
 
 extension CalorieCountViewController: UITextFieldDelegate{
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             searchBarSearchButtonClicked(searchBar)
             textField.resignFirstResponder()
             return false
@@ -228,19 +228,19 @@ extension CalorieCountViewController: UITextFieldDelegate{
 }
 
 extension CalorieCountViewController: MFMailComposeViewControllerDelegate{
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake{
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake{
             showEmail()
         }
     }
     
     func showEmail(){
         if presentedViewController != nil{
-            dismissViewControllerAnimated(true,completion: nil)
+            dismiss(animated: true,completion: nil)
         }
         makeEmail()
     }
@@ -251,7 +251,7 @@ extension CalorieCountViewController: MFMailComposeViewControllerDelegate{
             controller.mailComposeDelegate = self
             controller.setSubject(NSLocalizedString("App Suggestion", comment: "Email Sub"))
             controller.setToRecipients(["yaxinyuan0910@gmail.com"])
-            presentViewController(controller, animated: true, completion: nil)
+            present(controller, animated: true, completion: nil)
         }
     }
 }

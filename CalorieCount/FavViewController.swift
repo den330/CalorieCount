@@ -13,7 +13,7 @@ import MessageUI
 class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
     let fetchRequest = NSFetchRequest(entityName: "ItemConsumed")
     var managedContext: NSManagedObjectContext!
     var itemForSelected: ItemConsumed!
@@ -30,7 +30,7 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         tableView.delegate = self
         tableView.dataSource = self
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
+        tableView.register(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         let slideToRight = UISwipeGestureRecognizer(target: self, action: #selector(FavViewController.handleSwipe))
@@ -48,8 +48,8 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.active && searchController.searchBar.text != ""{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.isActive && searchController.searchBar.text != ""{
             return filteredItem.count
         }
         let sectionInfo = fetchedResultsController.sections![section]
@@ -57,47 +57,47 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         return rowNum
     }
     
-    func handleSwipe(Swipe: UISwipeGestureRecognizer){
-        if Swipe.direction == .Right{
-            let touchPoint = Swipe.locationInView(tableView)
-            let indexPath = tableView.indexPathForRowAtPoint(touchPoint)
+    func handleSwipe(_ Swipe: UISwipeGestureRecognizer){
+        if Swipe.direction == .right{
+            let touchPoint = Swipe.location(in: tableView)
+            let indexPath = tableView.indexPathForRow(at: touchPoint)
             quickSave(indexPath)
         }
     }
     
-    func quickSave(indexPath: NSIndexPath?){
+    func quickSave(_ indexPath: IndexPath?){
         if let indexPath = indexPath{
             let item: ItemConsumed
-            if searchController.active && searchController.searchBar.text != ""{
-                item = filteredItem[indexPath.row]
+            if searchController.isActive && searchController.searchBar.text != ""{
+                item = filteredItem[(indexPath as NSIndexPath).row]
             }else{
-                item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
+                item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
             }
             save(managedContext, food: item, quantity: 1)
             let hudView: HudView = HudView.hudInView(view, animated: true)
             hudView.text = "1 Unit Saved"
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! FoodCell
+            let cell = tableView.cellForRow(at: indexPath) as! FoodCell
             let calorieText = cell.calorieLabel.text
             cell.calorieLabel.text = "1 Unit Added"
             postNotification()
             let delayInSeconds = 0.6
-            let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds*Double(NSEC_PER_SEC)))
-            dispatch_after(when, dispatch_get_main_queue()){
+            let when = DispatchTime.now() + Double(Int64(delayInSeconds*Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: when){
                 cell.calorieLabel.text = calorieText
                 hudView.removeFromSuperview()
-                self.view.userInteractionEnabled = true
+                self.view.isUserInteractionEnabled = true
             }
         }
     }
 
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(commonConstants.cellXib, forIndexPath: indexPath) as! FoodCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: commonConstants.cellXib, for: indexPath) as! FoodCell
         let item:ItemConsumed
-        if searchController.active && searchController.searchBar.text != ""{
-            item = filteredItem[indexPath.row]
+        if searchController.isActive && searchController.searchBar.text != ""{
+            item = filteredItem[(indexPath as NSIndexPath).row]
         }else{
-            item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
+            item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
         }
         cell.brandLabel.text = item.brand
         cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
@@ -106,35 +106,35 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         return cell
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete{
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete{
             let item: ItemConsumed
-            if searchController.active  && searchController.searchBar.text != ""{
-                item = filteredItem[indexPath.row]
-                managedContext.deleteObject(item)
+            if searchController.isActive  && searchController.searchBar.text != ""{
+                item = filteredItem[(indexPath as NSIndexPath).row]
+                managedContext.delete(item)
                 try! managedContext.save()
                 filterItemForSearchText(searchController.searchBar.text!)
             }else{
-                item = fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed
-                managedContext.deleteObject(item)
+                item = fetchedResultsController.object(at: indexPath) as! ItemConsumed
+                managedContext.delete(item)
                 try! managedContext.save()
             }
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if searchController.active  && searchController.searchBar.text != ""{
-            performSegueWithIdentifier("showPop", sender: filteredItem[indexPath.row])
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searchController.isActive  && searchController.searchBar.text != ""{
+            performSegue(withIdentifier: "showPop", sender: filteredItem[(indexPath as NSIndexPath).row])
         }else{
-            performSegueWithIdentifier("showPop", sender: fetchedResultsController.objectAtIndexPath(indexPath) as! ItemConsumed)
+            performSegue(withIdentifier: "showPop", sender: fetchedResultsController.object(at: indexPath) as! ItemConsumed)
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPop"{
             let item = sender as! ItemConsumed
-            let DestController = segue.destinationViewController as! DetailViewController
+            let DestController = segue.destination as! DetailViewController
             DestController.itemCon = item
             DestController.managedContext = managedContext
         }
@@ -144,63 +144,63 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
 
 
 extension FavViewController: NSFetchedResultsControllerDelegate{
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        if searchController.active && searchController.searchBar.text != ""{
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if searchController.isActive && searchController.searchBar.text != ""{
             return
         }
         switch type{
-        case .Insert:
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-        case .Move:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
         default: break
         }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake{
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake{
             let alert: UIAlertController
-            if searchController.active && searchController.searchBar.text != ""{
+            if searchController.isActive && searchController.searchBar.text != ""{
                 let text = searchController.searchBar.text!
-                alert = UIAlertController(title: "Delete", message: "Delete All Fav Containing \(text)?", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {[unowned self] _ in self.handleMotion()}))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-                presentViewController(alert,animated: true, completion: nil)
-                alert.view.tintColor = UIColor.redColor()
+                alert = UIAlertController(title: "Delete", message: "Delete All Fav Containing \(text)?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                present(alert,animated: true, completion: nil)
+                alert.view.tintColor = UIColor.red
             }else{
-                alert = UIAlertController(title: "Delete", message: "Delete All Fav?", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {[unowned self] _ in self.handleMotion()}))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-                presentViewController(alert,animated: true, completion: nil)
-                alert.view.tintColor = UIColor.redColor()
+                alert = UIAlertController(title: "Delete", message: "Delete All Fav?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                present(alert,animated: true, completion: nil)
+                alert.view.tintColor = UIColor.red
             }
         }
     }
     
     func handleMotion(){
         let objects: [ItemConsumed]
-        if searchController.active && searchController.searchBar.text != ""{
+        if searchController.isActive && searchController.searchBar.text != ""{
             objects = filteredItem
         }else{
             objects = fetchedResultsController.fetchedObjects as! [ItemConsumed]
         }
         for object in objects{
-            managedContext.deleteObject(object)
+            managedContext.delete(object)
         }
         do{
             try managedContext.save()
-            if searchController.active && searchController.searchBar.text != ""{
+            if searchController.isActive && searchController.searchBar.text != ""{
                 filterItemForSearchText(searchController.searchBar.text!)
             }
         }catch let error as NSError{
@@ -210,13 +210,13 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
 }
 
 extension FavViewController: UISearchResultsUpdating{
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         filterItemForSearchText(searchController.searchBar.text!)
     }
     
-    func filterItemForSearchText(searchText: String){
+    func filterItemForSearchText(_ searchText: String){
         let list = fetchedResultsController.fetchedObjects as! [ItemConsumed]
-        filteredItem = list.filter{ item in return item.foodProContent.lowercaseString.containsString(searchText.lowercaseString)}
+        filteredItem = list.filter{ item in return item.foodProContent.lowercased().contains(searchText.lowercased())}
         tableView.reloadData()
     }
 }
