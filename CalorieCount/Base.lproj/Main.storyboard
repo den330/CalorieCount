@@ -19,8 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QFG-Cm-VTq">
-                                <frame key="frameInset" width="600" height="551"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QFG-Cm-VTq">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -28,16 +27,20 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Uro-Zs-6Mp"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" misplaced="YES" text="" placeholder="Type in Food or Drink" translatesAutoresizingMaskIntoConstraints="NO" id="73R-3t-qYc">
-                                <frame key="frameInset" minY="20" width="600" height="44"/>
+                            <searchBar contentMode="redraw" text="" placeholder="Type in Food or Drink" translatesAutoresizingMaskIntoConstraints="NO" id="73R-3t-qYc">
                                 <color key="tintColor" red="0.099348291754722595" green="0.56550288200378418" blue="0.55892848968505859" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="cBg-cZ-6pd"/>
                                 </connections>
                             </searchBar>
-                            <textField clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Brand or Restaurant Name(optional filter)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OUc-Ka-ObX">
-                                <frame key="frameInset" minY="64" width="600" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by Nutritionix API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKb-mc-uac">
+                                <color key="backgroundColor" red="0.078431372550000003" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Brand or Restaurant Name(optional filter)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OUc-Ka-ObX">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.078431372549019607" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -59,15 +62,18 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="5pz-0L-r5z"/>
+                            <constraint firstItem="eKb-mc-uac" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6ks-oj-E3P"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Cqq-ar-Iwb"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="E3J-sb-PBP"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="GNR-gM-2NP"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GiG-8F-2tC"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKr-Nh-Cv9"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="Kzw-Ra-5b5"/>
+                            <constraint firstAttribute="trailing" secondItem="eKb-mc-uac" secondAttribute="trailing" id="Rfa-iZ-skp"/>
                             <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="WZu-5l-31J"/>
                             <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="X7d-uq-E9e"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Z6d-ZO-Cjp"/>
+                            <constraint firstItem="eKb-mc-uac" firstAttribute="top" secondItem="OUc-Ka-ObX" secondAttribute="bottom" id="bAu-DB-0u0"/>
                             <constraint firstAttribute="trailing" secondItem="OUc-Ka-ObX" secondAttribute="trailing" id="bHW-Ik-Imj"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="buC-b5-S5I"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dyl-OU-nyR"/>
@@ -97,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2934" y="-2111"/>
+            <point key="canvasLocation" x="-2935.1999999999998" y="-2111.6941529235382"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dD9-P4-6R1">
@@ -131,8 +137,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J76-84-kri" userLabel="Pop-up View">
-                                <frame key="frameInset" minX="195" minY="212" width="211" height="175"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J76-84-kri" userLabel="Pop-up View">
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="393-um-OGm">
                                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
@@ -216,11 +221,11 @@
                                     <mask key="constraints">
                                         <exclude reference="2GR-Bc-EB4"/>
                                         <exclude reference="6iO-8b-nU7"/>
-                                        <exclude reference="I3F-LU-XAM"/>
-                                        <exclude reference="oqc-v4-tWa"/>
                                         <exclude reference="AG7-lO-Osx"/>
                                         <exclude reference="Sls-sg-6mT"/>
                                         <exclude reference="dDR-UC-dRs"/>
+                                        <exclude reference="I3F-LU-XAM"/>
+                                        <exclude reference="oqc-v4-tWa"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -259,8 +264,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" pagingEnabled="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
-                                <frame key="frameInset" width="600" height="551"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">Light, Simple To Use, Nothing Fancy 
 
@@ -328,8 +332,7 @@
                                             <color key="textColor" red="0.076499580536912748" green="0.62788380872483163" blue="0.62644190436241609" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IpR-HK-CCd">
-                                            <frame key="frameInset" minX="550" minY="38" width="42" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IpR-HK-CCd">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -384,8 +387,7 @@
                                     <frame key="frameInset" width="375" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcN-go-5GC">
-                                            <frame key="frameInset" minX="8" minY="8" width="584" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcN-go-5GC">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="42" id="fm6-Ex-C35"/>
                                             </constraints>
@@ -398,25 +400,22 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKG-1S-cAM">
-                                            <frame key="frameInset" minX="8" minY="95" width="584" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKG-1S-cAM">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.078431372549019607" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1003" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPK-1c-26A">
-                                            <frame key="frameInset" minX="8" minY="37" width="584" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1003" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPK-1c-26A">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.078431372549019607" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClJ-KG-aKg">
-                                            <frame key="frameInset" minX="8" minY="66" width="584" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClJ-KG-aKg">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.078431372549019607" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urw-6l-NZ8">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urw-6l-NZ8">
                                             <color key="backgroundColor" red="0.078431372550000003" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -517,8 +516,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mfs-x2-It4">
-                                <frame key="frameInset" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mfs-x2-It4">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                         </subviews>
@@ -577,8 +575,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rwt-dF-LXf">
-                                <frame key="frameInset" width="600" height="551"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rwt-dF-LXf">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="nMB-3x-WHp" id="FsA-rl-xVy"/>
@@ -618,6 +615,6 @@
         <image name="search-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Twd-5c-8zy"/>
+        <segue reference="wSO-tQ-y2A"/>
     </inferredMetricsTieBreakers>
 </document>

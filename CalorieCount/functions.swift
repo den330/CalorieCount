@@ -140,7 +140,7 @@ func hideLandscapeViewWithCoordinator(_ coordinator: UIViewControllerTransitionC
 
 struct commonConstants{
     static let cellXib = "FoodCell"
-    static let topInsets:CGFloat = 92
+    static let topInsets:CGFloat = 109.5
 }
 
 func isValidNumber(_ str:String) -> Bool{
