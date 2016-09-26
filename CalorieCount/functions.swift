@@ -193,5 +193,10 @@ func dismissPopup(_ vc: UIViewController, time: Double){
     }
 }
 
+func filterItemForSearchText(_ searchText: String, resultCon: NSFetchedResultsController<ItemConsumed>) -> [ItemConsumed]{
+    let list = resultCon.fetchedObjects!
+    return list.filter{ item in return item.foodProContent.lowercased().contains(searchText.lowercased())}
+}
+
 
 

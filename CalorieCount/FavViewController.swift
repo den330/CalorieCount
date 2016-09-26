@@ -114,7 +114,8 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
                 item = filteredItem[(indexPath as NSIndexPath).row]
                 managedContext.delete(item)
                 try! managedContext.save()
-                filterItemForSearchText(searchController.searchBar.text!)
+                filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
+                tableView.reloadData()
             }else{
                 item = fetchedResultsController.object(at: indexPath) 
                 managedContext.delete(item)
@@ -202,7 +203,8 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
         do{
             try managedContext.save()
             if searchController.isActive && searchController.searchBar.text != ""{
-                filterItemForSearchText(searchController.searchBar.text!)
+                filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
+                tableView.reloadData()
             }
         }catch let error as NSError{
             print("Could not save delete: \(error)")
@@ -212,12 +214,7 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
 
 extension FavViewController: UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
-        filterItemForSearchText(searchController.searchBar.text!)
-    }
-    
-    func filterItemForSearchText(_ searchText: String){
-        let list = fetchedResultsController.fetchedObjects!
-        filteredItem = list.filter{ item in return item.foodProContent.lowercased().contains(searchText.lowercased())}
+        filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
         tableView.reloadData()
     }
 }

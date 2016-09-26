@@ -14,14 +14,21 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     
+
     var fetchedResultsController: NSFetchedResultsController<ItemConsumed>!
     let fetchRequest = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
     var managedContext: NSManagedObjectContext!
     var itemForSelected: ItemConsumed!
     var recentDay: Day!
+    let searchController = UISearchController(searchResultsController: nil)
+    var filteredItem = [ItemConsumed]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
         if !UserDefaults.standard.bool(forKey: "DIYAgain"){
             let message = "Can’t Find What You Want From Our Server Yet You Did Learn the Calorie Amount Of a Certain Item From Some Other Source? Then Build An Item For Yourself So That You Can Add It To Your Daily Record Directly From This Tab"
             makeAlert(message, vc: self.parent!, title: "Tips")
@@ -58,7 +65,12 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func quickSave(_ indexPath: IndexPath?){
         if let indexPath = indexPath{
-            let item = fetchedResultsController.object(at: indexPath) 
+            let item: ItemConsumed
+            if searchController.isActive && searchController.searchBar.text != ""{
+                item = filteredItem[(indexPath as NSIndexPath).row]
+            }else{
+                item = fetchedResultsController.object(at: indexPath)
+            }
             save(managedContext, food: item, quantity: 1)
             let cell = tableView.cellForRow(at: indexPath) as! FoodCell
             let calorieText = cell.calorieLabel.text
@@ -136,6 +148,9 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.isActive && searchController.searchBar.text != ""{
+            return filteredItem.count
+        }
         let sectionInfo = fetchedResultsController.sections![section]
         let rowNum = sectionInfo.numberOfObjects
         return rowNum
@@ -143,7 +158,12 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: commonConstants.cellXib, for: indexPath) as! FoodCell
-        let item = fetchedResultsController.object(at: indexPath) 
+        let item:ItemConsumed
+        if searchController.isActive && searchController.searchBar.text != ""{
+            item = filteredItem[(indexPath as NSIndexPath).row]
+        }else{
+            item = fetchedResultsController.object(at: indexPath)
+        }
         cell.brandLabel.text = item.brand
         cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
         cell.foodLabel.text = item.name
@@ -152,20 +172,28 @@ class DIYListViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searchController.isActive  && searchController.searchBar.text != ""{
+            performSegue(withIdentifier: "presentPopUp", sender: filteredItem[(indexPath as NSIndexPath).row])
+        }else{
+            performSegue(withIdentifier: "presentPopUp", sender: fetchedResultsController.object(at: indexPath) )
+        }
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = fetchedResultsController.object(at: indexPath) 
-        performSegue(withIdentifier: "presentPopUp", sender: item)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete{
-            let item = fetchedResultsController.object(at: indexPath) 
-            managedContext.delete(item)
-        }
-        do{
-            try managedContext.save()
-        }catch let error as NSError{
-            print("Could not save delete: \(error)")
+            let item: ItemConsumed
+            if searchController.isActive  && searchController.searchBar.text != ""{
+                item = filteredItem[(indexPath as NSIndexPath).row]
+                managedContext.delete(item)
+                try! managedContext.save()
+                filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
+                tableView.reloadData()
+            }else{
+                item = fetchedResultsController.object(at: indexPath)
+                managedContext.delete(item)
+                try! managedContext.save()
+            }
         }
     }
     
@@ -185,6 +213,9 @@ extension DIYListViewController: NSFetchedResultsControllerDelegate{
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if searchController.isActive && searchController.searchBar.text != ""{
+            return
+        }
         switch type{
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
@@ -193,8 +224,7 @@ extension DIYListViewController: NSFetchedResultsControllerDelegate{
         case .move:
             tableView.deleteRows(at: [indexPath!], with: .automatic)
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        case .update:
-            tableView.reloadRows(at: [indexPath!], with: .automatic)
+        default: break
         }
     }
     
@@ -204,24 +234,50 @@ extension DIYListViewController: NSFetchedResultsControllerDelegate{
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake{
-            let alert = UIAlertController(title: "Delete", message: "Delete All DIY?", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            present(alert,animated: true, completion: nil)
-            alert.view.tintColor = UIColor.red
+            let alert: UIAlertController
+            if searchController.isActive && searchController.searchBar.text != ""{
+                let text = searchController.searchBar.text!
+                alert = UIAlertController(title: "Delete", message: "Delete All DIY Containing \(text)?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                present(alert,animated: true, completion: nil)
+                alert.view.tintColor = UIColor.red
+            }else{
+                alert = UIAlertController(title: "Delete", message: "Delete All DIY?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                present(alert,animated: true, completion: nil)
+                alert.view.tintColor = UIColor.red
+            }
         }
     }
     
     func handleMotion(){
-        let objects = fetchedResultsController.fetchedObjects!
+        let objects: [ItemConsumed]
+        if searchController.isActive && searchController.searchBar.text != ""{
+            objects = filteredItem
+        }else{
+            objects = fetchedResultsController.fetchedObjects!
+        }
         for object in objects{
             managedContext.delete(object)
         }
         do{
             try managedContext.save()
+            if searchController.isActive && searchController.searchBar.text != ""{
+                filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
+                tableView.reloadData()
+            }
         }catch let error as NSError{
             print("Could not save delete: \(error)")
         }
+    }
+}
+
+extension DIYListViewController: UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
+        tableView.reloadData()
     }
 }
 
