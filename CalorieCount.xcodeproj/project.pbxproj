@@ -11,6 +11,8 @@
 		900596B61CFD0A25001E1321 /* DetailAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900596B51CFD0A25001E1321 /* DetailAnimationController.swift */; };
 		9010A56C1D696228004A6C9D /* DIYListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010A56B1D696228004A6C9D /* DIYListViewController.swift */; };
 		902818261D0E351300A4E16A /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902818251D0E351300A4E16A /* FavViewController.swift */; };
+		9034061E1D9C5EF8003D6A43 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9034061D1D9C5EF8003D6A43 /* DataSource.swift */; };
+		903406201D9C72DE003D6A43 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9034061F1D9C72DE003D6A43 /* SearchController.swift */; };
 		906535AB1D1DC870004F7514 /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906535AA1D1DC870004F7514 /* LandscapeViewController.swift */; };
 		9075BF5C1D0CB1FB00F57575 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9075BF5B1D0CB1FB00F57575 /* HudView.swift */; };
 		9087CEDB1CEB6AE0006A1C63 /* RecordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9087CEDA1CEB6AE0006A1C63 /* RecordTableViewController.swift */; };
@@ -47,6 +49,8 @@
 		9010A56F1D697369004A6C9D /* Daily Calories 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 4.xcdatamodel"; sourceTree = "<group>"; };
 		902818241D0E1C1D00A4E16A /* Daily Calories 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 2.xcdatamodel"; sourceTree = "<group>"; };
 		902818251D0E351300A4E16A /* FavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
+		9034061D1D9C5EF8003D6A43 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataSource.swift; path = ../DataSource.swift; sourceTree = "<group>"; };
+		9034061F1D9C72DE003D6A43 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		906535AA1D1DC870004F7514 /* LandscapeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandscapeViewController.swift; sourceTree = "<group>"; };
 		9075BF5B1D0CB1FB00F57575 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		90847DBD1D1CBEFC00996E8C /* Daily Calories 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -141,7 +145,9 @@
 		90809B141D7D104300D16244 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				9034061F1D9C72DE003D6A43 /* SearchController.swift */,
 				90B8BC9A1CE3D8CD0083DF72 /* Food.swift */,
+				9034061D1D9C5EF8003D6A43 /* DataSource.swift */,
 				90B8BC9C1CE4035B0083DF72 /* NetworkGrab.swift */,
 				90CD30CA1CFE30B60063A7B9 /* functions.swift */,
 			);
@@ -345,10 +351,12 @@
 				90D11A211CE788DF005F8E13 /* CoreDataStack.swift in Sources */,
 				90D11A2C1CE790EC005F8E13 /* ItemConsumed.swift in Sources */,
 				906535AB1D1DC870004F7514 /* LandscapeViewController.swift in Sources */,
+				903406201D9C72DE003D6A43 /* SearchController.swift in Sources */,
 				90B8BC9D1CE4035B0083DF72 /* NetworkGrab.swift in Sources */,
 				90B8BC9B1CE3D8CD0083DF72 /* Food.swift in Sources */,
 				90B8BC841CE397DE0083DF72 /* CalorieCountViewController.swift in Sources */,
 				90B8BC821CE397DE0083DF72 /* AppDelegate.swift in Sources */,
+				9034061E1D9C5EF8003D6A43 /* DataSource.swift in Sources */,
 				90D11A1D1CE6A737005F8E13 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
