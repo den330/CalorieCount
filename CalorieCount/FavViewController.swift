@@ -10,26 +10,20 @@ import UIKit
 import CoreData
 import MessageUI
 
-class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
+class FavViewController: UIViewController, UITableViewDelegate{
     
     @IBOutlet weak var tableView: UITableView!
-    var fetchedResultsController: NSFetchedResultsController<ItemConsumed>!
-    let fetchRequest = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
-    
     var managedContext: NSManagedObjectContext!
     var itemForSelected: ItemConsumed!
     var recentDay: Day!
-    let searchController = UISearchController(searchResultsController: nil)
-    var filteredItem = [ItemConsumed]()
+    var dataSource: DataSource!
+    var searchCon: SearchController!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
         tableView.delegate = self
-        tableView.dataSource = self
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.estimatedRowHeight = 100
@@ -38,25 +32,13 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
         tableView.addGestureRecognizer(slideToRight)
         slideToRight.cancelsTouchesInView = true
         let sortDescriptor = NSSortDescriptor(key: "unitCalories", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.predicate = NSPredicate(format: "isFav==%@", true as CVarArg)
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        do{
-            try fetchedResultsController.performFetch()
-        }catch let error as NSError{
-            print("Error: \(error.localizedDescription)")
-        }
+        let predicate = NSPredicate(format: "isFav==%@", true as CVarArg)
+        searchCon = SearchController(tableView: tableView)
+        dataSource = DataSource(tableView: tableView, predicate: predicate, sort: sortDescriptor, context: managedContext, searchCon: searchCon)
+        tableView.dataSource = dataSource
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive && searchController.searchBar.text != ""{
-            return filteredItem.count
-        }
-        let sectionInfo = fetchedResultsController.sections![section]
-        let rowNum = sectionInfo.numberOfObjects
-        return rowNum
-    }
+
     
     func handleSwipe(_ Swipe: UISwipeGestureRecognizer){
         if Swipe.direction == .right{
@@ -69,11 +51,12 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
     func quickSave(_ indexPath: IndexPath?){
         if let indexPath = indexPath{
             let item: ItemConsumed
-            if searchController.isActive && searchController.searchBar.text != ""{
-                item = filteredItem[(indexPath as NSIndexPath).row]
+            if dataSource.searchActive(){
+                item = dataSource.filteredItems[(indexPath as NSIndexPath).row]
             }else{
-                item = fetchedResultsController.object(at: indexPath) 
+                item = dataSource.getObjAt(indexPath: indexPath as NSIndexPath)
             }
+            
             save(managedContext, food: item, quantity: 1)
             let hudView: HudView = HudView.hudInView(view, animated: true)
             hudView.text = "1 Unit Saved"
@@ -92,32 +75,17 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
     }
 
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: commonConstants.cellXib, for: indexPath) as! FoodCell
-        let item:ItemConsumed
-        if searchController.isActive && searchController.searchBar.text != ""{
-            item = filteredItem[(indexPath as NSIndexPath).row]
-        }else{
-            item = fetchedResultsController.object(at: indexPath) 
-        }
-        cell.brandLabel.text = item.brand
-        cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
-        cell.foodLabel.text = item.name
-        cell.quantityLabel.text = item.quantity
-        return cell
-    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete{
             let item: ItemConsumed
-            if searchController.isActive  && searchController.searchBar.text != ""{
-                item = filteredItem[(indexPath as NSIndexPath).row]
+            if dataSource.searchActive(){
+                item = dataSource.filteredItems[(indexPath as NSIndexPath).row]
                 managedContext.delete(item)
                 try! managedContext.save()
-                filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
                 tableView.reloadData()
             }else{
-                item = fetchedResultsController.object(at: indexPath) 
+                item = dataSource.getObjAt(indexPath: indexPath as NSIndexPath)
                 managedContext.delete(item)
                 try! managedContext.save()
             }
@@ -125,10 +93,10 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if searchController.isActive  && searchController.searchBar.text != ""{
-            performSegue(withIdentifier: "showPop", sender: filteredItem[(indexPath as NSIndexPath).row])
+        if dataSource.searchActive(){
+            performSegue(withIdentifier: "showPop", sender: dataSource.filteredItems[(indexPath as NSIndexPath).row])
         }else{
-            performSegue(withIdentifier: "showPop", sender: fetchedResultsController.object(at: indexPath) )
+            performSegue(withIdentifier: "showPop", sender: dataSource.getObjAt(indexPath: indexPath as NSIndexPath) )
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -145,36 +113,12 @@ class FavViewController: UIViewController, UITableViewDelegate,UITableViewDataSo
 
 
 
-extension FavViewController: NSFetchedResultsControllerDelegate{
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        if searchController.isActive && searchController.searchBar.text != ""{
-            return
-        }
-        switch type{
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
-        case .move:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
-            tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        default: break
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    
+extension FavViewController{
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake{
             let alert: UIAlertController
-            if searchController.isActive && searchController.searchBar.text != ""{
-                let text = searchController.searchBar.text!
+            if dataSource.searchActive(){
+                let text = searchCon.getText()
                 alert = UIAlertController(title: "Delete", message: "Delete All Fav Containing \(text)?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -192,18 +136,17 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
     
     func handleMotion(){
         let objects: [ItemConsumed]
-        if searchController.isActive && searchController.searchBar.text != ""{
-            objects = filteredItem
+        if dataSource.searchActive(){
+            objects = dataSource.filteredItems
         }else{
-            objects = fetchedResultsController.fetchedObjects!
+            objects = dataSource.getAllObj()
         }
         for object in objects{
             managedContext.delete(object)
         }
         do{
             try managedContext.save()
-            if searchController.isActive && searchController.searchBar.text != ""{
-                filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
+            if dataSource.searchActive(){
                 tableView.reloadData()
             }
         }catch let error as NSError{
@@ -212,12 +155,7 @@ extension FavViewController: NSFetchedResultsControllerDelegate{
     }
 }
 
-extension FavViewController: UISearchResultsUpdating{
-    func updateSearchResults(for searchController: UISearchController) {
-        filteredItem = filterItemForSearchText(searchController.searchBar.text!, resultCon: fetchedResultsController)
-        tableView.reloadData()
-    }
-}
+
 
 
 

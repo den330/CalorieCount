@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 import CoreData
 
-class DataSource:UITableViewDataSource{
+class DataSource:NSObject, UITableViewDataSource{
     private let fetchRequest: NSFetchRequest<ItemConsumed>!
     private let fetchedObjectController: NSFetchedResultsController<ItemConsumed>!
     private let tableView: UITableView!
     private let context: NSManagedObjectContext!
     private var searchController: SearchController!
-    private var filteredItems: [ItemConsumed]!
+    var filteredItems: [ItemConsumed]!
 
     
     init(tableView: UITableView, predicate: NSPredicate, sort: NSSortDescriptor, context: NSManagedObjectContext, searchCon: SearchController
@@ -26,19 +26,40 @@ class DataSource:UITableViewDataSource{
         self.searchController = searchCon
         searchController = SearchController(tableView: self.tableView)
         fetchRequest = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
-        self.fetchRequest.sortDescriptors = [sort]
-        self.fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = [sort]
+        fetchRequest.predicate = predicate
         fetchedObjectController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
+        try! fetchedObjectController.performFetch()
+    }
+    
+    func getObjAt(indexPath: NSIndexPath) -> ItemConsumed{
+        return fetchedObjectController.object(at: indexPath as IndexPath)
+    }
+    
+    func getAllObj() -> [ItemConsumed]{
+        return fetchedObjectController.fetchedObjects!
+    }
+    
+    func getTableView() -> UITableView{
+        return tableView
+    }
+    
+    func getSearchController() -> SearchController{
+        return searchController
     }
     
     func searchActive() -> Bool{
         return searchController.isActive() && searchController.getText() != ""
     }
     
+    func updateFilteredItems(){
+        let list = fetchedObjectController.fetchedObjects!
+        filteredItems = list.filter{ item in return item.foodProContent.lowercased().contains(searchController.getText().lowercased())}
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchActive(){
-            let list = fetchedObjectController.fetchedObjects!
-            filteredItems = list.filter{ item in return item.foodProContent.lowercased().contains(searchController.getText().lowercased())}
+            updateFilteredItems()
             return filteredItems.count
         }
         return fetchedObjectController.sections![section].numberOfObjects
@@ -57,8 +78,34 @@ class DataSource:UITableViewDataSource{
         cell.foodLabel.text = item.name
         cell.quantityLabel.text = item.quantity
         return cell
-        
+    }
+}
+
+
+extension DataSource: NSFetchedResultsControllerDelegate{
+
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        getTableView().beginUpdates()
     }
     
-
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        let tableView = getTableView()
+        if searchActive(){
+            return
+        }
+        switch type{
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        default: break
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        getTableView().endUpdates()
+    }
 }
