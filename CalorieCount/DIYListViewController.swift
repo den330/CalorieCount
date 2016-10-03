@@ -214,7 +214,7 @@ extension DIYListViewController: NSFetchedResultsControllerDelegate{
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         if searchController.isActive && searchController.searchBar.text != ""{
-            return
+           return
         }
         switch type{
         case .insert:

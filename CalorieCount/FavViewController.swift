@@ -76,21 +76,7 @@ class FavViewController: UIViewController, UITableViewDelegate{
 
 
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete{
-            let item: ItemConsumed
-            if dataSource.searchActive(){
-                item = dataSource.filteredItems[(indexPath as NSIndexPath).row]
-                managedContext.delete(item)
-                try! managedContext.save()
-                tableView.reloadData()
-            }else{
-                item = dataSource.getObjAt(indexPath: indexPath as NSIndexPath)
-                managedContext.delete(item)
-                try! managedContext.save()
-            }
-        }
-    }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if dataSource.searchActive(){
@@ -118,7 +104,7 @@ extension FavViewController{
         if motion == .motionShake{
             let alert: UIAlertController
             if dataSource.searchActive(){
-                let text = searchCon.getText()
+                let text = dataSource.getSearchController().getText()
                 alert = UIAlertController(title: "Delete", message: "Delete All Fav Containing \(text)?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {[unowned self] _ in self.handleMotion()}))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -136,22 +122,11 @@ extension FavViewController{
     
     func handleMotion(){
         let objects: [ItemConsumed]
-        if dataSource.searchActive(){
-            objects = dataSource.filteredItems
-        }else{
-            objects = dataSource.getAllObj()
-        }
+        objects = dataSource.getAllObj()
         for object in objects{
             managedContext.delete(object)
         }
-        do{
-            try managedContext.save()
-            if dataSource.searchActive(){
-                tableView.reloadData()
-            }
-        }catch let error as NSError{
-            print("Could not save delete: \(error)")
-        }
+        try! managedContext.save()
     }
 }
 

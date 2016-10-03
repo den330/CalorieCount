@@ -10,13 +10,17 @@ import Foundation
 import UIKit
 import CoreData
 
+let searchUpdateNotification = "Update Notification"
+
 class DataSource:NSObject, UITableViewDataSource{
     private let fetchRequest: NSFetchRequest<ItemConsumed>!
     private let fetchedObjectController: NSFetchedResultsController<ItemConsumed>!
-    private let tableView: UITableView!
-    private let context: NSManagedObjectContext!
+    var tableView: UITableView!
+    private var context: NSManagedObjectContext!
     private var searchController: SearchController!
     var filteredItems: [ItemConsumed]!
+    var observer: AnyObject!
+    
 
     
     init(tableView: UITableView, predicate: NSPredicate, sort: NSSortDescriptor, context: NSManagedObjectContext, searchCon: SearchController
@@ -24,12 +28,16 @@ class DataSource:NSObject, UITableViewDataSource{
         self.tableView = tableView
         self.context = context
         self.searchController = searchCon
+        
         searchController = SearchController(tableView: self.tableView)
         fetchRequest = NSFetchRequest<ItemConsumed>(entityName: "ItemConsumed")
         fetchRequest.sortDescriptors = [sort]
         fetchRequest.predicate = predicate
         fetchedObjectController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
+        super.init()
+        fetchedObjectController.delegate = self
         try! fetchedObjectController.performFetch()
+        listenForSearchUpdate()
     }
     
     func getObjAt(indexPath: NSIndexPath) -> ItemConsumed{
@@ -52,32 +60,53 @@ class DataSource:NSObject, UITableViewDataSource{
         return searchController.isActive() && searchController.getText() != ""
     }
     
-    func updateFilteredItems(){
+    func updateFilteredItems() -> [ItemConsumed]{
         let list = fetchedObjectController.fetchedObjects!
-        filteredItems = list.filter{ item in return item.foodProContent.lowercased().contains(searchController.getText().lowercased())}
+        let filtered = list.filter{ item in return item.foodProContent.lowercased().contains(searchController.getText().lowercased())}
+        return filtered
+    }
+    
+    func listenForSearchUpdate(){
+        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: searchUpdateNotification), object: nil, queue: nil){
+            [unowned self] notification in
+            if self.searchActive(){
+                let firstPredicate = NSPredicate(format: "name CONTAINS[c] %@" , self.searchController.getText())
+                let secondPredicate = NSPredicate(format: "isFav == %@", true as CVarArg)
+                self.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [firstPredicate, secondPredicate])
+            }else{
+                self.fetchRequest.predicate =  NSPredicate(format: "isFav == %@", true as CVarArg)
+            }
+            try! self.fetchedObjectController.performFetch()
+            self.tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchActive(){
-            updateFilteredItems()
-            return filteredItems.count
-        }
         return fetchedObjectController.sections![section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: commonConstants.cellXib, for: indexPath) as! FoodCell
         let item:ItemConsumed
-        if searchActive(){
-            item = filteredItems[(indexPath as NSIndexPath).row]
-        }else{
-            item = fetchedObjectController.object(at: indexPath)
-        }
+        item = fetchedObjectController.object(at: indexPath)
         cell.brandLabel.text = item.brand
         cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
         cell.foodLabel.text = item.name
         cell.quantityLabel.text = item.quantity
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete{
+            let item: ItemConsumed
+            item = getObjAt(indexPath: indexPath as NSIndexPath)
+            context.delete(item)
+            try! context.save()
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(observer)
     }
 }
 
@@ -85,14 +114,10 @@ class DataSource:NSObject, UITableViewDataSource{
 extension DataSource: NSFetchedResultsControllerDelegate{
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        getTableView().beginUpdates()
+        tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        let tableView = getTableView()
-        if searchActive(){
-            return
-        }
         switch type{
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
@@ -106,6 +131,6 @@ extension DataSource: NSFetchedResultsControllerDelegate{
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        getTableView().endUpdates()
+        tableView.endUpdates()
     }
 }

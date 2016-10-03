@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class SearchController: NSObject, UISearchResultsUpdating{
-    private let searchController: UISearchController!
-    private let tableView: UITableView!
-    private var filteredItems: [ItemConsumed]!
+    let searchController: UISearchController!
+    private weak var tableView: UITableView!
+    
     
     init(tableView: UITableView){
         searchController = UISearchController(searchResultsController: nil)
@@ -32,6 +32,6 @@ class SearchController: NSObject, UISearchResultsUpdating{
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        tableView.reloadData()
+        NotificationCenter.default.post(name: Notification.Name(rawValue: searchUpdateNotification), object: nil)
     }
 }
