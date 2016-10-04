@@ -22,8 +22,19 @@ class FavViewController: UIViewController, UITableViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        definesPresentationContext = true
+        tableViewSet()
+        let sortDescriptor = NSSortDescriptor(key: "unitCalories", ascending: true)
+        let predicate = NSPredicate(format: "isFav==%@", true as CVarArg)
+        searchCon = SearchController(tableView: tableView)
+        dataSource = DataSource(tableView: tableView, predicate: predicate, sort: sortDescriptor, context: managedContext, searchCon: searchCon)
         tableView.delegate = self
+        tableView.dataSource = dataSource
+        
+    }
+    
+    func tableViewSet(){
+        definesPresentationContext = true
+        
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.estimatedRowHeight = 100
@@ -31,59 +42,40 @@ class FavViewController: UIViewController, UITableViewDelegate{
         let slideToRight = UISwipeGestureRecognizer(target: self, action: #selector(FavViewController.handleSwipe))
         tableView.addGestureRecognizer(slideToRight)
         slideToRight.cancelsTouchesInView = true
-        let sortDescriptor = NSSortDescriptor(key: "unitCalories", ascending: true)
-        let predicate = NSPredicate(format: "isFav==%@", true as CVarArg)
-        searchCon = SearchController(tableView: tableView)
-        dataSource = DataSource(tableView: tableView, predicate: predicate, sort: sortDescriptor, context: managedContext, searchCon: searchCon)
-        tableView.dataSource = dataSource
     }
-    
-
     
     func handleSwipe(_ Swipe: UISwipeGestureRecognizer){
         if Swipe.direction == .right{
-            let touchPoint = Swipe.location(in: tableView)
+           let touchPoint = Swipe.location(in: tableView)
             let indexPath = tableView.indexPathForRow(at: touchPoint)
             quickSave(indexPath)
-        }
-    }
-    
-    func quickSave(_ indexPath: IndexPath?){
-        if let indexPath = indexPath{
-            let item: ItemConsumed
-            if dataSource.searchActive(){
-                item = dataSource.filteredItems[(indexPath as NSIndexPath).row]
-            }else{
-                item = dataSource.getObjAt(indexPath: indexPath as NSIndexPath)
-            }
-            
-            save(managedContext, food: item, quantity: 1)
-            let hudView: HudView = HudView.hudInView(view, animated: true)
-            hudView.text = "1 Unit Saved"
-            let cell = tableView.cellForRow(at: indexPath) as! FoodCell
+            let cell = tableView.cellForRow(at: indexPath!) as! FoodCell
             let calorieText = cell.calorieLabel.text
             cell.calorieLabel.text = "1 Unit Added"
-            postNotification()
+            let hudView: HudView = HudView.hudInView(view, animated: true)
+            hudView.text = "1 Unit Saved"
             let delayInSeconds = 0.6
             let when = DispatchTime.now() + Double(Int64(delayInSeconds*Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: when){
+                let cell = self.tableView.cellForRow(at: indexPath!) as! FoodCell
                 cell.calorieLabel.text = calorieText
                 hudView.removeFromSuperview()
                 self.view.isUserInteractionEnabled = true
             }
         }
     }
-
-
     
-
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if dataSource.searchActive(){
-            performSegue(withIdentifier: "showPop", sender: dataSource.filteredItems[(indexPath as NSIndexPath).row])
-        }else{
-            performSegue(withIdentifier: "showPop", sender: dataSource.getObjAt(indexPath: indexPath as NSIndexPath) )
+    func quickSave(_ indexPath: IndexPath?){
+        if let indexPath = indexPath{
+            let item: ItemConsumed
+            item = dataSource.getObjAt(indexPath: indexPath as NSIndexPath)
+            save(managedContext, food: item, quantity: 1)
+            postNotification()
         }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showPop", sender: dataSource.getObjAt(indexPath: indexPath as NSIndexPath) )
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
