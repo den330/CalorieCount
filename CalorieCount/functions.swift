@@ -198,5 +198,72 @@ func filterItemForSearchText(_ searchText: String, resultCon: NSFetchedResultsCo
     return list.filter{ item in return item.foodProContent.lowercased().contains(searchText.lowercased())}
 }
 
+func handleSwipe(_ Swipe: UISwipeGestureRecognizer, tableView: UITableView, view: UIView, context: NSManagedObjectContext, dataSource: DataSource){
+    if Swipe.direction == .right{
+        let touchPoint = Swipe.location(in: tableView)
+        let indexPath = tableView.indexPathForRow(at: touchPoint)
+        quickSave(indexPath, dataSource: dataSource, managedContext: context)
+        let cell = tableView.cellForRow(at: indexPath!) as! FoodCell
+        let calorieText = cell.calorieLabel.text
+        cell.calorieLabel.text = "1 Unit Added"
+        let hudView: HudView = HudView.hudInView(view, animated: true)
+        hudView.text = "1 Unit Saved"
+        let delayInSeconds = 0.6
+        let when = DispatchTime.now() + Double(Int64(delayInSeconds*Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: when){
+            let cell = tableView.cellForRow(at: indexPath!) as! FoodCell
+            cell.calorieLabel.text = calorieText
+            hudView.removeFromSuperview()
+            view.isUserInteractionEnabled = true
+        }
+    }
+}
+
+func quickSave(_ indexPath: IndexPath?, dataSource: DataSource, managedContext: NSManagedObjectContext){
+    if let indexPath = indexPath{
+        let item: ItemConsumed
+        item = dataSource.getObjAt(indexPath: indexPath as NSIndexPath)
+        save(managedContext, food: item, quantity: 1)
+        postNotification()
+    }
+}
+
+func motionEndHandle(_ motion: UIEventSubtype, with event: UIEvent?, dataSource: DataSource, vc: UIViewController, context: NSManagedObjectContext, filteredMessage: String, message: String){
+    if motion == .motionShake{
+        let alert: UIAlertController
+        if dataSource.searchActive(){
+            let text = dataSource.getSearchController().getText()
+            alert = UIAlertController(title: "Delete", message: "\(filteredMessage) \(text)?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {_ in handleMotion(dataSource: dataSource, managedContext: context)}))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            vc.present(alert,animated: true, completion: nil)
+            alert.view.tintColor = UIColor.red
+        }else{
+            alert = UIAlertController(title: "Delete", message: message, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {_ in handleMotion(dataSource: dataSource, managedContext: context)}))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            vc.present(alert,animated: true, completion: nil)
+            alert.view.tintColor = UIColor.red
+        }
+    }
+}
+
+func handleMotion(dataSource: DataSource, managedContext: NSManagedObjectContext){
+    let objects: [ItemConsumed]
+    objects = dataSource.getAllObj()
+    for object in objects{
+        managedContext.delete(object)
+    }
+    try! managedContext.save()
+}
+
+func tableViewSet(vc: UIViewController, tableView: UITableView){
+    vc.definesPresentationContext = true
+    let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
+    tableView.register(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
+    tableView.estimatedRowHeight = 100
+    tableView.rowHeight = UITableViewAutomaticDimension
+}
+
 
 

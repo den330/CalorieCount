@@ -23,8 +23,7 @@ class DataSource:NSObject, UITableViewDataSource{
     
 
     
-    init(tableView: UITableView, predicate: NSPredicate, sort: NSSortDescriptor, context: NSManagedObjectContext, searchCon: SearchController
-        ){
+    init(tableView: UITableView, predicate: NSPredicate, sort: NSSortDescriptor, context: NSManagedObjectContext, searchCon: SearchController, predicateStr: String){
         self.tableView = tableView
         self.context = context
         self.searchController = searchCon
@@ -37,7 +36,7 @@ class DataSource:NSObject, UITableViewDataSource{
         super.init()
         fetchedObjectController.delegate = self
         try! fetchedObjectController.performFetch()
-        listenForSearchUpdate()
+        listenForSearchUpdate(predicateStr: predicateStr)
     }
     
     func getObjAt(indexPath: NSIndexPath) -> ItemConsumed{
@@ -66,15 +65,15 @@ class DataSource:NSObject, UITableViewDataSource{
         return filtered
     }
     
-    func listenForSearchUpdate(){
+    func listenForSearchUpdate(predicateStr: String){
         observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: searchUpdateNotification), object: nil, queue: nil){
             [unowned self] notification in
             if self.searchActive(){
                 let firstPredicate = NSPredicate(format: "name CONTAINS[c] %@" , self.searchController.getText())
-                let secondPredicate = NSPredicate(format: "isFav == %@", true as CVarArg)
+                let secondPredicate = NSPredicate(format: predicateStr, true as CVarArg)
                 self.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [firstPredicate, secondPredicate])
             }else{
-                self.fetchRequest.predicate =  NSPredicate(format: "isFav == %@", true as CVarArg)
+                self.fetchRequest.predicate =  NSPredicate(format: predicateStr, true as CVarArg)
             }
             try! self.fetchedObjectController.performFetch()
             self.tableView.reloadData()
