@@ -34,6 +34,10 @@ class DIYListViewController: UIViewController, UITableViewDelegate{
         dataSource = DataSource(tableView: tableView, predicate: predicate, sort: sortDescriptor, context: managedContext, searchCon: searchCon, predicateStr: "isMy == %@")
         tableView.delegate = self
         tableView.dataSource = dataSource
+        firstTimePopUp()
+    }
+    
+    func firstTimePopUp(){
         if !UserDefaults.standard.bool(forKey: "DIYAgain"){
             let message = "Can’t Find What You Want From Our Server Yet You Did Learn the Calorie Amount Of a Certain Item From Some Other Source? Then Build An Item For Yourself So That You Can Add It To Your Daily Record Directly From This Tab"
             makeAlert(message, vc: self.parent!, title: "Tips")
@@ -103,6 +107,7 @@ class DIYListViewController: UIViewController, UITableViewDelegate{
         performSegue(withIdentifier: "presentPopUp", sender: dataSource.getObjAt(indexPath: indexPath as NSIndexPath) )
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "presentPopUp"{
             let item = sender as! ItemConsumed
