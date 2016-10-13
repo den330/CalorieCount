@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import CoreSpotlight
 import MobileCoreServices
+import  GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -84,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         recordController.managedContext = coreDataStack.context
         favController.managedContext = coreDataStack.context
         diyController.managedContext = coreDataStack.context
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-9661807512900472~8780399543")
         return true
     }
     

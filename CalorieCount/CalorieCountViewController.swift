@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import MessageUI
+import GoogleMobileAds
 
 class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
     
@@ -20,7 +21,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     var itemForSelected: ItemConsumed!
     
     
-    
+    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var filterHeight: NSLayoutConstraint!
     @IBOutlet weak var filterTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -36,11 +37,21 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
         let slideToRight = UISwipeGestureRecognizer(target: self, action: #selector(CalorieCountViewController.handleSwipe))
         tableView.addGestureRecognizer(slideToRight)
         slideToRight.cancelsTouchesInView = true
-        tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: commonConstants.topInsets, left: 0, bottom: 50, right: 0)
         let cellNib = UINib(nibName: commonConstants.cellXib, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: commonConstants.cellXib)
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
+        bannerSet()
+    }
+    
+    func bannerSet(){
+        bannerView.adSize = kGADAdSizeSmartBannerPortrait
+        //bannerView.adUnitID = "ca-app-pub-9661807512900472/1257132740"
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        let request: GADRequest = GADRequest()
+        bannerView.load(request)
     }
     
     override func viewDidAppear(_ animated: Bool) {

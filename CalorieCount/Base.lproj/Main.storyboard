@@ -58,15 +58,23 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ve2-K9-oiO"/>
                                 </connections>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bfh-XW-Rx7" customClass="GADBannerView">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ilm-j3-tvD"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Bfh-XW-Rx7" secondAttribute="trailing" id="5kE-Ed-Rhk"/>
                             <constraint firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="5pz-0L-r5z"/>
                             <constraint firstItem="eKb-mc-uac" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6ks-oj-E3P"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="Cqq-ar-Iwb"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="E3J-sb-PBP"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="trailing" secondItem="73R-3t-qYc" secondAttribute="trailing" id="GNR-gM-2NP"/>
                             <constraint firstItem="73R-3t-qYc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GiG-8F-2tC"/>
+                            <constraint firstItem="Bfh-XW-Rx7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Hvr-3J-GjL"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKr-Nh-Cv9"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="leading" secondItem="73R-3t-qYc" secondAttribute="leading" id="Kzw-Ra-5b5"/>
                             <constraint firstAttribute="trailing" secondItem="eKb-mc-uac" secondAttribute="trailing" id="Rfa-iZ-skp"/>
@@ -79,6 +87,7 @@
                             <constraint firstItem="73R-3t-qYc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dyl-OU-nyR"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="top" secondItem="73R-3t-qYc" secondAttribute="bottom" id="fdP-eJ-VVy"/>
                             <constraint firstItem="OUc-Ka-ObX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jZ0-vV-OtV"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bfh-XW-Rx7" secondAttribute="bottom" id="oxc-2H-Nmm"/>
                             <constraint firstItem="QFG-Cm-VTq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ycp-pI-irW"/>
                         </constraints>
                         <variation key="default">
@@ -94,6 +103,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search-7" id="vaE-Rh-dcp"/>
                     <connections>
+                        <outlet property="bannerView" destination="Bfh-XW-Rx7" id="2i1-FQ-EkF"/>
                         <outlet property="filterHeight" destination="eda-li-3Az" id="NGc-i3-Q61"/>
                         <outlet property="filterTextField" destination="OUc-Ka-ObX" id="IxX-PY-IaO"/>
                         <outlet property="searchBar" destination="73R-3t-qYc" id="czm-yH-LpD"/>
@@ -611,6 +621,6 @@
         <image name="search-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ybx-fD-IYt"/>
+        <segue reference="wSO-tQ-y2A"/>
     </inferredMetricsTieBreakers>
 </document>
