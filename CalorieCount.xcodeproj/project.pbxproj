@@ -61,6 +61,7 @@
 		908C411E1D0B5FBA00C70A02 /* Daily Calories.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories.xcdatamodel"; sourceTree = "<group>"; };
 		908C411F1D0B5FBA00C70A02 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		9090B2571D778D2B003B729C /* Daily Calories 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Daily Calories 5.xcdatamodel"; sourceTree = "<group>"; };
+		90AFA8D51DB01759009DBD90 /* CalorieCount.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CalorieCount.entitlements; sourceTree = "<group>"; };
 		90B8BC7E1CE397DE0083DF72 /* CalorieCount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalorieCount.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B8BC811CE397DE0083DF72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90B8BC831CE397DE0083DF72 /* CalorieCountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieCountViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +185,7 @@
 		90B8BC801CE397DE0083DF72 /* CalorieCount */ = {
 			isa = PBXGroup;
 			children = (
+				90AFA8D51DB01759009DBD90 /* CalorieCount.entitlements */,
 				90B8BC811CE397DE0083DF72 /* AppDelegate.swift */,
 				90B8BC851CE397DE0083DF72 /* Main.storyboard */,
 				90B8BC8D1CE397DE0083DF72 /* LaunchScreen.storyboard */,
@@ -244,6 +246,11 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = KG4ZLSV952;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -493,6 +500,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CalorieCount/CalorieCount.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CalorieCount/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -509,6 +517,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CalorieCount/CalorieCount.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CalorieCount/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

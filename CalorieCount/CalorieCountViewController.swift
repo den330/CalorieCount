@@ -47,8 +47,7 @@ class CalorieCountViewController: UIViewController, UITableViewDelegate,UITableV
     
     func bannerSet(){
         bannerView.adSize = kGADAdSizeSmartBannerPortrait
-        //bannerView.adUnitID = "ca-app-pub-9661807512900472/1257132740"
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-9661807512900472/1257132740"
         bannerView.rootViewController = self
         let request: GADRequest = GADRequest()
         bannerView.load(request)
