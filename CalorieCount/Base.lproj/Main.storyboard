@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QFG-Cm-VTq">
@@ -101,7 +101,9 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Search" image="search-7" id="vaE-Rh-dcp"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="search-7" id="vaE-Rh-dcp">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="bannerView" destination="Bfh-XW-Rx7" id="2i1-FQ-EkF"/>
                         <outlet property="filterHeight" destination="eda-li-3Az" id="NGc-i3-Q61"/>
@@ -119,7 +121,7 @@
         <scene sceneID="dD9-P4-6R1">
             <objects>
                 <tabBarController id="2st-lB-0p8" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="1Te-hY-6on">
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="1Te-hY-6on">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -271,7 +273,7 @@
                         <viewControllerLayoutGuide type="bottom" id="NMj-eU-UMW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="C9U-gE-Oe1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pl-Nt-6DQ">
@@ -321,7 +323,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="RecordTableViewController" id="Lfi-YJ-KRW" customClass="RecordTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lw2-nQ-1Oq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -386,7 +388,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="daily" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wfy-lH-oaM" customClass="DailyConsumeTableViewController" customModule="CalorieCount" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="V8p-H8-ZhN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -474,7 +476,13 @@
                             <outlet property="delegate" destination="wfy-lH-oaM" id="k9o-I2-GGX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Daily Calories" id="SES-YV-yS8"/>
+                    <navigationItem key="navigationItem" title="Daily Calories" id="SES-YV-yS8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="8yx-df-hRL">
+                            <connections>
+                                <action selector="shareButton:" destination="wfy-lH-oaM" id="1Xn-Gy-NF1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A17-pp-hBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -523,7 +531,7 @@
                         <viewControllerLayoutGuide type="bottom" id="T1t-lz-TnT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="z7h-3K-COa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mfs-x2-It4">
@@ -582,7 +590,7 @@
                         <viewControllerLayoutGuide type="bottom" id="tMd-qd-Bn1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PJF-hP-54d">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rwt-dF-LXf">

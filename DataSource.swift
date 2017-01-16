@@ -89,7 +89,11 @@ class DataSource:NSObject, UITableViewDataSource{
         let item:ItemConsumed
         item = fetchedObjectController.object(at: indexPath)
         cell.brandLabel.text = item.brand
-        cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
+        if item.unitCalories == 0{
+            cell.calorieLabel.text = "Calorie Free"
+        }else{
+            cell.calorieLabel.text = String(item.unitCalories) + " " + "Cal"
+        }
         cell.foodLabel.text = item.name
         cell.quantityLabel.text = item.quantity
         return cell
@@ -103,9 +107,7 @@ class DataSource:NSObject, UITableViewDataSource{
             try! context.save()
         }
     }
-    
 
-    
     deinit {
         NotificationCenter.default.removeObserver(observer)
     }

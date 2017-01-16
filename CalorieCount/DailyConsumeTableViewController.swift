@@ -15,6 +15,11 @@ class DailyConsumeTableViewController: UITableViewController{
     var day: Day!
     var items: NSOrderedSet?
     var managedContext: NSManagedObjectContext!
+    
+    @IBAction func shareButton(_ sender: UIBarButtonItem) {
+        
+    }
+    
   
     
     
@@ -66,7 +71,11 @@ class DailyConsumeTableViewController: UITableViewController{
         let unitQuantityLabel = cell.viewWithTag(1004) as! UILabel
         let item = day.items[(indexPath as NSIndexPath).row] as! ItemConsumed
         contentLabel.text = item.name
-        caloriesLabel.text = "Total Calories: " + String(format: "%.2f", Double(item.totalCalories)) + " Cal"
+        if item.totalCalories == 0{
+            caloriesLabel.text = "Calorie Free"
+        }else{
+            caloriesLabel.text = "Total Calories: " + String(format: "%.2f", Double(item.totalCalories)) + " Cal"
+        }
         quantityLabel.text = "Quantity Consumed: " + String(item.quantityConsumed)
         brandLabel.text = "Brand: " + item.brand
         unitQuantityLabel.text = "Unit: " + item.quantity
